@@ -8,4 +8,4 @@
 
 ## Optional
 
-(additional notes, additional links, api info...)
+(additional notes, info...)
