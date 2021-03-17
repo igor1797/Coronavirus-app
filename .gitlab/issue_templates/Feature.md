@@ -4,7 +4,7 @@
 
 ## Design, Documentation, API links
 
-(add links for design)
+(add links to design, docs, api...)
 
 ## Optional
 
