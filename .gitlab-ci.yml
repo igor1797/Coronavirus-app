@@ -1,11 +1,12 @@
 image: jangrewe/gitlab-ci-android
 
-stage:
-    - check
-    - test
-    - build
-    - deploy
+stages:
+  - check
+  - test
+  - build
+  - deploy
 
+  
 before_script:
     - export GRADLE_USER_HOME=$(pwd)/.gradle
     - chmod +x ./gradlew
@@ -15,10 +16,33 @@ cache:
   paths:
     - .gradle/
 
-build:
-  stage: build
+ktlint:
+  stage: check
+  when: manual
   script:
-  - ./gradlew assembleDebug
+  - ./gradlew clean ktlintCheck
   artifacts:
     paths:
-    - app/build/outputs/apk/app-debug.apk
+    - app/build/reports/ktlint
+
+unitTestDebug:
+  stage: test
+  when: manual
+  script:
+  - ./gradlew clean testDebugUnitTest
+  artifacts:
+    paths:
+    - app/build/reports
+
+build:
+  stage: build
+  when: manual
+  only: 
+    - develop
+  script:
+    - ./gradlew clean assembleDebug --stacktrace
+  artifacts:
+    name: "${CI_JOB_ID}-${CI_JOB_NAME}"
+    expire_in: 2 weeks
+    paths:
+    - app/build/outputs/
