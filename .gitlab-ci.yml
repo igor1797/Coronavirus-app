@@ -46,3 +46,5 @@ build:
     expire_in: 2 weeks
     paths:
     - app/build/outputs/
+
+# Deploy job doesn't exist for this project, so we will just send notification to discord DICE mobile channel that build succeeded TODO: add job for sending discord message
