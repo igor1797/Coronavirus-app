@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Coronavirus App</string>
+
+    <string name="coronavirusTrackerText">Coronavirus Tracker</string>
+    <string name="chooseYourCountryText">Choose your country</string>
+    <string name="searchHint">Search…</string>
+    <string name="worldwideText">Worldwide</string>
+    <string name="covid19TrackerText">Covid-19 Tracker</string>
+    <string name="lastUpdatedText">Last updated %s ago</string>
+    <string name="confirmedText">Confirmed</string>
+    <string name="activeText">Active</string>
+    <string name="recoveredText">Recovered</string>
+    <string name="deceasedText">Deceased</string>
+    <string name="dateText">Date</string>
+    <string name="cText">C</string>
+    <string name="aText">A</string>
+    <string name="rText">R</string>
+    <string name="dText">D</string>
+    <string name="statisticsByCountryText">Statistics by Country</string>
+    <string name="latestNewsText">Latest News</string>
+    <string name="statisticsWorldwideText">Statistics Worldwide</string>
+    <string name="stateText">State</string>
+    <string name="oopsText">Oops!</string>
+    <string name="errorMessageText">Something went wrong. Please try again</string>
+    <string name="noInternetConnectionText">No Internet connection</string>
+    <string name="noInternetConnectionMessageText">Please check your internet connection and  try again</string>
+    <string name="loadingText">Loading</string>
 </resources>
