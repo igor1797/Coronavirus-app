@@ -18,7 +18,7 @@ cache:
 
 ktlint:
   stage: check
-  when: manual
+  when: always
   script:
   - ./gradlew clean ktlintCheck
   artifacts:
