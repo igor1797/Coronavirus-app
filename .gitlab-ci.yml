@@ -36,14 +36,12 @@ unitTestDebug:
 
 build:
   stage: build
-  when: manual
-  only: 
-    - develop
+  when: on_success
   script:
     - ./gradlew clean assembleDebug --stacktrace
   artifacts:
     name: "${CI_JOB_ID}-${CI_JOB_NAME}"
-    expire_in: 2 weeks
+    expire_in: 1 weeks
     paths:
     - app/build/outputs/
 
