@@ -6,8 +6,8 @@
         <item name="colorPrimaryVariant">@color/mirage</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/dark_blue</item>
-        <item name="colorSecondaryVariant">@color/cloud_burst</item>
+        <item name="colorSecondary">@color/darkBlue</item>
+        <item name="colorSecondaryVariant">@color/cloudBurst</item>
         <item name="colorOnSecondary">@color/heather</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

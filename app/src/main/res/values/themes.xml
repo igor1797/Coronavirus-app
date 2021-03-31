@@ -3,10 +3,10 @@
     <style name="Theme.CoronavirusApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/mandy</item>
-        <item name="colorPrimaryVariant">@color/chestnut_rose</item>
+        <item name="colorPrimaryVariant">@color/chestnutRose</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/regent_gray</item>
+        <item name="colorSecondary">@color/regentGray</item>
         <item name="colorSecondaryVariant">@color/heather</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
