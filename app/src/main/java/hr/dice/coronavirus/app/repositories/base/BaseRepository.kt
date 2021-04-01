@@ -1,36 +1,42 @@
 package hr.dice.coronavirus.app.repositories.base
 
-import hr.dice.coronavirus.app.common.makeNetworkRequest
-import hr.dice.coronavirus.app.common.utils.connectivity.Connectivity
-import hr.dice.coronavirus.app.ui.base.NoInternetState
-import hr.dice.coronavirus.app.ui.base.Success
-import hr.dice.coronavirus.app.ui.base.ViewState
+import hr.dice.coronavirus.app.networking.GENERAL_NETWORK_ERROR
+import hr.dice.coronavirus.app.networking.base.*
+import hr.dice.coronavirus.app.ui.base.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import org.koin.core.component.KoinApiExtension
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import retrofit2.Response
+import java.io.IOException
 
-@KoinApiExtension
-abstract class BaseRepository : KoinComponent {
+abstract class BaseRepository {
 
-    private val connectivity: Connectivity by inject()
+    protected fun <T : DomainMapper<R>, R> fetchData(apiCall: suspend () -> Response<T>): Flow<ViewState<R>> {
+        return flow {
+            emit(Loading)
+            makeNetworkRequest(apiCall)
+                .onNoInternetConnection { emit(NoInternetState) }
+                .onSuccess { emit(Success(it.mapToDomain())) }
+                .onFailure { emit(Error(it)) }
+        }.flowOn(Dispatchers.IO)
+    }
 
-    protected fun <T> fetchData(apiCall: suspend () -> Response<T>, transform: ((T) -> Success<T>)? = null): Flow<ViewState<T>> {
-        return if (connectivity.isNetworkAvailable()) {
-            makeNetworkRequest(apiCall).map { viewState ->
-                transform?.let {
-                    if (viewState is Success) {
-                        transform(viewState.data)
-                    }
+    private suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult<T> {
+        try {
+            val response: Response<T> = apiCall.invoke()
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    return SuccessResponse(it)
                 }
-                viewState
-            }.flowOn(Dispatchers.IO)
-        } else
-            flowOf(NoInternetState)
+            } else
+                return FailureResponse(HttpError(Throwable(response.message()), response.code()))
+            return FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+        } catch (throwable: Throwable) {
+            return when(throwable){
+                is IOException -> NoInternetConnectionResponse
+                else -> FailureResponse(HttpError(throwable))
+            }
+        }
     }
 }
