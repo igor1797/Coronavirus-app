@@ -24,17 +24,17 @@ import java.io.IOException
 
 abstract class BaseRepository {
 
-    protected fun <T : DomainMapper<R>, R> fetchData(apiCall: suspend () -> Response<T>): Flow<ViewState<R>> {
+    protected fun <T : DomainMapper<R>, R> fetchData(apiCall: suspend () -> Response<T>): Flow<ViewState> {
         return flow {
             emit(Loading)
             makeNetworkRequest(apiCall)
                 .onNoInternetConnection { emit(NoInternetState) }
-                .onSuccess { emit(Success(it.mapToDomain())) }
+                .onSuccess<T> { emit(Success(it.mapToDomain())) }
                 .onFailure { emit(Error(it)) }
         }.flowOn(Dispatchers.IO)
     }
 
-    private suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult<T> {
+    private suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult{
         try {
             val response: Response<T> = apiCall.invoke()
             if (response.isSuccessful) {

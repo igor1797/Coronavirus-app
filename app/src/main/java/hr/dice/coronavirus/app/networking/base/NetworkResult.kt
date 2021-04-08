@@ -1,23 +1,23 @@
 package hr.dice.coronavirus.app.networking.base
 
-sealed class NetworkResult<out T>
-data class SuccessResponse<out T>(val data: T) : NetworkResult<T>()
-data class FailureResponse(val httpError: HttpError) : NetworkResult<Nothing>()
-object NoInternetConnectionResponse : NetworkResult<Nothing>()
+sealed class NetworkResult
+data class SuccessResponse<out T>(val data: T) : NetworkResult()
+data class FailureResponse(val httpError: HttpError) : NetworkResult()
+object NoInternetConnectionResponse : NetworkResult()
 
 data class HttpError(val throwable: Throwable, val errorCode: Int = 0)
 
-inline fun <T> NetworkResult<T>.onNoInternetConnection(action: () -> Unit): NetworkResult<T> {
+inline fun NetworkResult.onNoInternetConnection(action: () -> Unit): NetworkResult{
     if (this is NoInternetConnectionResponse) action()
     return this
 }
 
-inline fun <T> NetworkResult<T>.onSuccess(action: (T) -> Unit): NetworkResult<T> {
-    if (this is SuccessResponse) action(data)
+inline fun <T> NetworkResult.onSuccess(action: (T) -> Unit): NetworkResult {
+    if (this is SuccessResponse<*>) action(data as T)
     return this
 }
 
-inline fun <T> NetworkResult<T>.onFailure(action: (HttpError) -> Unit) {
+inline fun NetworkResult.onFailure(action: (HttpError) -> Unit) {
     if (this is FailureResponse) action(httpError)
 }
 

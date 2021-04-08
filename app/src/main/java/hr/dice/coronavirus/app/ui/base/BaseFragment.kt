@@ -13,6 +13,7 @@ import hr.dice.coronavirus.app.common.visible
 
 abstract class BaseFragment<viewBinding : ViewDataBinding> : Fragment() {
 
+    protected abstract val layoutResourceId: Int
     protected lateinit var binding: viewBinding private set
 
     override fun onCreateView(
@@ -20,7 +21,7 @@ abstract class BaseFragment<viewBinding : ViewDataBinding> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, getLayoutResourceId(), container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
@@ -29,8 +30,6 @@ abstract class BaseFragment<viewBinding : ViewDataBinding> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpUi()
     }
-
-    abstract fun getLayoutResourceId(): Int
 
     abstract fun setUpUi()
 

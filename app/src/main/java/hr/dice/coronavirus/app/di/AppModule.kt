@@ -14,14 +14,6 @@ private const val NEWS = "News"
 
 val appModule = module {
 
-    fun provideRetrofitWithBaseUrl(baseUrl: String, converterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .addConverterFactory(converterFactory)
-            .baseUrl(baseUrl)
-            .client(okHttpClient)
-            .build()
-    }
-
     single<Converter.Factory> {
         GsonConverterFactory.create()
     }
@@ -38,4 +30,12 @@ val appModule = module {
     single(named(NEWS)) {
         provideRetrofitWithBaseUrl(BASE_URL_NEWS_API, get(), get())
     }
+}
+
+private fun provideRetrofitWithBaseUrl(baseUrl: String, converterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit {
+    return Retrofit.Builder()
+        .addConverterFactory(converterFactory)
+        .baseUrl(baseUrl)
+        .client(okHttpClient)
+        .build()
 }
