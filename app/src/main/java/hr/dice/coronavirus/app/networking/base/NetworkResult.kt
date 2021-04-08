@@ -7,7 +7,7 @@ object NoInternetConnectionResponse : NetworkResult()
 
 data class HttpError(val throwable: Throwable, val errorCode: Int = 0)
 
-inline fun NetworkResult.onNoInternetConnection(action: () -> Unit): NetworkResult{
+inline fun NetworkResult.onNoInternetConnection(action: () -> Unit): NetworkResult {
     if (this is NoInternetConnectionResponse) action()
     return this
 }

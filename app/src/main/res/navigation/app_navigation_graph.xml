@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/app_navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/app_navigation_graph"
+    app:startDestination="@id/splashFragment">
 
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="hr.dice.coronavirus.app.ui.splash.view.SplashFragment"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/goToHomeContainerFragment"
+            app:destination="@id/homeContainerFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/splashFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeContainerFragment"
+        android:name="hr.dice.coronavirus.app.ui.home.container.HomeContainerFragment"
+        android:label="HomeContainerFragment" />
 </navigation>
