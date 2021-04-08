@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="hr.dice.coronavirus.app.ui.splash.view.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/goToHomeContainerFragment"
             app:destination="@id/homeContainerFragment"
