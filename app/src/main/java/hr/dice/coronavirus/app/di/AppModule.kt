@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.di
 
+import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import okhttp3.OkHttpClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -8,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL_COVID19_API = "https://api.covid19api.com/"
-private const val BASE_URL_NEWS_API = "http://api.mediastack.com/v1"
+private const val BASE_URL_NEWS_API = "http://api.mediastack.com/v1/"
 private const val COVID19 = "Covid19"
 private const val NEWS = "News"
 
@@ -30,9 +31,13 @@ val appModule = module {
     single(named(NEWS)) {
         provideRetrofitWithBaseUrl(BASE_URL_NEWS_API, get(), get())
     }
+
+    single<CoronavirusApiService> {
+        get<Retrofit>(named(COVID19)).create(CoronavirusApiService::class.java)
+    }
 }
 
-private fun provideRetrofitWithBaseUrl(baseUrl: String, converterFactory: GsonConverterFactory, okHttpClient: OkHttpClient): Retrofit {
+private fun provideRetrofitWithBaseUrl(baseUrl: String, converterFactory: Converter.Factory, okHttpClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
         .addConverterFactory(converterFactory)
         .baseUrl(baseUrl)

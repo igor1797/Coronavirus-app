@@ -34,7 +34,7 @@ abstract class BaseRepository {
         }.flowOn(Dispatchers.IO)
     }
 
-    private suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult {
+    protected suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult {
         try {
             val response: Response<T> = apiCall.invoke()
             if (response.isSuccessful) {
