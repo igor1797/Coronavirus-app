@@ -15,7 +15,7 @@ import hr.dice.coronavirus.app.ui.base.NoInternetState
 import hr.dice.coronavirus.app.ui.base.Success
 import kotlinx.coroutines.flow.flow
 
-class HomeRepository(
+class CoronavirusRepository(
     private val coronavirusApiService: CoronavirusApiService
 ) : BaseRepository() {
 
@@ -40,7 +40,7 @@ class HomeRepository(
         val recoveredCases = Case(latestDate.recovered, latestDate.recovered - dayBeforeLatestDate.recovered)
         val deceasedCases = Case(latestDate.deaths, latestDate.deaths - dayBeforeLatestDate.deaths)
         val casesStatus = CasesStatus(confirmedCases, activeCases, recoveredCases, deceasedCases)
-        val datesStatus = list.map { it.mapToDomain() }
+        val datesStatus = list.map { it.mapToDomain() }.reversed()
         return CountryStatus(latestDate.country, datesStatus, casesStatus, latestDate.date)
     }
 }
