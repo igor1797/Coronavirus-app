@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -33,28 +32,28 @@ abstract class BaseFragment<viewBinding : ViewDataBinding> : Fragment() {
 
     abstract fun setUpUi()
 
-    protected fun showLoading(errorView: View, successView: View, loadingView: ProgressBar, noInternetView: View) {
+    protected fun showLoading(errorView: View, successView: View, loadingView: View, noInternetView: View) {
         loadingView.visible()
         errorView.gone()
         successView.gone()
         noInternetView.gone()
     }
 
-    protected fun showData(errorView: View, successView: View, loadingView: ProgressBar, noInternetView: View) {
+    protected fun showData(errorView: View, successView: View, loadingView: View, noInternetView: View) {
         successView.visible()
         errorView.gone()
         loadingView.gone()
         noInternetView.gone()
     }
 
-    protected fun showError(errorView: View, successView: View, loadingView: ProgressBar, noInternetView: View) {
+    protected fun showError(errorView: View, successView: View, loadingView: View, noInternetView: View) {
         errorView.visible()
         successView.gone()
         loadingView.gone()
         noInternetView.gone()
     }
 
-    protected fun showNoInternet(errorView: View, successView: View, loadingView: ProgressBar, noInternetView: View) {
+    protected fun showNoInternet(errorView: View, successView: View, loadingView: View, noInternetView: View) {
         noInternetView.visible()
         errorView.gone()
         successView.gone()

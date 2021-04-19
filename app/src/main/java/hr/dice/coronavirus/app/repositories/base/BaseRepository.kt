@@ -18,7 +18,7 @@ import hr.dice.coronavirus.app.ui.base.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 
@@ -31,12 +31,12 @@ abstract class BaseRepository {
                 .onNoInternetConnection { emit(NoInternetState) }
                 .onSuccess<T> { emit(Success(it.mapToDomain())) }
                 .onFailure { emit(Error(it)) }
-        }.flowOn(Dispatchers.IO)
+        }
     }
 
-    private suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult {
+    protected suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult {
         try {
-            val response: Response<T> = apiCall.invoke()
+            val response: Response<T> = withContext(Dispatchers.IO) { apiCall.invoke() }
             if (response.isSuccessful) {
                 response.body()?.let {
                     return SuccessResponse(it)
