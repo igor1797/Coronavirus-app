@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.model
 
+import hr.dice.coronavirus.app.common.utils.formatNumber
 import kotlin.math.absoluteValue
 
 /**
@@ -24,13 +25,5 @@ data class Case(
 
     fun getTotalNumberOfCasesFormatted(): String {
         return formatNumber(total)
-    }
-
-    private fun formatNumber(number: Int): String {
-        return when {
-            number < 9999 -> "$number"
-            number < 999999 -> "${("%.2f".format(number / 1000.0))}K"
-            else -> "${("%.2f".format(number / 100000.0))}M"
-        }
     }
 }

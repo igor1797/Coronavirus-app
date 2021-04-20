@@ -64,7 +64,8 @@ class HomeViewModel(
                     thirdCountryWithHighestConfirmedCases = secondCountryWithHighestConfirmedCases
                     secondCountryWithHighestConfirmedCases = country
                 }
-                country.confirmedCases > thirdCountryWithHighestConfirmedCases.confirmedCases -> thirdCountryWithHighestConfirmedCases = country
+                country.confirmedCases > thirdCountryWithHighestConfirmedCases.confirmedCases ->
+                    thirdCountryWithHighestConfirmedCases = country
             }
         }
         topThreeCountriesByConfirmedCases.apply {
