@@ -1,4 +1,4 @@
-package hr.dice.coronavirus.app.ui.home.view
+package hr.dice.coronavirus.app.ui.home.fragments.view
 
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
