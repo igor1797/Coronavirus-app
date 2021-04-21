@@ -40,11 +40,10 @@ abstract class BaseRepository {
             if (response.isSuccessful) {
                 response.body()?.let {
                     SuccessResponse(it)
-                }
+                } ?: FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
             } else {
                 FailureResponse(HttpError(Throwable(response.message()), response.code()))
             }
-            FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
         } catch (throwable: Throwable) {
             when (throwable) {
                 is IOException -> NoInternetConnectionResponse
