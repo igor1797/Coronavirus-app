@@ -11,7 +11,7 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
 
     override val layoutResourceId: Int get() = R.layout.fragment_home_container
 
-    override fun setUpUi() {
+    override fun onPostViewCreated() {
         setBottomNav()
     }
 
