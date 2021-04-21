@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="hr.dice.coronavirus.app.ui.home.view.HomeFragment"
+        android:name="hr.dice.coronavirus.app.ui.home.fragments.view.HomeFragment"
         android:label="HomeFragment" />
 </navigation>

@@ -6,7 +6,7 @@
     <string name="searchHint">Search…</string>
     <string name="worldwideText">Worldwide</string>
     <string name="covid19TrackerText">Covid-19 Tracker</string>
-    <string name="lastUpdatedText">Last updated %s ago</string>
+    <string name="lastUpdatedText">Last updated %s </string>
     <string name="confirmedText">Confirmed</string>
     <string name="activeText">Active</string>
     <string name="recoveredText">Recovered</string>
@@ -21,8 +21,22 @@
     <string name="statisticsWorldwideText">Statistics Worldwide</string>
     <string name="stateText">State</string>
     <string name="oopsText">Oops!</string>
-    <string name="errorMessageText">Something went wrong. Please try again</string>
+    <string name="errorMessageText">
+        <br>
+            Something went wrong.
+        </br>
+        <br>
+            Please try again
+        </br>
+    </string>
     <string name="noInternetConnectionText">No Internet connection</string>
-    <string name="noInternetConnectionMessageText">Please check your internet connection and  try again</string>
+    <string name="noInternetConnectionMessageText">
+        <br>
+             Please check your internet connection \n
+        </br>
+        <br>
+           and  try again
+        </br>
+    </string>
     <string name="loadingText">Loading</string>
 </resources>

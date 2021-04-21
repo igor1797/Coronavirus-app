@@ -7,6 +7,7 @@
     <color name="mirage">#1B1E2A</color>
     <color name="darkBlue">#222B45</color>
     <color name="cloudBurst">#1C2C40</color>
+    <color name="cloudBurstWithOpacity">#1A1C2C40</color>
     <color name="athensGray">#F1F2F6</color>
     <color name="regentGray">#8C96A5</color>
     <color name="regentGrayWithOpacity">#B88C96A5</color>
@@ -20,6 +21,15 @@
     <color name="shuttleGray">#5A6679</color>
     <color name="vulcan">#0F131F</color>
     <color name="vulcanWithOpacity">#AB0F131F</color>
-    <color name="catskillWhite">#E5E9F2</color>
-    <color name="froly">#F58A97</color>
+    <color name="catskillWhite">#F9FCFC</color>
+    <color name="catskillWhiteWithOpacity">#CCF9FCFC</color>
+    <color name="froly">#EE6E7E</color>
+    <color name="frolyWith38Opacity">#61EE6E7E</color>
+    <color name="turkishRose">#BD7B97</color>
+    <color name="whiteWith48Opacity">#7AFFFFFF</color>
+    <color name="whiteWith82Opacity">#DEFFFFFF</color>
+    <color name="whiteWith35Opacity">#59FFFFFF</color>
+    <color name="whiteWith60Opacity">#99FFFFFF</color>
+    <color name="oxfordBlueWith82Opacity">#D13C4858</color>
+    <color name="lotus">#743645</color>
 </resources>
