@@ -34,18 +34,19 @@ abstract class BaseRepository {
         }
     }
 
-    protected suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult {
+    protected suspend fun <T> makeNetworkRequest(apiCall: suspend () -> Response<T>): NetworkResult = withContext(Dispatchers.IO) {
         try {
-            val response: Response<T> = withContext(Dispatchers.IO) { apiCall.invoke() }
+            val response: Response<T> = apiCall.invoke()
             if (response.isSuccessful) {
                 response.body()?.let {
-                    return SuccessResponse(it)
+                    SuccessResponse(it)
                 }
-            } else
-                return FailureResponse(HttpError(Throwable(response.message()), response.code()))
-            return FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+            } else {
+                FailureResponse(HttpError(Throwable(response.message()), response.code()))
+            }
+            FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
         } catch (throwable: Throwable) {
-            return when (throwable) {
+            when (throwable) {
                 is IOException -> NoInternetConnectionResponse
                 else -> FailureResponse(HttpError(throwable))
             }
