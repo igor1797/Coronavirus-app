@@ -8,6 +8,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
-    override fun setUpUi() {
+    override fun onPostViewCreated() {
     }
 }
