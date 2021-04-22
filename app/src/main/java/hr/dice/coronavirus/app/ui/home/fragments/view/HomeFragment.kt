@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
@@ -11,6 +12,7 @@ import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.WorldWide
+import hr.dice.coronavirus.app.ui.home.activity.MainActivity
 import hr.dice.coronavirus.app.ui.home.adapters.DateAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.StateAdapter
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
@@ -27,6 +29,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onPostViewCreated() {
         binding.viewModel = viewModel
         observe()
+        setChangeSelectionOnClickLister()
+    }
+
+    private fun setChangeSelectionOnClickLister(){
+        binding.changeSelection.setOnClickListener {
+            navigateToCountrySelection()
+        }
+    }
+
+    private fun navigateToCountrySelection(){
+        val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
+        controller.navigate(R.id.goToCountrySelectionFragment)
     }
 
     private fun setupRecycler(dataAdapter: RecyclerView.Adapter<*>) {
