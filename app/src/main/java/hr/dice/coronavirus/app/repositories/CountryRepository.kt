@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.flow
 
 class CountryRepository(
     private val countryApiService: CountryApiService
-): BaseRepository() {
+) : BaseRepository() {
 
     fun getCountryList() = flow {
         emit(Loading)

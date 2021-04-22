@@ -32,13 +32,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         setChangeSelectionOnClickLister()
     }
 
-    private fun setChangeSelectionOnClickLister(){
+    private fun setChangeSelectionOnClickLister() {
         binding.changeSelection.setOnClickListener {
             navigateToCountrySelection()
         }
     }
 
-    private fun navigateToCountrySelection(){
+    private fun navigateToCountrySelection() {
         val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
         controller.navigate(R.id.goToCountrySelectionFragment)
     }

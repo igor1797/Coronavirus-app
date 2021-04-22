@@ -40,5 +40,6 @@
     </string>
     <string name="loadingText">Loading</string>
     <string name="pageComingSoonText">Page coming soon</string>
-    <string name="worldWideEmoji">🌎</string>
+    <string name="worldWideEmoji">🌏</string>
+    <string name="noResultsText">No results found!</string>
 </resources>

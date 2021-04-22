@@ -11,7 +11,7 @@ data class CountryResponse(
     val slug: String,
     @SerializedName("ISO2")
     val iso2: String
-): DomainMapper<Country>{
+) : DomainMapper<Country> {
     override fun mapToDomain(): Country {
         return Country(name, slug, iso2)
     }
