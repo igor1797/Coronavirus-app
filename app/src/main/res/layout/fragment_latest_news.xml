@@ -1,81 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.latest_news_list.view.LatestNewsFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="hr.dice.coronavirus.app.ui.latest_news_list.presentation.LatestNewsViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/virusOne"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:alpha="0.54"
-            android:background="@drawable/virus_light_mode"
-            android:translationX="-14dp"
-            android:translationY="-10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/virusTwo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:alpha="0.74"
-            android:background="@drawable/virus_light_mode"
-            android:translationX="34dp"
-            android:translationY="-37dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/virusThree"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:alpha="0.54"
-            android:background="@drawable/virus_light_mode"
-            android:rotation="45"
-            app:layout_constraintBottom_toBottomOf="@id/latestNewsHeader"
-            app:layout_constraintEnd_toStartOf="@id/virusTwo"
-            app:layout_constraintStart_toEndOf="@id/latestNewsHeader"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/virusFour"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:alpha="0.3"
-            android:background="@drawable/virus_light_mode"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/latestNewsRecycler" />
-
-        <TextView
-            android:id="@+id/latestNewsHeader"
-            style="@style/textStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/latestNewsText"
-            android:textColor="@color/cloudBurst"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/latestNewsRecycler"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/success"
+            app:successState="@{viewModel.newsList}"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="14dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/latestNewsHeader"
-            tools:itemCount="3"
-            tools:listitem="@layout/single_news_item" />
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/virusOne"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:alpha="0.54"
+                android:background="@drawable/virus_light_mode"
+                android:translationX="-14dp"
+                android:translationY="-10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/virusTwo"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:alpha="0.74"
+                android:background="@drawable/virus_light_mode"
+                android:translationX="34dp"
+                android:translationY="-37dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/virusThree"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:alpha="0.54"
+                android:background="@drawable/virus_light_mode"
+                android:rotation="45"
+                app:layout_constraintBottom_toBottomOf="@id/latestNewsHeader"
+                app:layout_constraintEnd_toStartOf="@id/virusTwo"
+                app:layout_constraintStart_toEndOf="@id/latestNewsHeader"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/virusFour"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:alpha="0.3"
+                android:background="@drawable/virus_light_mode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/latestNewsRecycler" />
+
+            <TextView
+                android:id="@+id/latestNewsHeader"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/latestNewsText"
+                android:textColor="@color/cloudBurst"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/latestNewsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/latestNewsHeader"
+                tools:itemCount="3"
+                tools:listitem="@layout/single_news_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            android:id="@+id/loading"
+            app:loadingState="@{viewModel.newsList}"
+            layout="@layout/loading_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/noInternetConnection"
+            app:noInternetConnectionState="@{viewModel.newsList}"
+            layout="@layout/no_internet_connection_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/error"
+            app:errorState="@{viewModel.newsList}"
+            layout="@layout/error_view"
+            android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
