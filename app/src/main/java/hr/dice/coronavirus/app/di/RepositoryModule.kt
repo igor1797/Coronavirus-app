@@ -11,6 +11,6 @@ val repositoryModule = module {
     }
 
     factory {
-        CountryRepository(get())
+        CountryRepository(get(), get())
     }
 }

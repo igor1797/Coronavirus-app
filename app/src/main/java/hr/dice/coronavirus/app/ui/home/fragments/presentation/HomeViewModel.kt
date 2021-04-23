@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import hr.dice.coronavirus.app.common.WORLDWIDE
 import hr.dice.coronavirus.app.model.global.GlobalCountry
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.repositories.CoronavirusRepository
+import hr.dice.coronavirus.app.repositories.CountryRepository
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.ViewState
@@ -17,10 +20,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeViewModel(
-    private val coronavirusRepository: CoronavirusRepository
+    private val coronavirusRepository: CoronavirusRepository,
+    private val countryRepository: CountryRepository
 ) : ViewModel() {
 
     private var timeAgo: Int = 0
@@ -29,11 +34,20 @@ class HomeViewModel(
     val useCase: LiveData<UseCase> get() = _useCase
 
     init {
-        setUseCase(WorldWide)
+        viewModelScope.launch {
+            countryRepository.getUserSelection().collect { userSelection ->
+                if (userSelection.isEmpty() || userSelection == WORLDWIDE) {
+                    setUseCase(WorldWide)
+                } else {
+                    setUseCase(CountrySelected(userSelection))
+                }
+            }
+        }
     }
 
     val coronaDataStatus: LiveData<ViewState> = useCase.switchMap { useCase ->
         liveData {
+            timeAgo = 0
             when (useCase) {
                 is CountrySelected -> {
                     coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
@@ -42,7 +56,7 @@ class HomeViewModel(
                     coronavirusRepository.getGlobalStatusData()
                         .map {
                             it.onSuccess<GlobalStatus> { globalStatus ->
-                                globalStatus.countries = withContext(Dispatchers.IO) {
+                                globalStatus.countries = withContext(Dispatchers.Default) {
                                     findTopThreeCountriesByConfirmedCases(globalStatus.countries)
                                 }
                             }

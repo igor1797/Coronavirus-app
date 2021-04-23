@@ -10,7 +10,9 @@ import hr.dice.coronavirus.app.databinding.CountryItemBinding
 import hr.dice.coronavirus.app.model.country_list.Country
 import hr.dice.coronavirus.app.ui.base.BaseHolder
 
-class CountryAdapter : ListAdapter<Country, CountryAdapter.CountryHolder>(COMPARATOR) {
+class CountryAdapter(
+    private val onItemSelected: (String) -> Unit
+) : ListAdapter<Country, CountryAdapter.CountryHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,7 +28,10 @@ class CountryAdapter : ListAdapter<Country, CountryAdapter.CountryHolder>(COMPAR
 
     inner class CountryHolder(private val binding: CountryItemBinding) : BaseHolder<Country, CountryItemBinding>(binding) {
         override fun bindItem(item: Country) {
-            binding.country = item
+            with(binding) {
+                country = item
+                root.setOnClickListener { onItemSelected(item.slug) }
+            }
         }
     }
 

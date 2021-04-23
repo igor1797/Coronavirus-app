@@ -4,6 +4,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.dice.coronavirus.app.R
+import hr.dice.coronavirus.app.common.WORLDWIDE
 import hr.dice.coronavirus.app.common.gone
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.CountrySelectionFragmentBinding
@@ -15,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>() {
 
     private val countrySelectionViewModel by viewModel<CountrySelectionViewModel>()
-    private val countryAdapter by lazy { CountryAdapter() }
+    private val countryAdapter by lazy { CountryAdapter { onItemSelected(it) } }
 
     override val layoutResourceId: Int get() = R.layout.country_selection_fragment
 
@@ -33,31 +34,47 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
         }
     }
 
+    private fun goBack() {
+        findNavController().navigateUp()
+    }
+
     private fun initListeners() {
         with(binding) {
             backButton.setOnClickListener {
-                findNavController().navigateUp()
+                goBack()
             }
             searchQueryInput.doOnTextChanged { text, _, _, _ ->
                 text?.toString()?.let { searchQuery ->
                     countrySelectionViewModel.searchQueryChanged(searchQuery)
                 }
             }
+            worldwideItem.setOnClickListener {
+                countrySelectionViewModel.saveUserSelection(WORLDWIDE)
+            }
         }
     }
 
     private fun observe() {
-        countrySelectionViewModel.filteredCountryList.observe(viewLifecycleOwner) {
-            countryAdapter.submitList(it)
-            with(binding) {
-                if (it.isEmpty()) {
-                    countryListRecycler.gone()
-                    noResultsFound.visible()
-                } else {
-                    countryListRecycler.visible()
-                    noResultsFound.gone()
+        with(countrySelectionViewModel) {
+            filteredCountryList.observe(viewLifecycleOwner) {
+                countryAdapter.submitList(it)
+                with(binding) {
+                    if (it.isEmpty()) {
+                        countryListRecycler.gone()
+                        noResultsFound.visible()
+                    } else {
+                        countryListRecycler.visible()
+                        noResultsFound.gone()
+                    }
                 }
             }
+            successfulSavedUserSelection.observe(viewLifecycleOwner) {
+                if (it) goBack()
+            }
         }
+    }
+
+    private fun onItemSelected(selection: String) {
+        countrySelectionViewModel.saveUserSelection(selection)
     }
 }

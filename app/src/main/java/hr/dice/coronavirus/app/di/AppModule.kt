@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.di
 
+import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.CountryApiService
 import okhttp3.OkHttpClient
@@ -39,6 +40,10 @@ val appModule = module {
 
     single<CountryApiService> {
         get<Retrofit>(named(COVID19)).create(CountryApiService::class.java)
+    }
+
+    single {
+        DataStoreSelectionManager(get())
     }
 }
 

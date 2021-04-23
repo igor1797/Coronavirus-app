@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.repositories
 
+import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CountryApiService
 import hr.dice.coronavirus.app.networking.base.onFailure
 import hr.dice.coronavirus.app.networking.base.onNoInternetConnection
@@ -13,7 +14,8 @@ import hr.dice.coronavirus.app.ui.base.Success
 import kotlinx.coroutines.flow.flow
 
 class CountryRepository(
-    private val countryApiService: CountryApiService
+    private val countryApiService: CountryApiService,
+    private val dataStoreSelectionManager: DataStoreSelectionManager
 ) : BaseRepository() {
 
     fun getCountryList() = flow {
@@ -28,6 +30,12 @@ class CountryRepository(
             emit(Error(it))
         }
     }
+
+    suspend fun saveUserSelection(selection: String) {
+        dataStoreSelectionManager.storeUserSelection(selection)
+    }
+
+    fun getUserSelection() = dataStoreSelectionManager.userSelection
 
     private fun mapCountryListToDomain(countries: List<CountryResponse>) = countries.map { it.mapToDomain() }
 }
