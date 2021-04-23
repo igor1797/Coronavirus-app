@@ -3,6 +3,7 @@ package hr.dice.coronavirus.app.di
 import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.CountryApiService
+import hr.dice.coronavirus.app.networking.NewsApiService
 import okhttp3.OkHttpClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -44,6 +45,10 @@ val appModule = module {
 
     single {
         DataStoreSelectionManager(get())
+    }
+
+    single<NewsApiService> {
+        get<Retrofit>(named(NEWS)).create(NewsApiService::class.java)
     }
 }
 
