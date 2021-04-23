@@ -31,6 +31,7 @@
     <color name="whiteWith35Opacity">#59FFFFFF</color>
     <color name="whiteWith60Opacity">#99FFFFFF</color>
     <color name="oxfordBlueWith82Opacity">#D13C4858</color>
+    <color name="oxfordBlue">#3C4858</color>
     <color name="lotus">#743645</color>
     <color name="iron">#DFE0E1</color>
 </resources>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:contentPadding="2dp"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="@color/oxfordBlueWith82Opacity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="@color/oxfordBlue">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/newsImageCard"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="22dp"
+                app:cardCornerRadius="4dp"
+                app:layout_constraintBottom_toTopOf="@id/source"
+                app:layout_constraintDimensionRatio="H,1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/newsImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/source"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.72"
+                android:textColor="@color/regentGrayWithOpacity"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="BBC News \u00B7" />
+
+            <TextView
+                android:id="@+id/updated"
+                style="@style/textStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.72"
+                android:textColor="@color/regentGrayWithOpacity"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/source"
+                tools:text="14 mins ago" />
+
+            <TextView
+                android:id="@+id/newsTitle"
+                style="@style/textStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/catskillWhiteWithOpacity"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/newsDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/newsImageCard"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Could North Korea handle a Covid-19 outbreak?" />
+
+            <TextView
+                android:id="@+id/newsDescription"
+                style="@style/textStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/regentGrayWithOpacity"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/updated"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/newsImageCard"
+                app:layout_constraintTop_toBottomOf="@id/newsTitle"
+                tools:text="By Najib Farraj- PNN/ Ramallah/ The Israeli repression units affiliated with the Prisons Authority attacked several sections of the Israeli prison of Ofer today. In a phone call with a PNN reporter, prisoners from inside the prison said that a force of the" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
