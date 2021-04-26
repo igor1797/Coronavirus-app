@@ -3,4 +3,9 @@
     <style name="textStyle">
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
+    <style name="AppTheme.Splash" parent="Theme.CoronavirusApp">
+        <item name="android:windowBackground">@color/mirage</item>
+    </style>
+
 </resources>
