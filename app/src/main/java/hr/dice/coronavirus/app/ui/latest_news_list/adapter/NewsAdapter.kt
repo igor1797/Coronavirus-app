@@ -29,6 +29,7 @@ class NewsAdapter(
     inner class SingleNewsAdapterHolder(private val binding: SingleNewsItemBinding) : BaseHolder<SingleNews, SingleNewsItemBinding>(binding) {
         override fun bindItem(item: SingleNews) {
             with(binding) {
+                source.text = "${item.source} \u00B7 "
                 singleNews = item
                 root.setOnClickListener { onItemSelected(item.url) }
             }
