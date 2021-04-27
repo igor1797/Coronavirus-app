@@ -8,4 +8,11 @@ data class SingleNews(
     val source: String,
     val title: String,
     val url: String
-)
+) {
+    var timeAgo = ""
+        private set
+
+    fun setTimeAgo(timeAgo: String) {
+        this.timeAgo = timeAgo
+    }
+}

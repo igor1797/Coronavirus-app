@@ -10,6 +10,8 @@ import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 private const val BASE_URL_COVID19_API = "https://api.covid19api.com/"
 private const val BASE_URL_NEWS_API = "http://api.mediastack.com/v1/"
@@ -49,6 +51,14 @@ val appModule = module {
 
     single<NewsApiService> {
         get<Retrofit>(named(NEWS)).create(NewsApiService::class.java)
+    }
+
+    single {
+        Calendar.getInstance()
+    }
+
+    single {
+        SimpleDateFormat()
     }
 }
 

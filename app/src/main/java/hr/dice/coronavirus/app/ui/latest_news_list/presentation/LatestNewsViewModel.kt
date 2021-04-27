@@ -5,16 +5,21 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
+import hr.dice.coronavirus.app.common.DATE_TIME_FORMAT
 import hr.dice.coronavirus.app.common.KEYWORD_CORONA
+import hr.dice.coronavirus.app.common.TIME_ZONE
+import hr.dice.coronavirus.app.common.utils.DateTimeUtil
 import hr.dice.coronavirus.app.model.news_list.LatestNewsList
 import hr.dice.coronavirus.app.model.news_list.SingleNews
 import hr.dice.coronavirus.app.repositories.NewsRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
 import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 
 class LatestNewsViewModel(
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
+    private val dateTimeUtil: DateTimeUtil
 ) : ViewModel() {
 
     private val _viewState = MutableLiveData<ViewState>()
@@ -30,17 +35,29 @@ class LatestNewsViewModel(
 
     val newsList: LiveData<List<SingleNews>> = _offset.switchMap { offset ->
         liveData {
-            newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset).collect {
-                _viewState.postValue(it)
-                it.onSuccess<LatestNewsList> { latestNews ->
-                    if (latestNews.pagination.offset == INITIAL_OFFSET) {
-                        _isInitialNewsLoad.value = true
-                        totalNews = latestNews.pagination.total
+            newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset)
+                .map {
+                    it.onSuccess<LatestNewsList> { latestNews ->
+                        if (latestNews.pagination.offset == INITIAL_OFFSET) {
+                            _isInitialNewsLoad.value = true
+                            totalNews = latestNews.pagination.total
+                        }
+                        latestNews.newsList.forEach { singleNews ->
+                            singleNews.setTimeAgo(
+                                dateTimeUtil.getTimeAgo(
+                                    DATE_TIME_FORMAT,
+                                    TIME_ZONE,
+                                    singleNews.publishedAt
+                                )
+                            )
+                        }
+                        news.addAll(latestNews.newsList)
+                        emit(news as List<SingleNews>)
                     }
-                    news.addAll(latestNews.newsList)
-                    emit(news as List<SingleNews>)
                 }
-            }
+                .collect {
+                    _viewState.postValue(it)
+                }
         }
     }
 

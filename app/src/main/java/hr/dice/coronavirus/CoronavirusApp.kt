@@ -4,6 +4,7 @@ import android.app.Application
 import hr.dice.coronavirus.app.di.appModule
 import hr.dice.coronavirus.app.di.presentationModule
 import hr.dice.coronavirus.app.di.repositoryModule
+import hr.dice.coronavirus.app.di.utilModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,7 +18,8 @@ class CoronavirusApp : Application() {
                 listOf(
                     appModule,
                     presentationModule,
-                    repositoryModule
+                    repositoryModule,
+                    utilModule
                 )
             )
         }

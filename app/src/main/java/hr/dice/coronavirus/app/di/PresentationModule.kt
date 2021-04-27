@@ -15,5 +15,5 @@ val presentationModule = module {
 
     viewModel { CountrySelectionViewModel(get()) }
 
-    viewModel { LatestNewsViewModel(get()) }
+    viewModel { LatestNewsViewModel(get(), get()) }
 }

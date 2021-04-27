@@ -10,17 +10,18 @@
             type="hr.dice.coronavirus.app.model.news_list.SingleNews" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
         app:contentPadding="12dp"
-        android:layout_marginTop="14dp">
+        app:cardElevation="0dp"
+        android:layout_marginTop="14dp"
+        app:cardBackgroundColor="@color/oxfordBlue">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/oxfordBlue">
+            android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/newsImageCard"
@@ -63,7 +64,7 @@
                 android:alpha="0.72"
                 android:textColor="@color/regentGrayWithOpacity"
                 android:textSize="12sp"
-                android:text="@{singleNews.publishedAt}"
+                android:text="@{singleNews.timeAgo}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/source"
                 tools:text="14 mins ago" />
@@ -105,5 +106,5 @@
                 tools:text="By Najib Farraj- PNN/ Ramallah/ The Israeli repression units affiliated with the Prisons Authority attacked several sections of the Israeli prison of Ofer today. In a phone call with a PNN reporter, prisoners from inside the prison said that a force of the" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
