@@ -3,25 +3,60 @@ package hr.dice.coronavirus.app.ui.latest_news_list.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.liveData
+import androidx.lifecycle.switchMap
 import hr.dice.coronavirus.app.common.KEYWORD_CORONA
+import hr.dice.coronavirus.app.model.news_list.LatestNewsList
+import hr.dice.coronavirus.app.model.news_list.SingleNews
 import hr.dice.coronavirus.app.repositories.NewsRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
+import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class LatestNewsViewModel(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    private val _newsList = MutableLiveData<ViewState>()
-    val newsList: LiveData<ViewState> get() = _newsList
+    private val _viewState = MutableLiveData<ViewState>()
+    val viewState: LiveData<ViewState> get() = _viewState
 
-    init {
-        viewModelScope.launch {
-            newsRepository.getLatestNewsList(KEYWORD_CORONA, 25, 0).collect {
-                _newsList.postValue(it)
+    private val _isInitialNewsLoad = MutableLiveData(false)
+    val isInitialNewsLoad: LiveData<Boolean> get() = _isInitialNewsLoad
+
+    private val _offset = MutableLiveData<Int>()
+    private var totalNews = 0
+
+    private val news = arrayListOf<SingleNews>()
+
+    val newsList: LiveData<List<SingleNews>> = _offset.switchMap { offset ->
+        liveData {
+            newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset).collect {
+                _viewState.postValue(it)
+                it.onSuccess<LatestNewsList> { latestNews ->
+                    if (latestNews.pagination.offset == INITIAL_OFFSET) {
+                        _isInitialNewsLoad.value = true
+                        totalNews = latestNews.pagination.total
+                    }
+                    news.addAll(latestNews.newsList)
+                    emit(news as List<SingleNews>)
+                }
             }
         }
+    }
+
+    init {
+        _offset.value = INITIAL_OFFSET
+    }
+
+    fun loadMoreLatestNews(newOffset: Int) {
+        if (newOffset < totalNews) {
+            _offset.value = newOffset
+        }
+    }
+
+    companion object {
+        private const val INITIAL_OFFSET = 0
+        const val NEWS_PER_PAGE = 25
+        const val PREFETCH_DISTANCE = 8
     }
 }

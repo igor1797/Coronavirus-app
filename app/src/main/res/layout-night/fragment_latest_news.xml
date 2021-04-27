@@ -17,9 +17,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/success"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:successState="@{viewModel.newsList}">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/latestNewsHeader"
@@ -53,19 +53,19 @@
             android:id="@+id/loading"
             layout="@layout/loading_view"
             android:visibility="gone"
-            app:loadingState="@{viewModel.newsList}" />
+            app:loadingState="@{viewModel.viewState}" />
 
         <include
             android:id="@+id/noInternetConnection"
             layout="@layout/no_internet_connection_view"
             android:visibility="gone"
-            app:noInternetConnectionState="@{viewModel.newsList}" />
+            app:noInternetConnectionState="@{viewModel.viewState}" />
 
         <include
             android:id="@+id/error"
             layout="@layout/error_view"
             android:visibility="gone"
-            app:errorState="@{viewModel.newsList}" />
+            app:errorState="@{viewModel.viewState}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

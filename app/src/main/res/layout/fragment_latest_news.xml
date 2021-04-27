@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/success"
-            app:successState="@{viewModel.newsList}"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -94,19 +94,19 @@
 
         <include
             android:id="@+id/loading"
-            app:loadingState="@{viewModel.newsList}"
+            app:loadingState="@{viewModel.viewState}"
             layout="@layout/loading_view"
             android:visibility="gone" />
 
         <include
             android:id="@+id/noInternetConnection"
-            app:noInternetConnectionState="@{viewModel.newsList}"
+            app:noInternetConnectionState="@{viewModel.viewState}"
             layout="@layout/no_internet_connection_view"
             android:visibility="gone" />
 
         <include
             android:id="@+id/error"
-            app:errorState="@{viewModel.newsList}"
+            app:errorState="@{viewModel.viewState}"
             layout="@layout/error_view"
             android:visibility="gone" />
 
