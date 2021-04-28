@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.maps.MapsFragment">
+
+        <TextView
+            android:id="@+id/mapsHeader"
+            style="@style/textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            tools:text="@string/statisticsByCountryText"
+            android:textColor="@color/cloudBurst"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.libraries.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            map:layout_constraintBottom_toTopOf="@id/cardDetails"
+            map:layout_constraintTop_toBottomOf="@id/mapsHeader"
+            map:mapId="@string/map_id" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="40dp"
+            app:cardElevation="4dp"
+            map:contentPadding="16dp"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/selection"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/worldwideText"
+                    android:textColor="@color/cloudBurst"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/confirmed"
+                    style="@style/textStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/confirmedText"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/active"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/selection" />
+
+                <TextView
+                    android:id="@+id/active"
+                    style="@style/textStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/activeText"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/confirmed"
+                    app:layout_constraintTop_toBottomOf="@id/selection" />
+
+                <TextView
+                    android:id="@+id/totalConfirmed"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/chestnutRose"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/confirmed"
+                    tools:text="1000" />
+
+                <TextView
+                    android:id="@+id/totalActive"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/azureRadiance"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/active"
+                    app:layout_constraintTop_toBottomOf="@id/confirmed"
+                    tools:text="1000" />
+
+                <TextView
+                    android:id="@+id/recovered"
+                    style="@style/textStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/recoveredText"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/deceased"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalConfirmed" />
+
+                <TextView
+                    android:id="@+id/deceased"
+                    style="@style/textStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/deceasedText"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/recovered"
+                    app:layout_constraintTop_toBottomOf="@id/totalActive" />
+
+                <TextView
+                    android:id="@+id/totalRecovered"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/acapulco"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recovered"
+                    tools:text="1000" />
+
+                <TextView
+                    android:id="@+id/totalDeceased"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/shuttleGray"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@id/active"
+                    app:layout_constraintTop_toBottomOf="@id/deceased"
+                    tools:text="1000" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
