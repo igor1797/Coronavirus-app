@@ -15,6 +15,8 @@ import hr.dice.coronavirus.app.ui.base.NoInternetState
 import hr.dice.coronavirus.app.ui.base.Success
 import kotlinx.coroutines.flow.flow
 
+private const val UNITED_STATES_OF_AMERICA_COUNTRY_SLUG = "united-states"
+
 class CoronavirusRepository(
     private val coronavirusApiService: CoronavirusApiService
 ) : BaseRepository() {
@@ -23,10 +25,20 @@ class CoronavirusRepository(
 
     fun getDayOneAllStatusByCountry(country: String) = flow {
         emit(Loading)
-        makeNetworkRequest {
-            coronavirusApiService.getDayOneAllStatusByCountry(country)
+        if (country == UNITED_STATES_OF_AMERICA_COUNTRY_SLUG) {
+            makeNetworkRequest {
+                coronavirusApiService.getTotalStatusByCountry(country)
+            }
+        } else {
+            makeNetworkRequest {
+                coronavirusApiService.getDayOneAllStatusByCountry(country)
+            }
         }.onSuccess<List<OneCountryStatusResponse>> { list ->
-            emit(Success(mapListToCountryStatus(list)))
+            if (list.isEmpty() || list.size == 1) {
+                emit(Success(emptyList<CountryStatus>()))
+            } else {
+                emit(Success(mapListToCountryStatus(list)))
+            }
         }.onNoInternetConnection {
             emit(NoInternetState)
         }.onFailure { emit(Error(it)) }
