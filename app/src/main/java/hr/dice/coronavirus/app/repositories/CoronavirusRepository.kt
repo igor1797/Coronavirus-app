@@ -35,7 +35,7 @@ class CoronavirusRepository(
             }
         }.onSuccess<List<OneCountryStatusResponse>> { list ->
             if (list.isEmpty() || list.size == 1) {
-                emit(Success(emptyList<CountryStatus>()))
+                emit(Success(CountryStatus()))
             } else {
                 emit(Success(mapListToCountryStatus(list)))
             }
