@@ -28,23 +28,28 @@ class HomeViewModel(
     val coronaDataStatus: LiveData<ViewState> = useCase.switchMap { useCase ->
         liveData {
             when (useCase) {
-                is CountrySelected -> coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
-                WorldWide ->
+                is CountrySelected -> {
+                    coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
+                }
+                WorldWide -> {
                     coronavirusRepository.getGlobalStatusData()
                         .map {
                             it.onSuccess<GlobalStatus> { globalStatus ->
-                                globalStatus.countries = withContext(Dispatchers.IO) {
-                                    findTopThreeCountriesByConfirmedCases(globalStatus.countries)
-                                }
+                                globalStatus.setTopThreeCountriesByConfirmedCases(
+                                    withContext(Dispatchers.Default) {
+                                        findTopThreeCountriesByConfirmedCases(globalStatus.countries)
+                                    }
+                                )
                             }
                         }
+                }
             }.collect {
                 emit(it)
             }
         }
     }
 
-    fun setUseCase(useCase: UseCase) {
+    private fun setUseCase(useCase: UseCase) {
         _useCase.value = useCase
     }
 
