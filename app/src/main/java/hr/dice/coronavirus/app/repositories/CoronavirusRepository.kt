@@ -41,6 +41,6 @@ class CoronavirusRepository(
         val deceasedCases = Case(latestDate.deaths, latestDate.deaths - dayBeforeLatestDate.deaths)
         val casesStatus = CasesStatus(confirmedCases, activeCases, recoveredCases, deceasedCases)
         val datesStatus = list.map { it.mapToDomain() }.reversed()
-        return CountryStatus(latestDate.country, datesStatus, casesStatus, latestDate.date)
+        return CountryStatus(latestDate.country, datesStatus, casesStatus, latestDate.date, latestDate.lat.toDouble(), latestDate.lon.toDouble())
     }
 }

@@ -5,6 +5,13 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="casesStatus"
+            type="hr.dice.coronavirus.app.model.CasesStatus" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,6 +105,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/chestnutRose"
                     android:textSize="16sp"
+                    android:text="@{String.valueOf(casesStatus.confirmed.total)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/confirmed"
                     tools:text="1000" />
@@ -110,6 +118,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/azureRadiance"
                     android:textSize="16sp"
+                    android:text="@{String.valueOf(casesStatus.active.total)}"
                     app:layout_constraintStart_toStartOf="@id/active"
                     app:layout_constraintTop_toBottomOf="@id/confirmed"
                     tools:text="1000" />
@@ -150,6 +159,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/acapulco"
                     android:textSize="16sp"
+                    android:text="@{String.valueOf(casesStatus.recovered.total)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recovered"
                     tools:text="1000" />
@@ -162,6 +172,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/shuttleGray"
                     android:textSize="16sp"
+                    android:text="@{String.valueOf(casesStatus.deceased.total)}"
                     app:layout_constraintStart_toStartOf="@id/active"
                     app:layout_constraintTop_toBottomOf="@id/deceased"
                     tools:text="1000" />

@@ -4,6 +4,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
+import hr.dice.coronavirus.app.common.sharedGraphViewModel
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
@@ -15,19 +16,21 @@ import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.home.activity.MainActivity
 import hr.dice.coronavirus.app.ui.home.adapters.DateAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.StateAdapter
+import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel by viewModel<HomeViewModel>()
+    private val homeViewModel by sharedGraphViewModel<HomeViewModel>(R.id.home_container_graph)
+    private val homeContainerViewModel by lazy { requireParentFragment().requireParentFragment().getViewModel<HomeContainerViewModel>() }
     private val dateAdapter by lazy { DateAdapter() }
     private val stateAdapter by lazy { StateAdapter() }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
     override fun onPostViewCreated() {
-        binding.viewModel = viewModel
+        binding.viewModel = homeViewModel
         observe()
         setChangeSelectionOnClickLister()
     }
@@ -51,7 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun observe() {
-        with(viewModel) {
+        with(homeViewModel) {
             useCase.observe(viewLifecycleOwner) {
                 when (it) {
                     is CountrySelected -> {
@@ -70,6 +73,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 coronaDataStatus.observe(viewLifecycleOwner) { viewState ->
                     if (viewState is Success<*>) {
                         handleSuccess(it, viewState)
+                    } else {
+                        homeContainerViewModel.disableMapsItem()
                     }
                 }
             }
@@ -77,6 +82,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun handleSuccess(useCase: UseCase, successResponse: Success<*>) {
+        homeContainerViewModel.enableMapsItem()
         when (useCase) {
             is CountrySelected -> {
                 val countryStatus = successResponse.data as CountryStatus
@@ -95,7 +101,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
             }
         }
-        viewModel.getTimeAgo().observe(viewLifecycleOwner) {
+        homeViewModel.getTimeAgo().observe(viewLifecycleOwner) {
             binding.updated.text = getString(R.string.lastUpdatedText, it)
         }
     }

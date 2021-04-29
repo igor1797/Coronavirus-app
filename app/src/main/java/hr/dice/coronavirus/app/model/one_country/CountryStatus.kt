@@ -6,5 +6,7 @@ data class CountryStatus(
     val name: String,
     val datesStatus: List<DateStatus>,
     val casesStatus: CasesStatus,
-    val updated: String
+    val updated: String,
+    val lat: Double,
+    val long: Double,
 )
