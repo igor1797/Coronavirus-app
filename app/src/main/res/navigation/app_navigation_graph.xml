@@ -18,4 +18,5 @@
         android:id="@+id/homeContainerFragment"
         android:name="hr.dice.coronavirus.app.ui.home.fragments.container.HomeContainerFragment"
         android:label="HomeContainerFragment" />
+
 </navigation>
