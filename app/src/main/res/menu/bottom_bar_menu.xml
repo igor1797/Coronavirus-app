@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:title=""
+        android:icon="@drawable/coronavirus_item" />
+
+    <item
+        android:id="@+id/mapsFragment"
+        android:icon="@drawable/maps_item"
+        android:title="" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/news_item"
+        android:title="" />
+
+    <item
+        android:id="@+id/fourthFragment"
+        android:icon="@drawable/health_item"
+        android:title="" />
+
+</menu>
