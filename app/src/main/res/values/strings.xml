@@ -39,4 +39,7 @@
         </br>
     </string>
     <string name="loadingText">Loading</string>
+    <string name="positiveAlertButtonText">OK</string>
+    <string name="noDataFourCountryTitleText">No data</string>
+    <string name="noDataFourCountryMessageText">There are no data for selected country. Please select other country.</string>
 </resources>
