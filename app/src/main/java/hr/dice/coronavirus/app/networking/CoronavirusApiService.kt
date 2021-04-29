@@ -11,6 +11,9 @@ interface CoronavirusApiService {
     @GET("summary")
     suspend fun getGlobalData(): Response<GlobalResponse>
 
-    @GET("dayone/country/{$COUNTRY_PATH}")
-    suspend fun getDayOneAllStatusByCountry(@Path(COUNTRY_PATH) country: String): Response<List<OneCountryStatusResponse>>
+    @GET("dayone/country/{country}")
+    suspend fun getDayOneAllStatusByCountry(@Path("country") country: String): Response<List<OneCountryStatusResponse>>
+
+    @GET("total/country/{country}")
+    suspend fun getTotalStatusByCountry(@Path("country") country: String): Response<List<OneCountryStatusResponse>>
 }
