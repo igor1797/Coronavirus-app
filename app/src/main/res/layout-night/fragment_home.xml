@@ -49,23 +49,27 @@
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/worldwideText"
-                    android:textColor="@color/whiteWith82Opacity"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:layout_marginStart="18dp"
+                    android:textColor="@color/whiteWith82Opacity"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintEnd_toStartOf="@id/changeSelection"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/headerText" />
 
-                <ImageView
+                <View
                     android:id="@+id/changeSelection"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:padding="8dp"
-                    android:src="@drawable/arrow_drop_down"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/arrow_drop_down"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintEnd_toStartOf="@id/virusTwo"
                     app:layout_constraintBottom_toBottomOf="@id/selection"
-                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintStart_toEndOf="@id/selection"
                     app:layout_constraintTop_toTopOf="@id/selection" />
 

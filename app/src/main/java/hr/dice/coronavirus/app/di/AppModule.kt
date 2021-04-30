@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.di
 
+import hr.dice.coronavirus.app.BuildConfig
 import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.CountryApiService
@@ -10,8 +11,6 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private const val BASE_URL_COVID19_API = "https://api.covid19api.com/"
-private const val BASE_URL_NEWS_API = "http://api.mediastack.com/v1/"
 private const val COVID19 = "Covid19"
 private const val NEWS = "News"
 
@@ -27,11 +26,11 @@ val appModule = module {
     }
 
     single(named(COVID19)) {
-        provideRetrofitWithBaseUrl(BASE_URL_COVID19_API, get(), get())
+        provideRetrofitWithBaseUrl(BuildConfig.BASE_URL_COVID19_API, get(), get())
     }
 
     single(named(NEWS)) {
-        provideRetrofitWithBaseUrl(BASE_URL_NEWS_API, get(), get())
+        provideRetrofitWithBaseUrl(BuildConfig.BASE_URL_NEWS_API, get(), get())
     }
 
     single<CoronavirusApiService> {

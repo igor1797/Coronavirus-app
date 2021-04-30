@@ -12,7 +12,6 @@ buildscript {
         lottieVersion="3.7.0"
         datastoreVersion="1.0.0-beta01"
     }
-    ext.kotlin_version = "1.4.32"
     repositories {
         google()
         jcenter()
