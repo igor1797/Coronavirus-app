@@ -89,6 +89,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun handleCountrySelectedSuccess(countryStatus: CountryStatus) {
         if (countryStatus.datesStatus.isEmpty()) {
+            navigateToCountrySelection()
             showErrorDialog()
         } else {
             dateAdapter.setDates(countryStatus.datesStatus)
