@@ -1,5 +1,10 @@
 package hr.dice.coronavirus.app.common.utils
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 fun formatNumber(number: Int): String {
     return when {
         number < 9999 -> "$number"
@@ -8,12 +13,9 @@ fun formatNumber(number: Int): String {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(date: String): String {
-    val dateAndTimeParts = date.split('T')
-    val datePart = dateAndTimeParts.first()
-    val dateParts = datePart.split('-')
-    val year = dateParts.first()
-    val month = dateParts[1]
-    val day = dateParts.last()
-    return "$day.$month.$year"
+    val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
+    val localedDate = LocalDate.parse(date, formatter)
+    return "${localedDate.dayOfMonth}.${localedDate.monthValue}.${localedDate.year}"
 }

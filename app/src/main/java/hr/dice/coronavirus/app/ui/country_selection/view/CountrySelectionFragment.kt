@@ -51,6 +51,17 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             worldwideItem.setOnClickListener {
                 countrySelectionViewModel.saveUserSelection(WORLDWIDE)
             }
+            swipeRefresh.setOnRefreshListener {
+                refreshData()
+            }
+        }
+    }
+
+    private fun refreshData() {
+        with(binding) {
+            swipeRefresh.isRefreshing = true
+            countrySelectionViewModel.getCountryList()
+            swipeRefresh.isRefreshing = false
         }
     }
 

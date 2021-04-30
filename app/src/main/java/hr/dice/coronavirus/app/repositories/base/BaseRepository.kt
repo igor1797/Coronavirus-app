@@ -1,6 +1,5 @@
 package hr.dice.coronavirus.app.repositories.base
 
-import hr.dice.coronavirus.app.networking.GENERAL_NETWORK_ERROR
 import hr.dice.coronavirus.app.networking.base.DomainMapper
 import hr.dice.coronavirus.app.networking.base.FailureResponse
 import hr.dice.coronavirus.app.networking.base.HttpError
@@ -40,7 +39,7 @@ abstract class BaseRepository {
             if (response.isSuccessful) {
                 response.body()?.let {
                     SuccessResponse(it)
-                } ?: FailureResponse(HttpError(Throwable(GENERAL_NETWORK_ERROR)))
+                } ?: FailureResponse(HttpError(Throwable(response.message())))
             } else {
                 FailureResponse(HttpError(Throwable(response.message()), response.code()))
             }
