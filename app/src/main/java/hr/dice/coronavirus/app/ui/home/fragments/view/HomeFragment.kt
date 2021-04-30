@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -78,25 +79,43 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun handleSuccess(useCase: UseCase, successResponse: Success<*>) {
         when (useCase) {
-            is CountrySelected -> {
-                val countryStatus = successResponse.data as CountryStatus
-                dateAdapter.setDates(countryStatus.datesStatus)
-                with(binding) {
-                    casesStatus = countryStatus.casesStatus
-                    selection.text = countryStatus.name
-                }
-            }
-            WorldWide -> {
-                val globalStatus = successResponse.data as GlobalStatus
-                stateAdapter.setTopThreeStatesByConfirmedCases(globalStatus.countries)
-                with(binding) {
-                    casesStatus = globalStatus.casesStatus
-                    selection.text = getText(R.string.worldwideText)
-                }
-            }
+            is CountrySelected -> handleCountrySelectedSuccess(successResponse.data as CountryStatus)
+            WorldWide -> handleWorldwideSelectedSuccess(successResponse.data as GlobalStatus)
         }
         viewModel.getTimeAgo().observe(viewLifecycleOwner) {
             binding.updated.text = getString(R.string.lastUpdatedText, it)
+        }
+    }
+
+    private fun handleCountrySelectedSuccess(countryStatus: CountryStatus) {
+        if (countryStatus.datesStatus.isEmpty()) {
+            navigateToCountrySelection()
+            showErrorDialog()
+        } else {
+            dateAdapter.setDates(countryStatus.datesStatus)
+            with(binding) {
+                casesStatus = countryStatus.casesStatus
+                selection.text = countryStatus.name
+            }
+        }
+    }
+
+    private fun handleWorldwideSelectedSuccess(globalStatus: GlobalStatus) {
+        stateAdapter.setTopThreeStatesByConfirmedCases(globalStatus.topThreeCountriesByConfirmedCases)
+        with(binding) {
+            casesStatus = globalStatus.casesStatus
+            selection.text = getText(R.string.worldwideText)
+        }
+    }
+
+    private fun showErrorDialog() {
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle(R.string.noDataFourCountryTitleText)
+                .setIcon(R.drawable.error)
+                .setMessage(R.string.noDataFourCountryMessageText)
+                .setPositiveButton(R.string.positiveAlertButtonText) { dialog, _ -> dialog.dismiss() }
+                .show()
         }
     }
 }

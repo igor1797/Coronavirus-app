@@ -56,9 +56,11 @@ class HomeViewModel(
                     coronavirusRepository.getGlobalStatusData()
                         .map {
                             it.onSuccess<GlobalStatus> { globalStatus ->
-                                globalStatus.countries = withContext(Dispatchers.Default) {
-                                    findTopThreeCountriesByConfirmedCases(globalStatus.countries)
-                                }
+                                globalStatus.setTopThreeCountriesByConfirmedCases(
+                                    withContext(Dispatchers.Default) {
+                                        findTopThreeCountriesByConfirmedCases(globalStatus.countries)
+                                    }
+                                )
                             }
                         }
                 }
@@ -107,9 +109,8 @@ class HomeViewModel(
                     thirdCountryWithHighestConfirmedCases = secondCountryWithHighestConfirmedCases
                     secondCountryWithHighestConfirmedCases = country
                 }
-                country.confirmedCases > thirdCountryWithHighestConfirmedCases.confirmedCases -> {
+                country.confirmedCases > thirdCountryWithHighestConfirmedCases.confirmedCases ->
                     thirdCountryWithHighestConfirmedCases = country
-                }
             }
         }
         topThreeCountriesByConfirmedCases.apply {
