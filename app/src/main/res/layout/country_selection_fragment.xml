@@ -165,23 +165,32 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <include
             android:id="@+id/loading"
             app:loadingState="@{viewModel.countryList}"
             layout="@layout/loading_view"
             android:visibility="gone" />
 
-        <include
-            android:id="@+id/noInternetConnection"
-            app:noInternetConnectionState="@{viewModel.countryList}"
-            layout="@layout/no_internet_connection_view"
-            android:visibility="gone" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.swipeRefreshIsVisible}">
 
-        <include
-            android:id="@+id/error"
-            app:errorState="@{viewModel.countryList}"
-            layout="@layout/error_view"
-            android:visibility="gone" />
+            <include
+                android:id="@+id/noInternetConnection"
+                app:noInternetConnectionState="@{viewModel.countryList}"
+                layout="@layout/no_internet_connection_view"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/error"
+                app:errorState="@{viewModel.countryList}"
+                layout="@layout/error_view"
+                android:visibility="gone" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
