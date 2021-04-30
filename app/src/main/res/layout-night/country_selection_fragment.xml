@@ -171,17 +171,25 @@
             android:visibility="gone"
             app:loadingState="@{viewModel.countryList}" />
 
-        <include
-            android:id="@+id/noInternetConnection"
-            layout="@layout/no_internet_connection_view"
-            android:visibility="gone"
-            app:noInternetConnectionState="@{viewModel.countryList}" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isVisible="@{viewModel.swipeRefreshIsVisible}">
 
-        <include
-            android:id="@+id/error"
-            layout="@layout/error_view"
-            android:visibility="gone"
-            app:errorState="@{viewModel.countryList}" />
+            <include
+                android:id="@+id/noInternetConnection"
+                layout="@layout/no_internet_connection_view"
+                android:visibility="gone"
+                app:noInternetConnectionState="@{viewModel.countryList}" />
+
+            <include
+                android:id="@+id/error"
+                layout="@layout/error_view"
+                android:visibility="gone"
+                app:errorState="@{viewModel.countryList}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
