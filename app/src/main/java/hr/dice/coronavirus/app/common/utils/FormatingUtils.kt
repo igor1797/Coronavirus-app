@@ -1,7 +1,5 @@
 package hr.dice.coronavirus.app.common.utils
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -13,7 +11,6 @@ fun formatNumber(number: Int): String {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(date: String): String {
     val formatter = DateTimeFormatter.ISO_ZONED_DATE_TIME
     val localedDate = LocalDate.parse(date, formatter)
