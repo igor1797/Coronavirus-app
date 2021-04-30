@@ -1,6 +1,7 @@
 package hr.dice.coronavirus.app.ui.maps
 
 import android.content.Intent
+import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import com.google.android.libraries.maps.CameraUpdateFactory
@@ -9,6 +10,7 @@ import com.google.android.libraries.maps.OnMapReadyCallback
 import com.google.android.libraries.maps.SupportMapFragment
 import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.MarkerOptions
+import com.google.android.material.snackbar.Snackbar
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.sharedGraphViewModel
 import hr.dice.coronavirus.app.databinding.FragmentMapsBinding
@@ -76,25 +78,55 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>() {
             casesStatus = countryStatus.casesStatus
             selection.text = countryStatus.name
         }
-        val location = geocoder.getFromLocationName(countryStatus.name, 1)
-        addCountryMarkerOnMap(location[0].latitude, location[0].longitude)
-        moveCameraOnMapToCountryLatLng(location[0].latitude, location[0].longitude)
+        val location = getFromLocationName(countryStatus.name)
+        location?.let {
+            addCountryMarkerOnMap(location[0].latitude, location[0].longitude)
+            moveCameraOnMapToCountryLatLng(location[0].latitude, location[0].longitude)
+        } ?: showErrorSnackbar()
+    }
+
+    private fun getFromLocationName(name: String): List<Address>? {
+        return try {
+            geocoder.getFromLocationName(name, 1)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private fun getFromLocation(lat: Double, lng: Double): List<Address>? {
+        return try {
+            geocoder.getFromLocation(lat, lng, 1)
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private fun handleWorldWideSelected() {
-        binding.mapsHeader.text = getText(R.string.statisticsWorldwideText)
+        setHeaderTextToStatisticsByWordwide()
         map.setOnMarkerClickListener { marker ->
+            setHeaderTextToStatisticsByCountry()
             mapsViewModel.changeUserSelection(marker.tag as String)
             false
         }
         map.setOnMapClickListener { latLng ->
-            val location = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-            mapsViewModel.findIfCountryIsInTopThreeCountries(location[0].countryName)
+            setHeaderTextToStatisticsByWordwide()
+            val location = getFromLocation(latLng.latitude, latLng.longitude)
+            location?.let {
+                mapsViewModel.findIfCountryIsInTopThreeCountries(location[0].countryName)
+            } ?: showErrorSnackbar()
         }
-        mapsViewModel.selectedCountryOrWorldwide.observe(viewLifecycleOwner) {
+        mapsViewModel.mapsStatisticsData.observe(viewLifecycleOwner) {
             binding.casesStatus = it.casesStatus
             binding.selection.text = it.name
         }
+    }
+
+    private fun setHeaderTextToStatisticsByCountry() {
+        binding.mapsHeader.text = getText(R.string.statisticsByCountryText)
+    }
+
+    private fun setHeaderTextToStatisticsByWordwide() {
+        binding.mapsHeader.text = getText(R.string.statisticsWorldwideText)
     }
 
     private fun handleWorldWideSuccess(globalStatus: GlobalStatus) {
@@ -103,20 +135,27 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>() {
             selection.text = getText(R.string.worldwideText)
         }
         mapsViewModel.apply {
-            setTopThreeCountriesByConfirmedStates(globalStatus.countries)
+            setTopThreeCountriesByConfirmedStates(globalStatus.topThreeCountriesByConfirmedCases)
             setWorldwideGlobalStatus(globalStatus)
         }
 
-        globalStatus.countries.forEach { globalCountry ->
-            val location = geocoder.getFromLocationName(globalCountry.name, 1)
-            addGlobalCountryMarkerOnMap(
-                globalCountry.name,
+        globalStatus.topThreeCountriesByConfirmedCases.forEach { globalCountry ->
+            val location = getFromLocationName(globalCountry.name)
+            location?.let {
+                addGlobalCountryMarkerOnMap(
+                    globalCountry.name,
+                    location[0].latitude,
+                    location[0].longitude
+                )
+            } ?: showErrorSnackbar()
+        }
+        val location = getFromLocationName(globalStatus.topThreeCountriesByConfirmedCases.first().name)
+        location?.let {
+            moveCameraOnMapToCountryLatLongAndZoomOutWorld(
                 location[0].latitude,
                 location[0].longitude
             )
-        }
-        val location = geocoder.getFromLocationName(globalStatus.countries.first().name, 1)
-        moveCameraOnMapToCountryLatLongAndZoomOutWorld(location[0].latitude, location[0].longitude)
+        } ?: showErrorSnackbar()
     }
 
     private fun addCountryMarkerOnMap(lat: Double, long: Double) {
@@ -139,6 +178,10 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>() {
     private fun moveCameraOnMapToCountryLatLongAndZoomOutWorld(lat: Double, long: Double) {
         val country = LatLng(lat, long)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(country, 1F))
+    }
+
+    private fun showErrorSnackbar() {
+        Snackbar.make(binding.root, getText(R.string.markerErrorMessage), Snackbar.LENGTH_SHORT).show()
     }
 
     private fun openGoogleMapsWithTurnByTurnLocation(country: LatLng) {

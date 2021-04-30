@@ -1,7 +1,7 @@
 package hr.dice.coronavirus.app.di
 
-import hr.dice.coronavirus.app.BuildConfig
 import android.location.Geocoder
+import hr.dice.coronavirus.app.BuildConfig
 import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.CountryApiService

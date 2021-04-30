@@ -20,7 +20,7 @@ class MapsViewModel : ViewModel() {
 
     private val _userSelection = MutableLiveData<String>()
 
-    val selectedCountryOrWorldwide = _userSelection.switchMap { userSelection ->
+    val mapsStatisticsData = _userSelection.switchMap { userSelection ->
         liveData {
             if (userSelection == WORLDWIDE) {
                 worldwide?.let {

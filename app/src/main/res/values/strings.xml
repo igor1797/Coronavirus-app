@@ -46,4 +46,5 @@
     <string name="worldWideEmoji">🌏</string>
     <string name="noResultsText">No results found!</string>
     <string name="map_id">d7eaa32f14840c45</string>
+    <string name="markerErrorMessage">Something went wrong on adding markers on map</string>
 </resources>
