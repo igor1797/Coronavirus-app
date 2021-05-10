@@ -34,15 +34,7 @@ class HomeViewModel(
     val useCase: LiveData<UseCase> get() = _useCase
 
     init {
-        viewModelScope.launch {
-            countryRepository.getUserSelection().collect { userSelection ->
-                if (userSelection.isEmpty() || userSelection == WORLDWIDE) {
-                    setUseCase(WorldWide)
-                } else {
-                    setUseCase(CountrySelected(userSelection))
-                }
-            }
-        }
+       getStatisticsData()
     }
 
     val coronaDataStatus: LiveData<ViewState> = useCase.switchMap { useCase ->
@@ -66,6 +58,18 @@ class HomeViewModel(
                 }
             }.collect {
                 emit(it)
+            }
+        }
+    }
+
+    fun getStatisticsData(){
+        viewModelScope.launch {
+            countryRepository.getUserSelection().collect { userSelection ->
+                if (userSelection.isEmpty() || userSelection == WORLDWIDE) {
+                    setUseCase(WorldWide)
+                } else {
+                    setUseCase(CountrySelected(userSelection))
+                }
             }
         }
     }

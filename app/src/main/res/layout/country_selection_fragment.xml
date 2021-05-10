@@ -17,9 +17,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/success"
-            app:successState="@{viewModel.countryList}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:successState="@{viewModel.countryList}">
 
             <ImageView
                 android:id="@+id/backButton"
@@ -60,8 +60,8 @@
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/search_view_background"
                 android:backgroundTint="@color/athensGray"
-                android:padding="14dp"
                 android:orientation="horizontal"
+                android:padding="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/countrySelectionHeader">
@@ -71,25 +71,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/search"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/searchQueryInput"
+                    style="@style/textStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    style="@style/textStyle"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:hint="@string/searchHint"
-                    android:textColorHint="@color/regentGray"
+                    android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="@string/searchHint"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/regentGray"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/searchIcon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="10dp"/>
+                    app:layout_constraintStart_toEndOf="@id/searchIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,46 +151,37 @@
 
             <TextView
                 android:id="@+id/noResultsFound"
+                style="@style/textStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/textStyle"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="@string/noResultsText"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@id/divider"
+                android:text="@string/noResultsText"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <include
             android:id="@+id/loading"
-            app:loadingState="@{viewModel.countryList}"
             layout="@layout/loading_view"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:loadingState="@{viewModel.countryList}" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:isVisible="@{viewModel.swipeRefreshIsVisible}">
+        <include
+            android:id="@+id/noInternetConnection"
+            layout="@layout/no_internet_connection_view"
+            android:visibility="gone"
+            app:noInternetConnectionState="@{viewModel.countryList}" />
 
-            <include
-                android:id="@+id/noInternetConnection"
-                app:noInternetConnectionState="@{viewModel.countryList}"
-                layout="@layout/no_internet_connection_view"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/error"
-                app:errorState="@{viewModel.countryList}"
-                layout="@layout/error_view"
-                android:visibility="gone" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <include
+            android:id="@+id/error"
+            layout="@layout/error_view"
+            android:visibility="gone"
+            app:errorState="@{viewModel.countryList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

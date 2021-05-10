@@ -51,18 +51,17 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             worldwideItem.setOnClickListener {
                 countrySelectionViewModel.saveUserSelection(WORLDWIDE)
             }
-            swipeRefresh.setOnRefreshListener {
-                refreshData()
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchCountriesData()
+            }
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchCountriesData()
             }
         }
     }
 
-    private fun refreshData() {
-        with(binding) {
-            swipeRefresh.isRefreshing = true
-            countrySelectionViewModel.getCountryList()
-            swipeRefresh.isRefreshing = false
-        }
+    private fun tryAgainToFetchCountriesData() {
+        countrySelectionViewModel.getCountryList()
     }
 
     private fun observe() {

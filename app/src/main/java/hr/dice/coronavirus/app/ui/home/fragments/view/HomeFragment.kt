@@ -33,13 +33,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onPostViewCreated() {
         binding.viewModel = homeViewModel
         observe()
-        setChangeSelectionOnClickLister()
+        initListeners()
     }
 
-    private fun setChangeSelectionOnClickLister() {
-        binding.changeSelection.setOnClickListener {
-            navigateToCountrySelection()
+    private fun initListeners() {
+        with(binding){
+            changeSelection.setOnClickListener {
+                navigateToCountrySelection()
+            }
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
         }
+    }
+
+    private fun tryAgainToFetchStatisticsData(){
+        homeViewModel.getStatisticsData()
     }
 
     private fun navigateToCountrySelection() {

@@ -28,6 +28,22 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
         binding.viewModel = latestNewsViewModel
         observe()
         setupRecycler()
+        initListeners()
+    }
+
+    private fun initListeners(){
+        with(binding){
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchLatestNewsData()
+            }
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchLatestNewsData()
+            }
+        }
+    }
+
+    private fun tryAgainToFetchLatestNewsData(){
+        latestNewsViewModel.getLatestNewsData()
     }
 
     private fun setupRecycler() {
