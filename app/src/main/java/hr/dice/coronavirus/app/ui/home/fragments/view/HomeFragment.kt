@@ -16,10 +16,11 @@ import hr.dice.coronavirus.app.ui.home.adapters.CountryStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.DateStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModel<HomeViewModel>{ parametersOf(WorldWide) }
     private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
     private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
 
