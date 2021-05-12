@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter
 fun formatNumber(number: Int): String {
     return when {
         number < 9999 -> "$number"
-        number < 999999 -> "${("%.2f".format(number / 1000.0))}K"
-        else -> "${("%.2f".format(number / 1000000.0))}M"
+        number < 999999 -> "${("%.1f".format(number / 1000.0))}K"
+        else -> "${("%.1f".format(number / 1000000.0))}M"
     }
 }
 

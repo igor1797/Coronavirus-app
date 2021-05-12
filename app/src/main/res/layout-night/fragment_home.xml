@@ -13,6 +13,7 @@
         <variable
             name="viewModel"
             type="hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,54 +31,16 @@
                 android:layout_height="wrap_content"
                 tools:context=".ui.home.fragments.view.HomeFragment">
 
-                <View
-                    android:id="@+id/headerBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="340dp"
-                    android:background="@color/mirage"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/virusOne"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/virus_light_mode"
-                    app:layout_constraintTop_toBottomOf="@id/updated"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:translationX="-45dp"
-                    android:layout_marginTop="20dp"
-                    android:alpha="0.8"/>
-
-                <View
-                    android:id="@+id/virusTwo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/virus_light_mode"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:translationX="30dp"
-                    android:layout_marginTop="24dp"
-                    android:alpha="0.8"/>
-
-                <View
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/virus_light_mode"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/virusOne"
-                    app:layout_constraintTop_toTopOf="@id/virusOne"
-                    android:alpha="0.8"/>
-
                 <TextView
                     android:id="@+id/headerText"
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
                     android:layout_marginTop="40dp"
                     android:text="@string/covid19TrackerText"
-                    android:textColor="@color/white"
+                    android:textColor="@color/whiteWith48Opacity"
                     android:textSize="14sp"
+                    android:layout_marginStart="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,9 +52,9 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="32dp"
                     android:text="@string/worldwideText"
-                    android:textColor="@color/white"
                     android:textSize="32sp"
                     android:textStyle="bold"
+                    android:textColor="@color/whiteWith82Opacity"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintHorizontal_chainStyle="packed"
@@ -115,21 +78,52 @@
                     style="@style/textStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
                     android:alpha="0.65"
                     android:text="@string/lastUpdatedText"
-                    android:textColor="@color/heather"
+                    android:textColor="@color/whiteWith48Opacity"
                     android:textSize="14sp"
+                    android:layout_marginStart="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/selection" />
+
+                <View
+                    android:id="@+id/virusOne"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/virus_dark_mode"
+                    app:layout_constraintTop_toBottomOf="@id/updated"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:translationX="-45dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.8"/>
+
+                <View
+                    android:id="@+id/virusTwo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/virus_dark_mode"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:translationX="30dp"
+                    android:layout_marginTop="24dp"
+                    android:alpha="0.8"/>
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/virus_dark_mode"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/virusOne"
+                    app:layout_constraintTop_toTopOf="@id/virusOne"
+                    android:alpha="0.8"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/dashboard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:layout_marginStart="18dp"
                     android:layout_marginEnd="18dp"
-                    android:layout_marginTop="40dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/updated">
@@ -139,6 +133,8 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
                         app:contentPaddingBottom="16dp"
                         app:contentPaddingLeft="16dp"
                         app:contentPaddingRight="16dp"
@@ -160,6 +156,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/confirmedText"
                                 android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -185,6 +182,7 @@
                                 app:layout_constraintBottom_toBottomOf="@id/newConfirmed"
                                 app:layout_constraintEnd_toStartOf="@id/newConfirmed"
                                 app:layout_constraintTop_toTopOf="@id/newConfirmed"
+                                app:tint="@color/chestnutRose"
                                 app:visibilityByNumber="@{casesStatus.confirmed.increasing()}" />
 
                             <TextView
@@ -201,17 +199,18 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:visibilityByNumber="@{casesStatus.confirmed.increasing()}" />
 
-                            <View
+                            <ImageView
                                 android:id="@+id/confirmedCasesGraph"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginTop="12dp"
-                                android:background="@drawable/graph"
+                                android:src="@drawable/graph"
                                 app:graphDirectionByNumber="@{casesStatus.confirmed.increasing()}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/totalConfirmed" />
+                                app:layout_constraintTop_toBottomOf="@id/totalConfirmed"
+                                app:tint="@color/chestnutRose" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -221,8 +220,8 @@
                         android:id="@+id/activeCard"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
                         app:contentPaddingBottom="16dp"
                         app:contentPaddingLeft="16dp"
                         app:contentPaddingRight="16dp"
@@ -244,6 +243,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/activeText"
                                 android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -287,18 +287,18 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:visibilityByNumber="@{casesStatus.active.increasing()}" />
 
-                            <View
+                            <ImageView
                                 android:id="@+id/activeCasesGraph"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginTop="12dp"
-                                android:background="@drawable/graph"
-                                android:backgroundTint="@color/azureRadiance"
+                                android:src="@drawable/graph"
                                 app:graphDirectionByNumber="@{casesStatus.active.increasing()}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/totalActive" />
+                                app:layout_constraintTop_toBottomOf="@id/totalActive"
+                                app:tint="@color/azureRadiance" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -310,6 +310,7 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
                         app:contentPaddingBottom="16dp"
                         app:contentPaddingLeft="16dp"
                         app:contentPaddingRight="16dp"
@@ -331,6 +332,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/recoveredText"
                                 android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -373,18 +375,18 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:visibilityByNumber="@{casesStatus.recovered.increasing()}" />
 
-                            <View
+                            <ImageView
                                 android:id="@+id/recoveredCasesGraph"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginTop="12dp"
-                                android:background="@drawable/graph"
-                                android:backgroundTint="@color/acapulco"
+                                android:src="@drawable/graph"
                                 app:graphDirectionByNumber="@{casesStatus.recovered.increasing()}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/totalRecovered" />
+                                app:layout_constraintTop_toBottomOf="@id/totalRecovered"
+                                app:tint="@color/acapulco" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -396,6 +398,7 @@
                         android:layout_height="0dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
                         app:contentPaddingBottom="16dp"
                         app:contentPaddingLeft="16dp"
                         app:contentPaddingRight="16dp"
@@ -416,6 +419,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/deceasedText"
                                 android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -441,7 +445,7 @@
                                 app:layout_constraintBottom_toBottomOf="@id/newDeceased"
                                 app:layout_constraintEnd_toStartOf="@id/newDeceased"
                                 app:layout_constraintTop_toTopOf="@id/newDeceased"
-                                app:tint="@color/regentGrayWithOpacity"
+                                app:tint="@color/regentGray"
                                 app:visibilityByNumber="@{casesStatus.deceased.increasing()}" />
 
                             <TextView
@@ -458,18 +462,18 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:visibilityByNumber="@{casesStatus.deceased.increasing()}" />
 
-                            <View
+                            <ImageView
                                 android:id="@+id/deceasedCasesGraph"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginTop="12dp"
-                                android:background="@drawable/graph"
-                                android:backgroundTint="@color/regentGrayWithOpacity"
+                                android:src="@drawable/graph"
                                 app:graphDirectionByNumber="@{casesStatus.deceased.increasing()}"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/totalDeceased" />
+                                app:layout_constraintTop_toBottomOf="@id/totalDeceased"
+                                app:tint="@color/regentGrayWithOpacity" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -481,11 +485,10 @@
                     android:id="@+id/dateOrStateHeader"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="18dp"
                     android:orientation="horizontal"
                     android:weightSum="6"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dashboard">
@@ -497,7 +500,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/catskillWhiteWithOpacity"
+                        android:backgroundTint="@color/shuttleGray"
                         android:padding="8dp"
                         android:textColor="@color/cloudBurst"
                         android:textSize="14sp"
@@ -511,10 +514,10 @@
                         android:layout_marginStart="2dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/catskillWhiteWithOpacity"
+                        android:backgroundTint="@color/shuttleGray"
                         android:padding="8dp"
                         android:text="@string/cText"
-                        android:textColor="@color/chestnutRose"
+                        android:textColor="@color/turkishRose"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -526,7 +529,7 @@
                         android:layout_marginStart="2dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/catskillWhiteWithOpacity"
+                        android:backgroundTint="@color/shuttleGray"
                         android:padding="8dp"
                         android:text="@string/aText"
                         android:textColor="@color/azureRadiance"
@@ -541,7 +544,7 @@
                         android:layout_marginStart="2dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/catskillWhiteWithOpacity"
+                        android:backgroundTint="@color/shuttleGray"
                         android:padding="8dp"
                         android:text="@string/rText"
                         android:textColor="@color/acapulco"
@@ -556,10 +559,10 @@
                         android:layout_marginStart="2dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_background"
-                        android:backgroundTint="@color/catskillWhiteWithOpacity"
+                        android:backgroundTint="@color/shuttleGray"
                         android:padding="8dp"
                         android:text="@string/dText"
-                        android:textColor="@color/shuttleGray"
+                        android:textColor="@color/whiteWith48Opacity"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -571,6 +574,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:layout_marginEnd="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/dateOrStateHeader"
@@ -578,7 +582,6 @@
                     tools:listitem="@layout/date_or_state_item" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </ScrollView>
 
         <include
