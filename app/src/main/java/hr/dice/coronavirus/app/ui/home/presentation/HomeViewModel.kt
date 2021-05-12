@@ -1,9 +1,8 @@
-package hr.dice.coronavirus.app.ui.home.fragments.presentation
+package hr.dice.coronavirus.app.ui.home.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.model.global.GlobalCountry
 import hr.dice.coronavirus.app.model.global.GlobalStatus
@@ -14,7 +13,6 @@ import hr.dice.coronavirus.app.ui.base.ViewState
 import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -24,8 +22,6 @@ class HomeViewModel(
     private val coronavirusRepository: CoronavirusRepository,
     initialUseCase: UseCase
 ) : ViewModel() {
-
-    private var timeAgo = 0
 
     private val _useCase = MutableStateFlow(initialUseCase)
     val useCase: LiveData<UseCase> get() = _useCase.asLiveData(viewModelScope.coroutineContext)
@@ -49,25 +45,6 @@ class HomeViewModel(
             }
         }
     }.asLiveData(viewModelScope.coroutineContext)
-
-    fun getTimeAgo() = liveData {
-        while (true) {
-            timeAgo++
-            val time = when (timeAgo) {
-                in 0..59 -> {
-                    "now"
-                }
-                in ONE_MINUTE_IN_SECONDS..ONE_HOUR_IN_SECONDS -> {
-                    "${timeAgo / ONE_MINUTE_IN_SECONDS}m ago"
-                }
-                else -> {
-                    "${timeAgo / ONE_HOUR_IN_SECONDS}h ago"
-                }
-            }
-            emit(time)
-            delay(ONE_SECOND_IN_MILISECONDS)
-        }
-    }
 
     private fun setUseCase(useCase: UseCase) {
         _useCase.value = useCase
@@ -99,11 +76,5 @@ class HomeViewModel(
             add(thirdCountryWithHighestConfirmedCases)
         }
         return topThreeCountriesByConfirmedCases
-    }
-
-    companion object {
-        private const val ONE_MINUTE_IN_SECONDS = 60
-        private const val ONE_HOUR_IN_SECONDS = 3600
-        private const val ONE_SECOND_IN_MILISECONDS = 1000L
     }
 }

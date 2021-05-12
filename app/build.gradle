@@ -24,6 +24,7 @@ android {
     buildFeatures{
         dataBinding true
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -40,7 +41,6 @@ android {
         }
         production {
             dimension "version"
-            versionNameSuffix ".prod"
             buildConfigField("String", "BASE_URL_COVID19_API", "\"https://api.covid19api.com/\"")
             buildConfigField("String", "BASE_URL_NEWS_API", "\"http://api.mediastack.com/v1/\"")
         }

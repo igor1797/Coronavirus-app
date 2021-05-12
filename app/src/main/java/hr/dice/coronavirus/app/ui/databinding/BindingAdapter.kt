@@ -14,75 +14,75 @@ object BindingAdapter {
 
     @BindingAdapter("app:errorState")
     @JvmStatic
-    fun setUiStateForError(view: View, viewState: ViewState?) {
+    fun View.setUiStateForError(viewState: ViewState?) {
         when (viewState) {
-            is Error -> view.visible()
-            else -> view.gone()
+            is Error -> visible()
+            else -> gone()
         }
     }
 
     @BindingAdapter("app:successState")
     @JvmStatic
-    fun setUiStateForSuccess(view: View, viewState: ViewState?) {
+    fun View.setUiStateForSuccess(viewState: ViewState?) {
         when (viewState) {
-            is Success<*> -> view.visible()
-            else -> view.gone()
+            is Success<*> -> visible()
+            else -> gone()
         }
     }
 
     @BindingAdapter("app:loadingState")
     @JvmStatic
-    fun setUiStateForLoading(view: View, viewState: ViewState?) {
+    fun View.setUiStateForLoading(viewState: ViewState?) {
         when (viewState) {
-            is Loading -> view.visible()
-            else -> view.gone()
+            is Loading -> visible()
+            else -> gone()
         }
     }
 
     @BindingAdapter("app:noInternetConnectionState")
     @JvmStatic
-    fun setUiStateForNoInternetConnection(view: View, viewState: ViewState?) {
+    fun View.setUiStateForNoInternetConnection(viewState: ViewState?) {
         when (viewState) {
-            is NoInternetState -> view.visible()
-            else -> view.gone()
+            is NoInternetState -> visible()
+            else -> gone()
         }
     }
 
     @BindingAdapter("app:visibilityByNumber")
     @JvmStatic
-    fun setVisibilityByNumber(view: View, increasing: Int) {
+    fun View.setVisibilityByNumber(increasing: Int) {
         when (increasing) {
             -1 -> {
-                view.visible()
+                visible()
             }
             0 -> {
-                view.gone()
+                gone()
             }
             1 -> {
-                view.visible()
+                visible()
             }
         }
     }
 
     @BindingAdapter("app:graphDirectionByNumber")
     @JvmStatic
-    fun setGraphDirectionByNumber(view: View, increasing: Int) {
+    fun View.setGraphDirectionByNumber(increasing: Int) {
         when (increasing) {
             -1 -> {
-                view.rotation = 40F
+                rotation = 40F
             }
             0 -> {
-                view.rotation = 20F
+                rotation = 20F
             }
             1 -> {
-                view.rotation = 0F
+                rotation = 0F
             }
         }
     }
 
     @BindingAdapter("app:arrowDirectionByNumber")
     @JvmStatic
-    fun setArrowDirectionByNumber(view: View, increasing: Int) {
-        if (increasing == -1) view.rotation = 180F
+    fun View.setArrowDirectionByNumber(increasing: Int) {
+        if (increasing == -1) rotation = 180F
     }
 }
