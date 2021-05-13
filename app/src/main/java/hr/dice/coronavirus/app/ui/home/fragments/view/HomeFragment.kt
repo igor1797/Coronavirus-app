@@ -8,6 +8,7 @@ import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.Success
