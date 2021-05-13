@@ -1,10 +1,9 @@
 package hr.dice.coronavirus.app.ui.home.fragments.presentation
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.common.WORLDWIDE
 import hr.dice.coronavirus.app.model.global.GlobalCountry
@@ -18,49 +17,47 @@ import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val coronavirusRepository: CoronavirusRepository,
+    initialUseCase: UseCase,
     private val countryRepository: CountryRepository
 ) : ViewModel() {
 
-    private var timeAgo: Int = 0
+    private var timeAgo = 0
 
-    private val _useCase = MutableLiveData<UseCase>()
-    val useCase: LiveData<UseCase> get() = _useCase
+    private val _useCase = MutableStateFlow(initialUseCase)
+    val useCase: LiveData<UseCase> get() = _useCase.asLiveData(viewModelScope.coroutineContext)
 
     init {
        getStatisticsData()
     }
 
-    val coronaDataStatus: LiveData<ViewState> = useCase.switchMap { useCase ->
-        liveData {
-            timeAgo = 0
-            when (useCase) {
-                is CountrySelected -> {
-                    coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
-                }
-                WorldWide -> {
-                    coronavirusRepository.getGlobalStatusData()
-                        .map {
-                            it.onSuccess<GlobalStatus> { globalStatus ->
-                                globalStatus.setTopThreeCountriesByConfirmedCases(
-                                    withContext(Dispatchers.Default) {
-                                        findTopThreeCountriesByConfirmedCases(globalStatus.countries)
-                                    }
-                                )
-                            }
+    val coronaDataStatus: LiveData<ViewState> = _useCase.flatMapLatest { useCase ->
+        when (useCase) {
+            is CountrySelected -> {
+                coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
+            }
+            WorldWide -> {
+                coronavirusRepository.getGlobalStatusData()
+                    .map {
+                        it.onSuccess<GlobalStatus> { globalStatus ->
+                            globalStatus.setTopThreeCountriesByConfirmedCases(
+                                withContext(Dispatchers.Default) {
+                                    findTopThreeCountriesByConfirmedCases(globalStatus.countries)
+                                }
+                            )
                         }
-                }
-            }.collect {
-                emit(it)
+                    }
             }
         }
-    }
+    }.asLiveData(viewModelScope.coroutineContext)
 
     fun getStatisticsData(){
         viewModelScope.launch {

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.FragmentLatestNewsBinding
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
-import hr.dice.coronavirus.app.ui.home.activity.MainActivity
 import hr.dice.coronavirus.app.ui.home.fragments.container.HomeContainerFragmentDirections
 import hr.dice.coronavirus.app.ui.latest_news_list.adapter.NewsAdapter
 import hr.dice.coronavirus.app.ui.latest_news_list.adapter.PaginationListener

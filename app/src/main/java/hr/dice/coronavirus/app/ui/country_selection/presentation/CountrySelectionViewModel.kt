@@ -44,10 +44,10 @@ class CountrySelectionViewModel(
     }
 
     init {
-        getCountryList()
+        getCountryListData()
     }
 
-    fun getCountryList() {
+    fun getCountryListData() {
         viewModelScope.launch {
             countryRepository.getCountryList().collect {
                 _countryList.postValue(it)

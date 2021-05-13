@@ -2,6 +2,8 @@ package hr.dice.coronavirus.app.ui.home.adapters
 
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.utils.formatDate
@@ -10,15 +12,7 @@ import hr.dice.coronavirus.app.databinding.DateOrStateItemBinding
 import hr.dice.coronavirus.app.model.one_country.DateStatus
 import android.view.LayoutInflater as LayoutInflater
 
-class DateAdapter : RecyclerView.Adapter<DateAdapter.DateHolder>() {
-
-    private val dates = arrayListOf<DateStatus>()
-
-    fun setDates(dates: List<DateStatus>) {
-        this.dates.clear()
-        this.dates.addAll(dates)
-        notifyDataSetChanged()
-    }
+class DateStatusListAdapter : ListAdapter<DateStatus, DateStatusListAdapter.DateHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -27,10 +21,10 @@ class DateAdapter : RecyclerView.Adapter<DateAdapter.DateHolder>() {
     }
 
     override fun onBindViewHolder(holder: DateHolder, position: Int) {
-        holder.bind(dates[position])
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
-
-    override fun getItemCount(): Int = dates.size
 
     inner class DateHolder(private val item: DateOrStateItemBinding) : RecyclerView.ViewHolder(item.root) {
 
@@ -41,6 +35,18 @@ class DateAdapter : RecyclerView.Adapter<DateAdapter.DateHolder>() {
                 numberOfActiveCases.text = formatNumber(dateStatus.active)
                 numberOfDeceasedCases.text = formatNumber(dateStatus.deceased)
                 numberOfRecoveredCases.text = formatNumber(dateStatus.recovered)
+            }
+        }
+    }
+
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<DateStatus>() {
+            override fun areItemsTheSame(oldItem: DateStatus, newItem: DateStatus): Boolean {
+                return oldItem.date == newItem.date
+            }
+
+            override fun areContentsTheSame(oldItem: DateStatus, newItem: DateStatus): Boolean {
+                return oldItem == newItem
             }
         }
     }

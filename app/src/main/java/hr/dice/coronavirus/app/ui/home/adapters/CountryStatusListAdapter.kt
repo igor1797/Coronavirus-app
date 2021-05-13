@@ -2,6 +2,8 @@ package hr.dice.coronavirus.app.ui.home.adapters
 
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.utils.formatNumber
@@ -9,15 +11,7 @@ import hr.dice.coronavirus.app.databinding.DateOrStateItemBinding
 import hr.dice.coronavirus.app.model.global.GlobalCountry
 import android.view.LayoutInflater as LayoutInflater
 
-class StateAdapter : RecyclerView.Adapter<StateAdapter.StateHolder>() {
-
-    private val topThreeStatesByConfirmedCases = arrayListOf<GlobalCountry>()
-
-    fun setTopThreeStatesByConfirmedCases(topThreeStatesByConfirmedCases: List<GlobalCountry>) {
-        this.topThreeStatesByConfirmedCases.clear()
-        this.topThreeStatesByConfirmedCases.addAll(topThreeStatesByConfirmedCases)
-        notifyDataSetChanged()
-    }
+class CountryStatusListAdapter : ListAdapter<GlobalCountry, CountryStatusListAdapter.StateHolder>(COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StateHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -26,10 +20,10 @@ class StateAdapter : RecyclerView.Adapter<StateAdapter.StateHolder>() {
     }
 
     override fun onBindViewHolder(holder: StateHolder, position: Int) {
-        holder.bind(topThreeStatesByConfirmedCases[position])
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
-
-    override fun getItemCount(): Int = topThreeStatesByConfirmedCases.size
 
     inner class StateHolder(private val item: DateOrStateItemBinding) : RecyclerView.ViewHolder(item.root) {
 
@@ -40,6 +34,18 @@ class StateAdapter : RecyclerView.Adapter<StateAdapter.StateHolder>() {
                 numberOfActiveCases.text = formatNumber(stateStatus.activeCases)
                 numberOfDeceasedCases.text = formatNumber(stateStatus.deathCases)
                 numberOfRecoveredCases.text = formatNumber(stateStatus.recoveredCases)
+            }
+        }
+    }
+
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<GlobalCountry>() {
+            override fun areItemsTheSame(oldItem: GlobalCountry, newItem: GlobalCountry): Boolean {
+                return oldItem.name == newItem.name
+            }
+
+            override fun areContentsTheSame(oldItem: GlobalCountry, newItem: GlobalCountry): Boolean {
+                return oldItem == newItem
             }
         }
     }
