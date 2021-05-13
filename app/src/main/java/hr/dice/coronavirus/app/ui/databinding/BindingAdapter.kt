@@ -52,10 +52,10 @@ object BindingAdapter {
 
     @BindingAdapter("app:isVisible")
     @JvmStatic
-    fun setVisibility(view: View, isVisible: Boolean?) {
+    fun View.setVisibility(isVisible: Boolean?) {
         when (isVisible) {
-            true -> view.visible()
-            else -> view.gone()
+            true -> visible()
+            else -> gone()
         }
     }
 
@@ -99,7 +99,7 @@ object BindingAdapter {
 
     @BindingAdapter("app:imagePath")
     @JvmStatic
-    fun loadImage(imageView: ImageView, imagePath: String?) {
-        imageView.loadImage(imagePath)
+    fun ImageView.loadImageUrl(imagePath: String?) {
+        loadImage(imagePath)
     }
 }

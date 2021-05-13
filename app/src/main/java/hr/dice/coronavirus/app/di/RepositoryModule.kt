@@ -15,7 +15,7 @@ val repositoryModule = module {
         CountryRepository(get(), get())
     }
 
-    factory {
+    single {
         NewsRepository(get())
     }
 }
