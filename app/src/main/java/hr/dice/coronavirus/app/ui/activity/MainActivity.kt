@@ -1,4 +1,4 @@
-package hr.dice.coronavirus.app.ui.home.activity
+package hr.dice.coronavirus.app.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -11,11 +11,11 @@ val repositoryModule = module {
         CoronavirusRepository(get())
     }
 
-    factory {
+    single {
         CountryRepository(get(), get())
     }
 
-    factory {
+    single {
         NewsRepository(get())
     }
 }

@@ -8,22 +8,23 @@ import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.WorldWide
-import hr.dice.coronavirus.app.ui.home.activity.MainActivity
-import hr.dice.coronavirus.app.ui.home.adapters.DateAdapter
-import hr.dice.coronavirus.app.ui.home.adapters.StateAdapter
+import hr.dice.coronavirus.app.ui.home.adapters.CountryStatusListAdapter
+import hr.dice.coronavirus.app.ui.home.adapters.DateStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel by viewModel<HomeViewModel>()
-    private val dateAdapter by lazy { DateAdapter() }
-    private val stateAdapter by lazy { StateAdapter() }
+    private val viewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
+    private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
+    private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
@@ -57,13 +58,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 when (it) {
                     is CountrySelected -> {
                         binding.apply {
-                            setupRecycler(dateAdapter)
+                            setupRecycler(dateStatusListAdapter)
                             stateOrDateText.text = getText(R.string.dateText)
                         }
                     }
                     WorldWide -> {
                         binding.apply {
-                            setupRecycler(stateAdapter)
+                            setupRecycler(countryStatusListAdapter)
                             stateOrDateText.text = getText(R.string.stateText)
                         }
                     }
@@ -92,7 +93,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             navigateToCountrySelection()
             showErrorDialog()
         } else {
-            dateAdapter.setDates(countryStatus.datesStatus)
+            dateStatusListAdapter.submitList(countryStatus.datesStatus)
             with(binding) {
                 casesStatus = countryStatus.casesStatus
                 selection.text = countryStatus.name
@@ -101,7 +102,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun handleWorldwideSelectedSuccess(globalStatus: GlobalStatus) {
-        stateAdapter.setTopThreeStatesByConfirmedCases(globalStatus.topThreeCountriesByConfirmedCases)
+        countryStatusListAdapter.submitList(globalStatus.topThreeCountriesByConfirmedCases)
         with(binding) {
             casesStatus = globalStatus.casesStatus
             selection.text = getText(R.string.worldwideText)
