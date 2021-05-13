@@ -60,7 +60,7 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
     private fun refreshData() {
         with(binding) {
             swipeRefresh.isRefreshing = true
-            countrySelectionViewModel.getCountryList()
+            countrySelectionViewModel.getCountryListData()
             swipeRefresh.isRefreshing = false
         }
     }

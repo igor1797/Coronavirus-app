@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoronavirusApp">
         <activity
-            android:name=".ui.home.activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
