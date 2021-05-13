@@ -31,8 +31,8 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
         initListeners()
     }
 
-    private fun initListeners(){
-        with(binding){
+    private fun initListeners() {
+        with(binding) {
             noInternetConnection.tryAgain.setOnClickListener {
                 tryAgainToFetchLatestNewsData()
             }
@@ -42,7 +42,7 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
         }
     }
 
-    private fun tryAgainToFetchLatestNewsData(){
+    private fun tryAgainToFetchLatestNewsData() {
         latestNewsViewModel.getLatestNewsData()
     }
 

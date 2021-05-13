@@ -17,10 +17,10 @@ import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.home.adapters.CountryStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.DateStatusListAdapter
+import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
@@ -38,7 +38,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initListeners() {
-        with(binding){
+        with(binding) {
             changeSelection.setOnClickListener {
                 navigateToCountrySelection()
             }
@@ -51,7 +51,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun tryAgainToFetchStatisticsData(){
+    private fun tryAgainToFetchStatisticsData() {
         homeViewModel.getStatisticsData()
     }
 

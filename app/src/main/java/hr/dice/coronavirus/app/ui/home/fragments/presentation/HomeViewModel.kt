@@ -33,10 +33,10 @@ class HomeViewModel(
     private var timeAgo = 0
 
     private val _useCase = MutableStateFlow(initialUseCase)
-    val useCase: LiveData<UseCase> get() = _useCase.asLiveData(viewModelScope.coroutineContext)
+    val useCase: LiveData<UseCase> = _useCase.asLiveData(viewModelScope.coroutineContext)
 
     init {
-       getStatisticsData()
+        getStatisticsData()
     }
 
     val coronaDataStatus: LiveData<ViewState> = _useCase.flatMapLatest { useCase ->
@@ -59,7 +59,7 @@ class HomeViewModel(
         }
     }.asLiveData(viewModelScope.coroutineContext)
 
-    fun getStatisticsData(){
+    fun getStatisticsData() {
         viewModelScope.launch {
             countryRepository.getUserSelection().collect { userSelection ->
                 if (userSelection.isEmpty() || userSelection == WORLDWIDE) {

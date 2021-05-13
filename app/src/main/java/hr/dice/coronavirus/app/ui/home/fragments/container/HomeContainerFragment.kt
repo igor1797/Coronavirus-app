@@ -24,7 +24,7 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
         val navController: NavController = Navigation.findNavController(requireView().findViewById(R.id.bottomNavHostFragment))
         binding.bottomNav.apply {
             setupWithNavController(navController)
-            setOnNavigationItemReselectedListener {  }
+            setOnNavigationItemReselectedListener { }
         }
     }
 

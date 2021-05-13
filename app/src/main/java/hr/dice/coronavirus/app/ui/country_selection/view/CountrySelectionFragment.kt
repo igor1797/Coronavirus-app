@@ -61,7 +61,7 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
     }
 
     private fun tryAgainToFetchCountriesData() {
-        countrySelectionViewModel.getCountryList()
+        countrySelectionViewModel.getCountryListData()
     }
 
     private fun observe() {

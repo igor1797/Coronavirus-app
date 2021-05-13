@@ -62,10 +62,10 @@ class LatestNewsViewModel(
     }
 
     init {
-       getLatestNewsData()
+        getLatestNewsData()
     }
 
-    fun getLatestNewsData(){
+    fun getLatestNewsData() {
         _offset.value = INITIAL_OFFSET
     }
 
