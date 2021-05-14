@@ -1,6 +1,5 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
-import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +11,7 @@ import hr.dice.coronavirus.app.model.one_country.CountryStatus
 import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
+import hr.dice.coronavirus.app.ui.base.EmptyState
 import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.WorldWide
@@ -47,6 +47,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
             error.tryAgain.setOnClickListener {
                 tryAgainToFetchStatisticsData()
+            }
+            emptyState.backToSearch.setOnClickListener {
+                navigateToCountrySelection()
             }
         }
     }
@@ -90,6 +93,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     } else {
                         homeContainerViewModel.disableMapsItem()
                     }
+                    if (viewState is EmptyState) {
+                        homeContainerViewModel.setBottomNavInvisible()
+                    } else {
+                        homeContainerViewModel.setBottomNavVisible()
+                    }
                 }
             }
         }
@@ -107,15 +115,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun handleCountrySelectedSuccess(countryStatus: CountryStatus) {
-        if (countryStatus.datesStatus.isEmpty()) {
-            navigateToCountrySelection()
-            showErrorDialog()
-        } else {
-            dateStatusListAdapter.submitList(countryStatus.datesStatus)
-            with(binding) {
-                casesStatus = countryStatus.casesStatus
-                selection.text = countryStatus.name
-            }
+        dateStatusListAdapter.submitList(countryStatus.datesStatus)
+        with(binding) {
+            casesStatus = countryStatus.casesStatus
+            selection.text = countryStatus.name
         }
     }
 
@@ -124,17 +127,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         with(binding) {
             casesStatus = globalStatus.casesStatus
             selection.text = getText(R.string.worldwideText)
-        }
-    }
-
-    private fun showErrorDialog() {
-        activity?.let {
-            AlertDialog.Builder(it)
-                .setTitle(R.string.noDataFourCountryTitleText)
-                .setIcon(R.drawable.error)
-                .setMessage(R.string.noDataFourCountryMessageText)
-                .setPositiveButton(R.string.positiveAlertButtonText) { dialog, _ -> dialog.dismiss() }
-                .show()
         }
     }
 }

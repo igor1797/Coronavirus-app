@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import hr.dice.coronavirus.app.R
+import hr.dice.coronavirus.app.common.gone
+import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.FragmentHomeContainerBinding
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
@@ -29,8 +31,13 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
     }
 
     private fun observe() {
-        homeContainerViewModel.mapsItemEnabled.observe(viewLifecycleOwner) { mapsItemEnabled ->
-            binding.bottomNav.menu.findItem(R.id.mapsFragment).isEnabled = mapsItemEnabled
+        with(homeContainerViewModel) {
+            mapsItemEnabled.observe(viewLifecycleOwner) { mapsItemEnabled ->
+                binding.bottomNav.menu.findItem(R.id.mapsFragment).isEnabled = mapsItemEnabled
+            }
+            bottomNavVisible.observe(viewLifecycleOwner) { bottomNavVisible ->
+                if (bottomNavVisible) binding.bottomNav.visible() else binding.bottomNav.gone()
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import hr.dice.coronavirus.app.networking.base.onNoInternetConnection
 import hr.dice.coronavirus.app.networking.base.onSuccess
 import hr.dice.coronavirus.app.networking.model.response.one_country.OneCountryStatusResponse
 import hr.dice.coronavirus.app.repositories.base.BaseRepository
+import hr.dice.coronavirus.app.ui.base.EmptyState
 import hr.dice.coronavirus.app.ui.base.Error
 import hr.dice.coronavirus.app.ui.base.Loading
 import hr.dice.coronavirus.app.ui.base.NoInternetState
@@ -35,7 +36,7 @@ class CoronavirusRepository(
             }
         }.onSuccess<List<OneCountryStatusResponse>> { list ->
             if (list.isEmpty() || list.size == 1) {
-                emit(Success(CountryStatus()))
+                emit(EmptyState)
             } else {
                 emit(Success(mapListToCountryStatus(list)))
             }

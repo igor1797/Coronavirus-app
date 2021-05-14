@@ -599,6 +599,12 @@
             layout="@layout/error_view"
             android:visibility="gone" />
 
+        <include
+            android:id="@+id/emptyState"
+            layout="@layout/empty_state_view"
+            app:emptyState="@{viewModel.coronaDataStatus}"
+            android:visibility="gone" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
