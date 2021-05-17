@@ -17,7 +17,7 @@ import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
@@ -26,13 +26,12 @@ import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val coronavirusRepository: CoronavirusRepository,
-    initialUseCase: UseCase,
     private val countryRepository: CountryRepository
 ) : ViewModel() {
 
     private var timeAgo = 0
 
-    private val _useCase = MutableStateFlow(initialUseCase)
+    private val _useCase = MutableSharedFlow<UseCase>()
     val useCase: LiveData<UseCase> = _useCase.asLiveData(viewModelScope.coroutineContext)
 
     init {
@@ -40,6 +39,7 @@ class HomeViewModel(
     }
 
     val coronaDataStatus: LiveData<ViewState> = _useCase.flatMapLatest { useCase ->
+        timeAgo = 0
         when (useCase) {
             is CountrySelected -> {
                 coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
@@ -90,8 +90,8 @@ class HomeViewModel(
         }
     }
 
-    private fun setUseCase(useCase: UseCase) {
-        _useCase.value = useCase
+    private suspend fun setUseCase(useCase: UseCase) {
+        _useCase.emit(useCase)
     }
 
     private fun findTopThreeCountriesByConfirmedCases(countries: List<GlobalCountry>): List<GlobalCountry> {
