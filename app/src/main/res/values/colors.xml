@@ -32,6 +32,7 @@
     <color name="oxfordBlueWith82Opacity">#D13C4858</color>
     <color name="oxfordBlue">#3C4858</color>
     <color name="lotus">#743645</color>
+    <color name="iron">#DFE0E1</color>
 
     <color name="colorPageComingSoonText">#1B1E2A</color>
     <color name="colorHeader">#1C2C40</color>
@@ -41,6 +42,12 @@
     <color name="colorDivider">#1C2C40</color>
     <color name="colorNoResultsText">#FF000000</color>
     <color name="colorCountryItemText">#1C2C40</color>
+    <color name="colorViewStateTitleText">#FF000000</color>
+    <color name="colorProgressTint">#EE6E7E</color>
+    <color name="colorLatestNewsHeader">#1C2C40</color>
+    <color name="colorCardViewStroke">#F9FCFC</color>
+    <color name="colorCardViewContent">#5A6679</color>
+    <color name="colorCardViewTitle">#1C2C40</color>
+    <color name="colorCardViewInfo">#8C96A5</color>
 
-    <color name="iron">#DFE0E1</color>
 </resources>
