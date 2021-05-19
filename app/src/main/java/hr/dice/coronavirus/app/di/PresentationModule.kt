@@ -11,7 +11,7 @@ val presentationModule = module {
 
     viewModel { SplashViewModel() }
 
-    viewModel { (initialUseCase: UseCase) -> HomeViewModel(get(), initialUseCase, get()) }
+    viewModel { (initialUseCase: UseCase) -> HomeViewModel(get(), initialUseCase, get(), get()) }
 
     viewModel { CountrySelectionViewModel(get()) }
 }
