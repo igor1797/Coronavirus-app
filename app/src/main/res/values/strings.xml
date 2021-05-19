@@ -45,4 +45,7 @@
     <string name="pageComingSoonText">Page coming soon</string>
     <string name="worldWideEmoji">🌏</string>
     <string name="noResultsText">No results found!</string>
+    <string name="nowText">now</string>
+    <string name="mAgotext">%sm ago</string>
+    <string name="hAgoText">%sh ago</string>
 </resources>

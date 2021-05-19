@@ -10,6 +10,7 @@ import hr.dice.coronavirus.app.model.global.GlobalCountry
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.repositories.CoronavirusRepository
 import hr.dice.coronavirus.app.repositories.CountryRepository
+import hr.dice.coronavirus.app.repositories.ResourceRepository
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.ViewState
@@ -27,7 +28,8 @@ import kotlinx.coroutines.withContext
 class HomeViewModel(
     private val coronavirusRepository: CoronavirusRepository,
     initialUseCase: UseCase,
-    private val countryRepository: CountryRepository
+    private val countryRepository: CountryRepository,
+    private val resourceRepository: ResourceRepository
 ) : ViewModel() {
 
     private var timeAgo = 0
@@ -48,6 +50,7 @@ class HomeViewModel(
     }
 
     val coronaDataStatus: LiveData<ViewState> = _useCase.flatMapLatest { useCase ->
+        timeAgo = 0
         when (useCase) {
             is CountrySelected -> {
                 coronavirusRepository.getDayOneAllStatusByCountry(useCase.country)
@@ -72,13 +75,13 @@ class HomeViewModel(
             timeAgo++
             val time = when (timeAgo) {
                 in 0..59 -> {
-                    "now"
+                    resourceRepository.getNowText()
                 }
                 in ONE_MINUTE_IN_SECONDS..ONE_HOUR_IN_SECONDS -> {
-                    "${timeAgo / ONE_MINUTE_IN_SECONDS}m ago"
+                    resourceRepository.getMinutesTimeAgoText(timeAgo / ONE_MINUTE_IN_SECONDS)
                 }
                 else -> {
-                    "${timeAgo / ONE_HOUR_IN_SECONDS}h ago"
+                    resourceRepository.getHoursTimeAgoText(timeAgo / ONE_HOUR_IN_SECONDS)
                 }
             }
             emit(time)
@@ -91,31 +94,7 @@ class HomeViewModel(
     }
 
     private fun findTopThreeCountriesByConfirmedCases(countries: List<GlobalCountry>): List<GlobalCountry> {
-        val topThreeCountriesByConfirmedCases = arrayListOf<GlobalCountry>()
-        var countryWithHighestConfirmedCases = GlobalCountry()
-        var secondCountryWithHighestConfirmedCases = GlobalCountry()
-        var thirdCountryWithHighestConfirmedCases = GlobalCountry()
-        countries.forEach { country ->
-            when {
-                country.confirmedCases > countryWithHighestConfirmedCases.confirmedCases -> {
-                    thirdCountryWithHighestConfirmedCases = secondCountryWithHighestConfirmedCases
-                    secondCountryWithHighestConfirmedCases = countryWithHighestConfirmedCases
-                    countryWithHighestConfirmedCases = country
-                }
-                country.confirmedCases > secondCountryWithHighestConfirmedCases.confirmedCases -> {
-                    thirdCountryWithHighestConfirmedCases = secondCountryWithHighestConfirmedCases
-                    secondCountryWithHighestConfirmedCases = country
-                }
-                country.confirmedCases > thirdCountryWithHighestConfirmedCases.confirmedCases ->
-                    thirdCountryWithHighestConfirmedCases = country
-            }
-        }
-        topThreeCountriesByConfirmedCases.apply {
-            add(countryWithHighestConfirmedCases)
-            add(secondCountryWithHighestConfirmedCases)
-            add(thirdCountryWithHighestConfirmedCases)
-        }
-        return topThreeCountriesByConfirmedCases
+        return countries.sortedBy { it.confirmedCases }.asReversed().take(3)
     }
 
     companion object {

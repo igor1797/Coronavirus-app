@@ -35,7 +35,7 @@
                 app:layout_constraintEnd_toStartOf="@id/countrySelectionHeader"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/countrySelectionHeader"
-                app:tint="@color/cloudBurst" />
+                app:tint="@color/colorHeader" />
 
             <TextView
                 android:id="@+id/countrySelectionHeader"
@@ -45,7 +45,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
                 android:text="@string/chooseYourCountryText"
-                android:textColor="@color/cloudBurst"
+                android:textColor="@color/colorHeader"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/backButton"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/search_view_background"
-                android:backgroundTint="@color/athensGray"
+                android:backgroundTint="@color/colorSearchBackground"
                 android:padding="14dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,9 +81,9 @@
                     android:layout_height="wrap_content"
                     style="@style/textStyle"
                     android:textSize="16sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorSearchText"
                     android:hint="@string/searchHint"
-                    android:textColorHint="@color/regentGray"
+                    android:textColorHint="@color/colorSearchHintText"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/worldwideText"
-                    android:textColor="@color/cloudBurst"
+                    android:textColor="@color/colorHeader"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +138,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:alpha="0.2"
-                android:background="@color/cloudBurst"
+                android:background="@color/colorDivider"
                 app:layout_constraintTop_toBottomOf="@id/worldwideItem" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 style="@style/textStyle"
                 android:textSize="16sp"
-                android:textColor="@color/black"
+                android:textColor="@color/colorNoResultsText"
                 android:text="@string/noResultsText"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="35dp"
