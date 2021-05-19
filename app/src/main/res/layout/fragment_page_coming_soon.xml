@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/textStyle"
-            android:textColor="@color/mirage"
+            android:textColor="@color/colorPageComingSoonText"
             android:textSize="24sp"
             android:text="@string/pageComingSoonText"
             app:layout_constraintTop_toBottomOf="@id/virusAnimation"
