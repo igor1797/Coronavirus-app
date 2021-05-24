@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="hr.dice.coronavirus.app.common.ConstantsKt" />
+
         <variable
             name="viewModel"
             type="hr.dice.coronavirus.app.ui.country_selection.presentation.CountrySelectionViewModel" />
@@ -13,13 +15,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/success"
-            app:successState="@{viewModel.countryList}"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:successState="@{viewModel.countryList}">
 
             <ImageView
                 android:id="@+id/backButton"
@@ -30,6 +32,7 @@
                 android:paddingBottom="8dp"
                 android:src="@drawable/back_button"
                 app:layout_constrainedWidth="true"
+                android:onClick="@{() -> viewModel.goBack()}"
                 app:layout_constraintBottom_toBottomOf="@id/countrySelectionHeader"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/countrySelectionHeader"
@@ -60,8 +63,8 @@
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/search_view_background"
                 android:backgroundTint="@color/colorSearchBackground"
-                android:padding="14dp"
                 android:orientation="horizontal"
+                android:padding="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/countrySelectionHeader">
@@ -71,26 +74,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/search"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
                     android:id="@+id/searchQueryInput"
+                    style="@style/textStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    style="@style/textStyle"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorSearchText"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
                     android:hint="@string/searchHint"
                     android:text="@={viewModel.searchQuery}"
+                    android:textColor="@color/colorSearchText"
                     android:textColorHint="@color/colorSearchHintText"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/searchIcon"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="10dp"/>
+                    app:layout_constraintStart_toEndOf="@id/searchIcon"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,7 +108,8 @@
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/searchLayout">
+                app:layout_constraintTop_toBottomOf="@id/searchLayout"
+                android:onClick="@{() -> viewModel.saveUserSelection(ConstantsKt.WORLDWIDE)}">
 
                 <TextView
                     android:id="@+id/worldwideIcon"
@@ -152,46 +156,38 @@
 
             <TextView
                 android:id="@+id/noResultsFound"
+                style="@style/textStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/textStyle"
-                android:textSize="16sp"
-                android:textColor="@color/colorNoResultsText"
-                android:text="@string/noResultsText"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@id/divider"
+                android:text="@string/noResultsText"
+                android:textColor="@color/colorNoResultsText"
+                android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@id/divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <include
             android:id="@+id/loading"
-            app:loadingState="@{viewModel.countryList}"
             layout="@layout/loading_view"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:loadingState="@{viewModel.countryList}" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:isVisible="@{viewModel.swipeRefreshIsVisible}">
+        <include
+            android:id="@+id/noInternetConnection"
+            layout="@layout/no_internet_connection_view"
+            android:visibility="gone"
+            app:noInternetConnectionState="@{viewModel.countryList}" />
 
-            <include
-                android:id="@+id/noInternetConnection"
-                app:noInternetConnectionState="@{viewModel.countryList}"
-                layout="@layout/no_internet_connection_view"
-                android:visibility="gone" />
-
-            <include
-                android:id="@+id/error"
-                app:errorState="@{viewModel.countryList}"
-                layout="@layout/error_view"
-                android:visibility="gone" />
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <include
+            android:id="@+id/error"
+            layout="@layout/error_view"
+            android:visibility="gone"
+            app:errorState="@{viewModel.countryList}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

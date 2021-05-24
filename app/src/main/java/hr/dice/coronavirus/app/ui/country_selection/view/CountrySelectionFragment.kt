@@ -1,10 +1,8 @@
 package hr.dice.coronavirus.app.ui.country_selection.view
 
-import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.dice.coronavirus.app.R
-import hr.dice.coronavirus.app.common.WORLDWIDE
 import hr.dice.coronavirus.app.common.gone
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.CountrySelectionFragmentBinding
@@ -23,7 +21,6 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
     override fun onPostViewCreated() {
         binding.viewModel = countrySelectionViewModel
         setupRecycler()
-        initListeners()
         observe()
     }
 
@@ -34,30 +31,8 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
         }
     }
 
-    private fun goBack() {
+    private fun navigateBack() {
         findNavController().navigateUp()
-    }
-
-    private fun initListeners() {
-        with(binding) {
-            backButton.setOnClickListener {
-                goBack()
-            }
-            worldwideItem.setOnClickListener {
-                countrySelectionViewModel.saveUserSelection(WORLDWIDE)
-            }
-            swipeRefresh.setOnRefreshListener {
-                refreshData()
-            }
-        }
-    }
-
-    private fun refreshData() {
-        with(binding) {
-            swipeRefresh.isRefreshing = true
-            countrySelectionViewModel.getCountryListData()
-            swipeRefresh.isRefreshing = false
-        }
     }
 
     private fun observe() {
@@ -76,6 +51,9 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             }
             successfulSavedUserSelection.observe(viewLifecycleOwner) {
                 if (it) goBack()
+            }
+            goBack.observe(viewLifecycleOwner) { needToGoBack ->
+                if (needToGoBack) navigateBack()
             }
         }
     }

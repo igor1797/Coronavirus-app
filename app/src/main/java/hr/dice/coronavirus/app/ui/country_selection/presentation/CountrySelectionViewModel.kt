@@ -8,8 +8,8 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.model.country_list.Country
 import hr.dice.coronavirus.app.repositories.CountryRepository
-import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.ViewState
+import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,8 +20,8 @@ class CountrySelectionViewModel(
     private val countryRepository: CountryRepository
 ) : ViewModel() {
 
-    private val _swipeRefreshIsVisible = MutableLiveData(false)
-    val swipeRefreshIsVisible: LiveData<Boolean> get() = _swipeRefreshIsVisible
+    private val _goBack = MutableLiveData(false)
+    val goBack: LiveData<Boolean> get() = _goBack
 
     private val _successfulSavedUserSelection = MutableLiveData(false)
     val successfulSavedUserSelection: LiveData<Boolean> get() = _successfulSavedUserSelection
@@ -54,16 +54,12 @@ class CountrySelectionViewModel(
         viewModelScope.launch {
             countryRepository.getCountryList().collect {
                 _countryList.postValue(it)
-                if (it is Success<*>) {
-                    _swipeRefreshIsVisible.value = false
-                    val countries = it.data as List<Country>
+                it.onSuccess<List<Country>> { countries ->
                     val sortedCountriesByName = withContext(Dispatchers.Default) {
                         countries.sortedBy { country -> country.name }
                     }
                     unfilteredCountryList.addAll(sortedCountriesByName)
                     searchQuery.value = ""
-                } else {
-                    _swipeRefreshIsVisible.value = true
                 }
             }
         }
@@ -74,5 +70,9 @@ class CountrySelectionViewModel(
             countryRepository.saveUserSelection(selection)
             _successfulSavedUserSelection.value = true
         }
+    }
+
+    fun goBack() {
+        _goBack.value = true
     }
 }
