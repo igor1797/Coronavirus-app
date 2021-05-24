@@ -1,10 +1,7 @@
 package hr.dice.coronavirus.app.ui.country_selection.view
 
-import androidx.core.widget.doOnTextChanged
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.dice.coronavirus.app.R
-import hr.dice.coronavirus.app.common.WORLDWIDE
 import hr.dice.coronavirus.app.common.gone
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.CountrySelectionFragmentBinding
@@ -21,9 +18,11 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
     override val layoutResourceId: Int get() = R.layout.country_selection_fragment
 
     override fun onPostViewCreated() {
-        binding.viewModel = countrySelectionViewModel
+        binding.apply {
+            viewModel = countrySelectionViewModel
+            countrySelectionFragment = this@CountrySelectionFragment
+        }
         setupRecycler()
-        initListeners()
         observe()
     }
 
@@ -31,37 +30,6 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
         binding.countryListRecycler.apply {
             adapter = countryAdapter
             layoutManager = LinearLayoutManager(context)
-        }
-    }
-
-    private fun goBack() {
-        findNavController().navigateUp()
-    }
-
-    private fun initListeners() {
-        with(binding) {
-            backButton.setOnClickListener {
-                goBack()
-            }
-            searchQueryInput.doOnTextChanged { text, _, _, _ ->
-                text?.toString()?.let { searchQuery ->
-                    countrySelectionViewModel.searchQueryChanged(searchQuery)
-                }
-            }
-            worldwideItem.setOnClickListener {
-                countrySelectionViewModel.saveUserSelection(WORLDWIDE)
-            }
-            swipeRefresh.setOnRefreshListener {
-                refreshData()
-            }
-        }
-    }
-
-    private fun refreshData() {
-        with(binding) {
-            swipeRefresh.isRefreshing = true
-            countrySelectionViewModel.getCountryListData()
-            swipeRefresh.isRefreshing = false
         }
     }
 
@@ -87,5 +55,9 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
 
     private fun onItemSelected(selection: String) {
         countrySelectionViewModel.saveUserSelection(selection)
+    }
+
+    fun goBack() {
+        navigateBack()
     }
 }

@@ -8,8 +8,8 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.model.country_list.Country
 import hr.dice.coronavirus.app.repositories.CountryRepository
-import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.ViewState
+import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,20 +20,17 @@ class CountrySelectionViewModel(
     private val countryRepository: CountryRepository
 ) : ViewModel() {
 
-    private val _swipeRefreshIsVisible = MutableLiveData(false)
-    val swipeRefreshIsVisible: LiveData<Boolean> get() = _swipeRefreshIsVisible
-
     private val _successfulSavedUserSelection = MutableLiveData(false)
     val successfulSavedUserSelection: LiveData<Boolean> get() = _successfulSavedUserSelection
 
-    private val _searchQuery = MutableLiveData<String>()
+    val searchQuery = MutableLiveData<String>()
 
     private val _countryList = MutableLiveData<ViewState>()
     val countryList: LiveData<ViewState> get() = _countryList
 
     private val unfilteredCountryList = arrayListOf<Country>()
 
-    val filteredCountryList: LiveData<List<Country>> = _searchQuery.switchMap { searchQuery ->
+    val filteredCountryList: LiveData<List<Country>> = searchQuery.switchMap { searchQuery ->
         liveData {
             if (searchQuery.isEmpty()) {
                 emit(unfilteredCountryList as List<Country>)
@@ -54,23 +51,15 @@ class CountrySelectionViewModel(
         viewModelScope.launch {
             countryRepository.getCountryList().collect {
                 _countryList.postValue(it)
-                if (it is Success<*>) {
-                    _swipeRefreshIsVisible.value = false
-                    val countries = it.data as List<Country>
+                it.onSuccess<List<Country>> { countries ->
                     val sortedCountriesByName = withContext(Dispatchers.Default) {
                         countries.sortedBy { country -> country.name }
                     }
                     unfilteredCountryList.addAll(sortedCountriesByName)
-                    _searchQuery.value = ""
-                } else {
-                    _swipeRefreshIsVisible.value = true
+                    searchQuery.value = ""
                 }
             }
         }
-    }
-
-    fun searchQueryChanged(query: String) {
-        _searchQuery.value = query
     }
 
     fun saveUserSelection(selection: String) {
