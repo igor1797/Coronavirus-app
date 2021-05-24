@@ -35,9 +35,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
             mapsItemEnabled.observe(viewLifecycleOwner) { mapsItemEnabled ->
                 binding.bottomNav.menu.findItem(R.id.mapsFragment).isEnabled = mapsItemEnabled
             }
-            bottomNavVisible.observe(viewLifecycleOwner) { bottomNavVisible ->
-                if (bottomNavVisible) binding.bottomNav.visible() else binding.bottomNav.gone()
-            }
         }
     }
 }

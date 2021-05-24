@@ -93,11 +93,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     } else {
                         homeContainerViewModel.disableMapsItem()
                     }
-                    if (viewState is EmptyState) {
-                        homeContainerViewModel.setBottomNavInvisible()
-                    } else {
-                        homeContainerViewModel.setBottomNavVisible()
-                    }
                 }
             }
         }
