@@ -26,14 +26,14 @@ class CountrySelectionViewModel(
     private val _successfulSavedUserSelection = MutableLiveData(false)
     val successfulSavedUserSelection: LiveData<Boolean> get() = _successfulSavedUserSelection
 
-    private val _searchQuery = MutableLiveData<String>()
+    val searchQuery = MutableLiveData<String>()
 
     private val _countryList = MutableLiveData<ViewState>()
     val countryList: LiveData<ViewState> get() = _countryList
 
     private val unfilteredCountryList = arrayListOf<Country>()
 
-    val filteredCountryList: LiveData<List<Country>> = _searchQuery.switchMap { searchQuery ->
+    val filteredCountryList: LiveData<List<Country>> = searchQuery.switchMap { searchQuery ->
         liveData {
             if (searchQuery.isEmpty()) {
                 emit(unfilteredCountryList as List<Country>)
@@ -61,16 +61,12 @@ class CountrySelectionViewModel(
                         countries.sortedBy { country -> country.name }
                     }
                     unfilteredCountryList.addAll(sortedCountriesByName)
-                    _searchQuery.value = ""
+                    searchQuery.value = ""
                 } else {
                     _swipeRefreshIsVisible.value = true
                 }
             }
         }
-    }
-
-    fun searchQueryChanged(query: String) {
-        _searchQuery.value = query
     }
 
     fun saveUserSelection(selection: String) {

@@ -43,11 +43,6 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             backButton.setOnClickListener {
                 goBack()
             }
-            searchQueryInput.doOnTextChanged { text, _, _, _ ->
-                text?.toString()?.let { searchQuery ->
-                    countrySelectionViewModel.searchQueryChanged(searchQuery)
-                }
-            }
             worldwideItem.setOnClickListener {
                 countrySelectionViewModel.saveUserSelection(WORLDWIDE)
             }

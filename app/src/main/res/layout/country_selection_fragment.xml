@@ -83,6 +83,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/colorSearchText"
                     android:hint="@string/searchHint"
+                    android:text="@={viewModel.searchQuery}"
                     android:textColorHint="@color/colorSearchHintText"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toTopOf="parent"

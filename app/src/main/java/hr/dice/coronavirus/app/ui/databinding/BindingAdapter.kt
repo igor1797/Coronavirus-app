@@ -50,10 +50,10 @@ object BindingAdapter {
 
     @BindingAdapter("app:isVisible")
     @JvmStatic
-    fun setVisibility(view: View, isVisible: Boolean?) {
+    fun View.setVisibility(isVisible: Boolean?) {
         when (isVisible) {
-            true -> view.visible()
-            else -> view.gone()
+            true -> visible()
+            else -> gone()
         }
     }
 
