@@ -9,6 +9,10 @@
         <import type="hr.dice.coronavirus.app.common.ConstantsKt" />
 
         <variable
+            name="countrySelectionFragment"
+            type="hr.dice.coronavirus.app.ui.country_selection.view.CountrySelectionFragment" />
+
+        <variable
             name="viewModel"
             type="hr.dice.coronavirus.app.ui.country_selection.presentation.CountrySelectionViewModel" />
     </data>
@@ -32,7 +36,7 @@
                 android:paddingBottom="8dp"
                 android:src="@drawable/back_button"
                 app:layout_constrainedWidth="true"
-                android:onClick="@{() -> viewModel.goBack()}"
+                android:onClick="@{() -> countrySelectionFragment.goBack()}"
                 app:layout_constraintBottom_toBottomOf="@id/countrySelectionHeader"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/countrySelectionHeader"

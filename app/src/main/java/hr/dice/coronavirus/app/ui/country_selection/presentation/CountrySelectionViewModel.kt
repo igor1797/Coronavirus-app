@@ -20,9 +20,6 @@ class CountrySelectionViewModel(
     private val countryRepository: CountryRepository
 ) : ViewModel() {
 
-    private val _goBack = MutableLiveData(false)
-    val goBack: LiveData<Boolean> get() = _goBack
-
     private val _successfulSavedUserSelection = MutableLiveData(false)
     val successfulSavedUserSelection: LiveData<Boolean> get() = _successfulSavedUserSelection
 
@@ -70,9 +67,5 @@ class CountrySelectionViewModel(
             countryRepository.saveUserSelection(selection)
             _successfulSavedUserSelection.value = true
         }
-    }
-
-    fun goBack() {
-        _goBack.value = true
     }
 }

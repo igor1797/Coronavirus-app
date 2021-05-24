@@ -1,6 +1,5 @@
 package hr.dice.coronavirus.app.ui.country_selection.view
 
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.gone
@@ -19,7 +18,10 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
     override val layoutResourceId: Int get() = R.layout.country_selection_fragment
 
     override fun onPostViewCreated() {
-        binding.viewModel = countrySelectionViewModel
+        binding.apply {
+            viewModel = countrySelectionViewModel
+            countrySelectionFragment = this@CountrySelectionFragment
+        }
         setupRecycler()
         observe()
     }
@@ -29,10 +31,6 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             adapter = countryAdapter
             layoutManager = LinearLayoutManager(context)
         }
-    }
-
-    private fun navigateBack() {
-        findNavController().navigateUp()
     }
 
     private fun observe() {
@@ -52,13 +50,14 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             successfulSavedUserSelection.observe(viewLifecycleOwner) {
                 if (it) goBack()
             }
-            goBack.observe(viewLifecycleOwner) { needToGoBack ->
-                if (needToGoBack) navigateBack()
-            }
         }
     }
 
     private fun onItemSelected(selection: String) {
         countrySelectionViewModel.saveUserSelection(selection)
+    }
+
+    fun goBack() {
+        navigateBack()
     }
 }
