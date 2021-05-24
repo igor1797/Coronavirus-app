@@ -24,7 +24,6 @@
     <color name="catskillWhite">#F9FCFC</color>
     <color name="catskillWhiteWithOpacity">#CCF9FCFC</color>
     <color name="froly">#EE6E7E</color>
-    <color name="frolyWith38Opacity">#61EE6E7E</color>
     <color name="turkishRose">#BD7B97</color>
     <color name="whiteWith48Opacity">#7AFFFFFF</color>
     <color name="whiteWith82Opacity">#DEFFFFFF</color>
@@ -32,4 +31,7 @@
     <color name="whiteWith60Opacity">#99FFFFFF</color>
     <color name="oxfordBlueWith82Opacity">#D13C4858</color>
     <color name="lotus">#743645</color>
+
+    <color name="colorPageComingSoonText">#1B1E2A</color>
+
 </resources>
