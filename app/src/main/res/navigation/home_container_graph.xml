@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/home_container_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_container_graph"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="hr.dice.coronavirus.app.ui.home.fragments.view.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/fourthFragment"
+        android:name="hr.dice.coronavirus.app.ui.page_coming_soon.PageComingSoonFragment"
+        android:label="fragment_page_coming_soon"
+        tools:layout="@layout/fragment_page_coming_soon" />
 </navigation>
