@@ -3,17 +3,17 @@ package hr.dice.coronavirus.app.ui.country_selection.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.model.country_list.Country
 import hr.dice.coronavirus.app.repositories.CountryRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
-import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class CountrySelectionViewModel(
@@ -23,41 +23,35 @@ class CountrySelectionViewModel(
     private val _successfulSavedUserSelection = MutableLiveData(false)
     val successfulSavedUserSelection: LiveData<Boolean> get() = _successfulSavedUserSelection
 
-    val searchQuery = MutableLiveData<String>()
+    val searchQuery = MutableLiveData("")
+    private val _searchQuery = searchQuery.asFlow()
 
     private val _countryList = MutableLiveData<ViewState>()
     val countryList: LiveData<ViewState> get() = _countryList
 
-    private val unfilteredCountryList = arrayListOf<Country>()
-
-    val filteredCountryList: LiveData<List<Country>> = searchQuery.switchMap { searchQuery ->
-        liveData {
+    val filteredCountryList: LiveData<List<Country>> =
+        _searchQuery.combineTransform(countryRepository.countries) { searchQuery, countries ->
             if (searchQuery.isEmpty()) {
-                emit(unfilteredCountryList as List<Country>)
+                emit(countries.sortedBy { it.name })
             } else {
-                val filteredCountriesByQuery = withContext(Dispatchers.Default) {
-                    unfilteredCountryList.filter { it.name.toLowerCase(Locale.getDefault()).contains(searchQuery.toLowerCase(Locale.getDefault())) }
-                }
-                emit(filteredCountriesByQuery)
+                emit(filterCountries(countries, searchQuery))
             }
-        }
-    }
+        }.flowOn(Dispatchers.Default).asLiveData(viewModelScope.coroutineContext)
 
     init {
         getCountryListData()
+    }
+
+    private fun filterCountries(countries: List<Country>, searchQuery: String): List<Country> {
+        return countries.filter {
+            it.name.toLowerCase(Locale.getDefault()).contains(searchQuery.toLowerCase(Locale.getDefault()))
+        }.sortedBy { it.name }
     }
 
     fun getCountryListData() {
         viewModelScope.launch {
             countryRepository.getCountryList().collect {
                 _countryList.postValue(it)
-                it.onSuccess<List<Country>> { countries ->
-                    val sortedCountriesByName = withContext(Dispatchers.Default) {
-                        countries.sortedBy { country -> country.name }
-                    }
-                    unfilteredCountryList.addAll(sortedCountriesByName)
-                    searchQuery.value = ""
-                }
             }
         }
     }
