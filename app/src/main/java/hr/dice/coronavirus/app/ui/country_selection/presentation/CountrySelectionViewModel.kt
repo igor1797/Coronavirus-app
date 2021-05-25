@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.model.country_list.Country
 import hr.dice.coronavirus.app.repositories.CountryRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
+import hr.dice.coronavirus.app.ui.base.onSuccess
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.flowOn
@@ -29,8 +31,10 @@ class CountrySelectionViewModel(
     private val _countryList = MutableLiveData<ViewState>()
     val countryList: LiveData<ViewState> get() = _countryList
 
+    private val countries = MutableStateFlow(listOf<Country>())
+
     val filteredCountryList: LiveData<List<Country>> =
-        _searchQuery.combineTransform(countryRepository.countries) { searchQuery, countries ->
+        _searchQuery.combineTransform(countries) { searchQuery, countries ->
             if (searchQuery.isEmpty()) {
                 emit(countries.sortedBy { it.name })
             } else {
@@ -52,6 +56,9 @@ class CountrySelectionViewModel(
         viewModelScope.launch {
             countryRepository.getCountryList().collect {
                 _countryList.postValue(it)
+                it.onSuccess<List<Country>> { countryList ->
+                    countries.value = countryList
+                }
             }
         }
     }
