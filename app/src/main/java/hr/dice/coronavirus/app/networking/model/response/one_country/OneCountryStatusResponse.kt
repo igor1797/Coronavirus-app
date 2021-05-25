@@ -11,6 +11,8 @@ data class OneCountryStatusResponse(
     val city: String,
     @SerializedName("CityCode")
     val cityCode: String,
+    @SerializedName("Province")
+    val province: String,
     @SerializedName("Confirmed")
     val confirmed: Int,
     @SerializedName("Country")

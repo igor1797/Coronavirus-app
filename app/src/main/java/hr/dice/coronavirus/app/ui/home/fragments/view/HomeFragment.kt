@@ -22,25 +22,21 @@ import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
+    private val homeViewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
     private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
     private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
     override fun onPostViewCreated() {
-        binding.viewModel = viewModel
-        observe()
-        setChangeSelectionOnClickLister()
-    }
-
-    private fun setChangeSelectionOnClickLister() {
-        binding.changeSelection.setOnClickListener {
-            navigateToCountrySelection()
+        binding.apply {
+            viewModel = homeViewModel
+            homeFragment = this@HomeFragment
         }
+        observe()
     }
 
-    private fun navigateToCountrySelection() {
+    fun navigateToCountrySelection() {
         val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
         controller.navigate(R.id.goToCountrySelectionFragment)
     }
@@ -53,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun observe() {
-        with(viewModel) {
+        with(homeViewModel) {
             useCase.observe(viewLifecycleOwner) {
                 when (it) {
                     is CountrySelected -> {
@@ -83,7 +79,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             is CountrySelected -> handleCountrySelectedSuccess(successResponse.data as CountryStatus)
             WorldWide -> handleWorldwideSelectedSuccess(successResponse.data as GlobalStatus)
         }
-        viewModel.getTimeAgo().observe(viewLifecycleOwner) {
+        homeViewModel.getTimeAgo().observe(viewLifecycleOwner) {
             binding.updated.text = getString(R.string.lastUpdatedText, it)
         }
     }
