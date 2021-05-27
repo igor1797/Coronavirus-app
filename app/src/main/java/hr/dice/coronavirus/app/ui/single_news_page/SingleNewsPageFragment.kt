@@ -1,7 +1,6 @@
 package hr.dice.coronavirus.app.ui.single_news_page
 
 import android.webkit.WebViewClient
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentSingleNewsPageBinding
@@ -14,7 +13,7 @@ class SingleNewsPageFragment : BaseFragment<FragmentSingleNewsPageBinding>() {
     override val layoutResourceId: Int get() = R.layout.fragment_single_news_page
 
     override fun onPostViewCreated() {
-        initListeners()
+        binding.singleNewsPageFragment = this
         loadWebViewContent()
     }
 
@@ -25,9 +24,7 @@ class SingleNewsPageFragment : BaseFragment<FragmentSingleNewsPageBinding>() {
         }
     }
 
-    private fun initListeners() {
-        binding.backButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
+    fun goBack(){
+        navigateBack()
     }
 }
