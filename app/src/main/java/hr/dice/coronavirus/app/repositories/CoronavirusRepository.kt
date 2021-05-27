@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.repositories
 
+import hr.dice.coronavirus.app.common.EMPTY_STRING
 import hr.dice.coronavirus.app.model.Case
 import hr.dice.coronavirus.app.model.CasesStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
@@ -13,7 +14,9 @@ import hr.dice.coronavirus.app.ui.base.Error
 import hr.dice.coronavirus.app.ui.base.Loading
 import hr.dice.coronavirus.app.ui.base.NoInternetState
 import hr.dice.coronavirus.app.ui.base.Success
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 
 private const val UNITED_STATES_OF_AMERICA_COUNTRY_SLUG = "united-states"
 
@@ -44,15 +47,18 @@ class CoronavirusRepository(
         }.onFailure { emit(Error(it)) }
     }
 
-    private fun mapListToCountryStatus(list: List<OneCountryStatusResponse>): CountryStatus {
-        val latestDate = list.last()
-        val dayBeforeLatestDate = list[list.size - 2]
+    private suspend fun mapListToCountryStatus(list: List<OneCountryStatusResponse>): CountryStatus {
+        val filteredCountryStatusList = withContext(Dispatchers.Default) {
+            list.filter { it.province == EMPTY_STRING }
+        }
+        val latestDate = filteredCountryStatusList.last()
+        val dayBeforeLatestDate = filteredCountryStatusList[filteredCountryStatusList.size - 2]
         val activeCases = Case(latestDate.active, latestDate.active - dayBeforeLatestDate.active)
         val confirmedCases = Case(latestDate.confirmed, latestDate.confirmed - dayBeforeLatestDate.confirmed)
         val recoveredCases = Case(latestDate.recovered, latestDate.recovered - dayBeforeLatestDate.recovered)
         val deceasedCases = Case(latestDate.deaths, latestDate.deaths - dayBeforeLatestDate.deaths)
         val casesStatus = CasesStatus(confirmedCases, activeCases, recoveredCases, deceasedCases)
-        val datesStatus = list.map { it.mapToDomain() }.reversed()
+        val datesStatus = filteredCountryStatusList.map { it.mapToDomain() }.reversed()
         return CountryStatus(latestDate.country, datesStatus, casesStatus, latestDate.date)
     }
 }

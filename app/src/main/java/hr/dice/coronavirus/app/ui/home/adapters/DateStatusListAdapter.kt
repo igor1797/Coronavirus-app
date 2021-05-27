@@ -12,7 +12,7 @@ import hr.dice.coronavirus.app.databinding.DateOrStateItemBinding
 import hr.dice.coronavirus.app.model.one_country.DateStatus
 import android.view.LayoutInflater as LayoutInflater
 
-class DateStatusListAdapter : ListAdapter<DateStatus, DateStatusListAdapter.DateHolder>(COMPARATOR) {
+class DateStatusListAdapter : ListAdapter<DateStatus, DateStatusListAdapter.DateHolder>(DateStatusDiffItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DateHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -40,7 +40,7 @@ class DateStatusListAdapter : ListAdapter<DateStatus, DateStatusListAdapter.Date
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<DateStatus>() {
+        private val DateStatusDiffItemCallback = object : DiffUtil.ItemCallback<DateStatus>() {
             override fun areItemsTheSame(oldItem: DateStatus, newItem: DateStatus): Boolean {
                 return oldItem.date == newItem.date
             }
