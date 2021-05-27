@@ -3,8 +3,8 @@ package hr.dice.coronavirus.app.ui.latest_news_list.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import hr.dice.coronavirus.app.common.DATE_TIME_FORMAT
 import hr.dice.coronavirus.app.common.KEYWORD_CORONA
 import hr.dice.coronavirus.app.common.TIME_ZONE
@@ -14,7 +14,8 @@ import hr.dice.coronavirus.app.model.news_list.SingleNews
 import hr.dice.coronavirus.app.repositories.NewsRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
 import hr.dice.coronavirus.app.ui.base.onSuccess
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class LatestNewsViewModel(
@@ -22,48 +23,40 @@ class LatestNewsViewModel(
     private val dateTimeUtil: DateTimeUtil
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState>()
-    val viewState: LiveData<ViewState> get() = _viewState
-
     private val _isInitialNewsLoad = MutableLiveData(false)
     val isInitialNewsLoad: LiveData<Boolean> get() = _isInitialNewsLoad
 
-    private val _offset = MutableLiveData<Int>()
+    private val _offset = MutableStateFlow(INITIAL_OFFSET)
     private var totalNews = 0
 
-    private val news = arrayListOf<SingleNews>()
+    val viewState: LiveData<ViewState> = _offset.flatMapLatest { offset ->
+        fetchMoreLatestNews(offset)
+    }.asLiveData(viewModelScope.coroutineContext)
 
-    val newsList: LiveData<List<SingleNews>> = _offset.switchMap { offset ->
-        liveData {
-            newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset)
-                .map {
-                    it.onSuccess<LatestNewsList> { latestNews ->
-                        if (latestNews.pagination.offset == INITIAL_OFFSET) {
-                            _isInitialNewsLoad.value = true
-                            totalNews = latestNews.pagination.total
-                        }
-                        latestNews.newsList.forEach { singleNews ->
-                            singleNews.setTimeAgo(
-                                dateTimeUtil.getTimeAgo(
-                                    DATE_TIME_FORMAT,
-                                    TIME_ZONE,
-                                    singleNews.publishedAt
-                                )
-                            )
-                        }
-                        news.addAll(latestNews.newsList)
-                        emit(news as List<SingleNews>)
-                    }
+    private val news = MutableStateFlow<List<SingleNews>>(emptyList())
+    val newsList: LiveData<List<SingleNews>> = news.asLiveData(viewModelScope.coroutineContext)
+
+    private fun fetchMoreLatestNews(offset: Int) = newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset)
+        .map {
+            it.onSuccess<LatestNewsList> { latestNews ->
+                if (latestNews.pagination.offset == INITIAL_OFFSET) {
+                    _isInitialNewsLoad.value = true
+                    totalNews = latestNews.pagination.total
                 }
-                .collect {
-                    _viewState.postValue(it)
+                latestNews.newsList.forEach { singleNews ->
+                    singleNews.setTimeAgo(
+                        dateTimeUtil.getTimeAgo(
+                            DATE_TIME_FORMAT,
+                            TIME_ZONE,
+                            singleNews.publishedAt
+                        )
+                    )
                 }
+                val newsList = news.value.toMutableList()
+                newsList.addAll(latestNews.newsList)
+                news.value = newsList
+            }
         }
-    }
-
-    init {
-        _offset.value = INITIAL_OFFSET
-    }
 
     fun loadMoreLatestNews(newOffset: Int) {
         if (newOffset < totalNews) {

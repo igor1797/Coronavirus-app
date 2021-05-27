@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 class DateTimeUtil(
     private val simpleDateFormat: SimpleDateFormat,
@@ -27,19 +28,26 @@ class DateTimeUtil(
 
     fun getTimeAgo(dateTimeFormat: String, timeZone: String, time: String): String {
         val currentTimeInMillis = calendar.timeInMillis
-        val timeAgoInSeconds = ((currentTimeInMillis - convertTimeInMillis(dateTimeFormat, timeZone, time)) / 1000)
-        return when (timeAgoInSeconds) {
-            in 0..59 -> context.getString(R.string.nowText)
-            in 60..119 -> context.getString(R.string.oneMinuteAgoText)
-            in 119..3599 -> context.getString(R.string.minsAgoText, (timeAgoInSeconds / 60).toString())
-            in 3600..7199 -> context.getString(R.string.oneHourAgoText)
-            in 7200..86399 -> context.getString(R.string.hoursAgoText, (timeAgoInSeconds / 3600).toString())
-            in 86400..172799 -> context.getString(R.string.oneDayAgoText)
-            in 172800..2629742 -> context.getString(R.string.daysAgoText, (timeAgoInSeconds / 86400).toString())
-            in 2629743..5259486 -> context.getString(R.string.oneMonthAgoText)
-            in 5259487..31556926 -> context.getString(R.string.monthsAgoText, (timeAgoInSeconds / 2629743).toString())
-            in 31556926..63113851 -> context.getString(R.string.oneYearAgoText)
-            else -> context.getString(R.string.yearsAgoText, (timeAgoInSeconds / 31556926).toString())
+        val timeAgoInMiliseconds = currentTimeInMillis - convertTimeInMillis(dateTimeFormat, timeZone, time)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(timeAgoInMiliseconds)
+        val days = TimeUnit.MILLISECONDS.toDays(timeAgoInMiliseconds)
+        val months = days / ONE_MONTH_IN_DAYS
+        val years = months / ONE_YEAR_IN_MONTHS
+        return when {
+            years == 1L -> context.getString(R.string.oneYearAgoText)
+            years > 1L -> context.getString(R.string.yearsAgoText, years.toString())
+            months == 1L -> context.getString(R.string.oneMonthAgoText)
+            months > 1L -> context.getString(R.string.monthsAgoText, months.toString())
+            days == 1L -> context.getString(R.string.oneDayAgoText)
+            days > 1L -> context.getString(R.string.daysAgoText, days.toString())
+            minutes == 1L -> context.getString(R.string.oneMinuteAgoText)
+            minutes > 1L -> context.getString(R.string.minsAgoText, minutes.toString())
+            else -> context.getString(R.string.nowText)
         }
+    }
+
+    companion object {
+        private const val ONE_MONTH_IN_DAYS = 30
+        private const val ONE_YEAR_IN_MONTHS = 12
     }
 }
