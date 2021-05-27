@@ -24,7 +24,7 @@ class SingleNewsPageFragment : BaseFragment<FragmentSingleNewsPageBinding>() {
         }
     }
 
-    fun goBack(){
+    fun goBack() {
         navigateBack()
     }
 }
