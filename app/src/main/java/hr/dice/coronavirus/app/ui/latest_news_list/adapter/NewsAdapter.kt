@@ -12,7 +12,7 @@ import hr.dice.coronavirus.app.ui.base.BaseHolder
 
 class NewsAdapter(
     private val onItemSelected: (String) -> Unit
-) : ListAdapter<SingleNews, NewsAdapter.SingleNewsAdapterHolder>(COMPARATOR) {
+) : ListAdapter<SingleNews, NewsAdapter.SingleNewsAdapterHolder>(SingleNewsDiffItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleNewsAdapterHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -37,7 +37,7 @@ class NewsAdapter(
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<SingleNews>() {
+        private val SingleNewsDiffItemCallback = object : DiffUtil.ItemCallback<SingleNews>() {
             override fun areItemsTheSame(oldItem: SingleNews, newItem: SingleNews): Boolean {
                 return oldItem.title == newItem.title
             }

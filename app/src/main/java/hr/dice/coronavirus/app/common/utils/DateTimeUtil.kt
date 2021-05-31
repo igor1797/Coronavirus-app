@@ -1,13 +1,17 @@
 package hr.dice.coronavirus.app.common.utils
 
+import android.app.Application
+import hr.dice.coronavirus.app.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
+import java.util.concurrent.TimeUnit
 
 class DateTimeUtil(
     private val simpleDateFormat: SimpleDateFormat,
-    private val calendar: Calendar
+    private val calendar: Calendar,
+    private val context: Application
 ) {
 
     private fun convertTimeInMillis(
@@ -24,19 +28,26 @@ class DateTimeUtil(
 
     fun getTimeAgo(dateTimeFormat: String, timeZone: String, time: String): String {
         val currentTimeInMillis = calendar.timeInMillis
-        val timeAgoInSeconds = ((currentTimeInMillis - convertTimeInMillis(dateTimeFormat, timeZone, time)) / 1000)
-        return when (timeAgoInSeconds) {
-            in 0..59 -> "now"
-            in 60..119 -> "1 min ago"
-            in 119..3599 -> "${timeAgoInSeconds / 60} mins ago"
-            in 3600..7199 -> "1 hour ago"
-            in 7200..86399 -> "${timeAgoInSeconds / 3600} hours ago"
-            in 86400..172799 -> "1 day ago"
-            in 172800..2629742 -> "${timeAgoInSeconds / 86400} days ago"
-            in 2629743..5259486 -> "1 month ago"
-            in 5259487..31556926 -> "${timeAgoInSeconds / 2629743} months ago"
-            in 31556926..63113851 -> "1 year ago"
-            else -> "${timeAgoInSeconds / 31556926} years ago"
+        val timeAgoInMiliseconds = currentTimeInMillis - convertTimeInMillis(dateTimeFormat, timeZone, time)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(timeAgoInMiliseconds)
+        val days = TimeUnit.MILLISECONDS.toDays(timeAgoInMiliseconds)
+        val months = days / ONE_MONTH_IN_DAYS
+        val years = months / ONE_YEAR_IN_MONTHS
+        return when {
+            years == 1L -> context.getString(R.string.oneYearAgoText)
+            years > 1L -> context.getString(R.string.yearsAgoText, years.toString())
+            months == 1L -> context.getString(R.string.oneMonthAgoText)
+            months > 1L -> context.getString(R.string.monthsAgoText, months.toString())
+            days == 1L -> context.getString(R.string.oneDayAgoText)
+            days > 1L -> context.getString(R.string.daysAgoText, days.toString())
+            minutes == 1L -> context.getString(R.string.oneMinuteAgoText)
+            minutes > 1L -> context.getString(R.string.minsAgoText, minutes.toString())
+            else -> context.getString(R.string.nowText)
         }
+    }
+
+    companion object {
+        private const val ONE_MONTH_IN_DAYS = 30
+        private const val ONE_YEAR_IN_MONTHS = 12
     }
 }

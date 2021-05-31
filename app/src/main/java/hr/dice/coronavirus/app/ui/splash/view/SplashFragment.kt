@@ -14,10 +14,10 @@ class SplashFragment : BaseFragment<SplashFragmentBinding>() {
     override val layoutResourceId: Int get() = R.layout.splash_fragment
 
     override fun onPostViewCreated() {
-        observe()
+        initViewModelObservers()
     }
 
-    private fun observe() {
+    private fun initViewModelObservers() {
         viewModel.startHomeContainerScreen.observe(viewLifecycleOwner) { startHomeContainerScreen ->
             if (startHomeContainerScreen) navigateToHomeContainerScreen()
         }

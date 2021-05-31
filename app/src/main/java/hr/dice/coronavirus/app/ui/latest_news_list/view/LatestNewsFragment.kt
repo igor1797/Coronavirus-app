@@ -26,7 +26,7 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
 
     override fun onPostViewCreated() {
         binding.viewModel = latestNewsViewModel
-        observe()
+        initViewModelObservers()
         setupRecycler()
         initListeners()
     }
@@ -60,7 +60,7 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
         }
     }
 
-    private fun observe() {
+    private fun initViewModelObservers() {
         with(latestNewsViewModel) {
             isInitialNewsLoad.observe(viewLifecycleOwner) { isInitialNewsLoad ->
                 if (isInitialNewsLoad) {

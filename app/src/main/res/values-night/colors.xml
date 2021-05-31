@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorPageComingSoonText">#61EE6E7E</color>
+  <color name="colorHeader">#CCF9FCFC</color>
+  <color name="colorSearchBackground">#5A6679</color>
+  <color name="colorSearchHintText">#8C96A5</color>
+  <color name="colorSearchText">#F9FCFC</color>
+  <color name="colorDivider">#8C96A5</color>
+  <color name="colorNoResultsText">#DFE0E1</color>
+  <color name="colorCountryItemText">#C0CCDA</color>
+  <color name="colorViewStateTitleText">#7AFFFFFF</color>
+  <color name="colorProgressTint">#743645</color>
+  <color name="colorLatestNewsHeader">#FFFFFFFF</color>
+  <color name="colorCardViewStroke">#3C4858</color>
+  <color name="colorCardViewContent">#B88C96A5</color>
+  <color name="colorCardViewTitle">#CCF9FCFC</color>
+  <color name="colorCardViewInfo">#B88C96A5</color>
+
+</resources>

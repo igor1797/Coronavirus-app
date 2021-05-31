@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 val utilModule = module {
     factory {
-        DateTimeUtil(get(), get())
+        DateTimeUtil(get(), get(), get())
     }
 }
