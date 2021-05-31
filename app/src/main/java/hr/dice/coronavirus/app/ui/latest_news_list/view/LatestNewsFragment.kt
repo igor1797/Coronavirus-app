@@ -43,7 +43,7 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
     }
 
     private fun tryAgainToFetchLatestNewsData() {
-        latestNewsViewModel.getLatestNewsData()
+        latestNewsViewModel.loadMoreLatestNews(0)
     }
 
     private fun setupRecycler() {
