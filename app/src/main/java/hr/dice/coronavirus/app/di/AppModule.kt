@@ -4,12 +4,15 @@ import hr.dice.coronavirus.app.BuildConfig
 import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.CountryApiService
+import hr.dice.coronavirus.app.networking.NewsApiService
 import okhttp3.OkHttpClient
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 private const val COVID19 = "Covid19"
 private const val NEWS = "News"
@@ -43,6 +46,18 @@ val appModule = module {
 
     single {
         DataStoreSelectionManager(get())
+    }
+
+    single<NewsApiService> {
+        get<Retrofit>(named(NEWS)).create(NewsApiService::class.java)
+    }
+
+    single {
+        Calendar.getInstance()
+    }
+
+    single {
+        SimpleDateFormat()
     }
 }
 

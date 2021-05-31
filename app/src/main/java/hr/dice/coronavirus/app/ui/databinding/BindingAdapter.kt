@@ -1,8 +1,10 @@
 package hr.dice.coronavirus.app.ui.databinding
 
 import android.view.View
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import hr.dice.coronavirus.app.common.gone
+import hr.dice.coronavirus.app.common.loadImage
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.ui.base.Error
 import hr.dice.coronavirus.app.ui.base.Loading
@@ -93,5 +95,11 @@ object BindingAdapter {
     @JvmStatic
     fun View.setArrowDirectionByNumber(increasing: Int) {
         if (increasing == -1) rotation = 180F
+    }
+
+    @BindingAdapter("app:imagePath")
+    @JvmStatic
+    fun ImageView.loadImageUrl(imagePath: String?) {
+        loadImage(imagePath)
     }
 }

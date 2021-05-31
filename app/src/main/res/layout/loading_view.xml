@@ -9,14 +9,14 @@
         android:id="@+id/progress"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:indeterminateTint="@color/froly"/>
+        android:indeterminateTint="@color/colorProgressTint"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/loadingText"
         android:textSize="22sp"
-        android:textColor="@color/black"
+        android:textColor="@color/colorViewStateTitleText"
         android:alpha="0.5"
         android:layout_marginTop="28sp"
         />

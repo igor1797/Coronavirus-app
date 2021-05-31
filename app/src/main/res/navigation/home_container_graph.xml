@@ -14,4 +14,9 @@
         android:name="hr.dice.coronavirus.app.ui.page_coming_soon.PageComingSoonFragment"
         android:label="fragment_page_coming_soon"
         tools:layout="@layout/fragment_page_coming_soon" />
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="hr.dice.coronavirus.app.ui.latest_news_list.view.LatestNewsFragment"
+        android:label="fragment_latest_news"
+        tools:layout="@layout/fragment_latest_news" />
 </navigation>
