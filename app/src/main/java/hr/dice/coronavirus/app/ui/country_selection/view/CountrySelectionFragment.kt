@@ -23,7 +23,7 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             countrySelectionFragment = this@CountrySelectionFragment
         }
         setupRecycler()
-        observe()
+        initViewModelObservers()
     }
 
     private fun setupRecycler() {
@@ -33,7 +33,7 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
         }
     }
 
-    private fun observe() {
+    private fun initViewModelObservers() {
         with(countrySelectionViewModel) {
             filteredCountryList.observe(viewLifecycleOwner) {
                 countryAdapter.submitList(it)

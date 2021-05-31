@@ -33,7 +33,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             viewModel = homeViewModel
             homeFragment = this@HomeFragment
         }
-        observe()
+        initViewModelObservers()
     }
 
     fun navigateToCountrySelection() {
@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun observe() {
+    private fun initViewModelObservers() {
         with(homeViewModel) {
             useCase.observe(viewLifecycleOwner) {
                 when (it) {
