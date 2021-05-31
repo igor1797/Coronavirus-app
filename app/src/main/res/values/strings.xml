@@ -48,4 +48,14 @@
     <string name="nowText">now</string>
     <string name="mAgotext">%sm ago</string>
     <string name="hAgoText">%sh ago</string>
+    <string name="oneMinuteAgoText">1 min ago</string>
+    <string name="minsAgoText">%s mins ago</string>
+    <string name="oneHourAgoText">1 hour ago</string>
+    <string name="hoursAgoText">%s hours ago</string>
+    <string name="oneDayAgoText">1 day ago</string>
+    <string name="daysAgoText">%s days ago</string>
+    <string name="oneMonthAgoText">1 month ago</string>
+    <string name="monthsAgoText">%s months ago</string>
+    <string name="oneYearAgoText">1 year ago</string>
+    <string name="yearsAgoText">%s years ago</string>
 </resources>

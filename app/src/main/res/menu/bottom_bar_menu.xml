@@ -12,7 +12,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/settingsFragment"
+        android:id="@+id/newsFragment"
         android:icon="@drawable/news_item"
         android:title="" />
 
