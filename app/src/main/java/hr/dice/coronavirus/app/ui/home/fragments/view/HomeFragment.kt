@@ -1,12 +1,14 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.Success
@@ -20,15 +22,23 @@ import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val viewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
+    private val homeViewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
     private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
     private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
     override fun onPostViewCreated() {
-        binding.viewModel = viewModel
-        observe()
+        binding.apply {
+            viewModel = homeViewModel
+            homeFragment = this@HomeFragment
+        }
+        initViewModelObservers()
+    }
+
+    fun navigateToCountrySelection() {
+        val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
+        controller.navigate(R.id.goToCountrySelectionFragment)
     }
 
     private fun setupRecycler(dataAdapter: RecyclerView.Adapter<*>) {
@@ -38,8 +48,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun observe() {
-        with(viewModel) {
+    private fun initViewModelObservers() {
+        with(homeViewModel) {
             useCase.observe(viewLifecycleOwner) {
                 when (it) {
                     is CountrySelected -> {
@@ -69,13 +79,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             is CountrySelected -> handleCountrySelectedSuccess(successResponse.data as CountryStatus)
             WorldWide -> handleWorldwideSelectedSuccess(successResponse.data as GlobalStatus)
         }
-        viewModel.getTimeAgo().observe(viewLifecycleOwner) {
+        homeViewModel.getTimeAgo().observe(viewLifecycleOwner) {
             binding.updated.text = getString(R.string.lastUpdatedText, it)
         }
     }
 
     private fun handleCountrySelectedSuccess(countryStatus: CountryStatus) {
         if (countryStatus.datesStatus.isEmpty()) {
+            navigateToCountrySelection()
             showErrorDialog()
         } else {
             dateStatusListAdapter.submitList(countryStatus.datesStatus)
