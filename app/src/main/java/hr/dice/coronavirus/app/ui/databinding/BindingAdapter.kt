@@ -48,6 +48,15 @@ object BindingAdapter {
         }
     }
 
+    @BindingAdapter("app:isVisible")
+    @JvmStatic
+    fun View.setVisibility(isVisible: Boolean?) {
+        when (isVisible) {
+            true -> visible()
+            else -> gone()
+        }
+    }
+
     @BindingAdapter("app:visibilityByNumber")
     @JvmStatic
     fun View.setVisibilityByNumber(increasing: Int) {

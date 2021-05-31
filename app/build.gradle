@@ -100,4 +100,7 @@ dependencies {
 
     //Lottie
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //Datastore
+    implementation "androidx.datastore:datastore-preferences:$datastoreVersion"
 }

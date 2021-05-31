@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/app_navigation_graph"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation_graph"
     app:startDestination="@id/splashFragment">
 
     <fragment
@@ -17,6 +19,14 @@
     <fragment
         android:id="@+id/homeContainerFragment"
         android:name="hr.dice.coronavirus.app.ui.home.fragments.container.HomeContainerFragment"
-        android:label="HomeContainerFragment" />
-
+        android:label="HomeContainerFragment" >
+        <action
+            android:id="@+id/goToCountrySelectionFragment"
+            app:destination="@id/countrySelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countrySelectionFragment"
+        android:name="hr.dice.coronavirus.app.ui.country_selection.view.CountrySelectionFragment"
+        android:label="country_selection_fragment"
+        tools:layout="@layout/country_selection_fragment" />
 </navigation>
