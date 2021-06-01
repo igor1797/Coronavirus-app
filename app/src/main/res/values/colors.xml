@@ -58,5 +58,7 @@
     <color name="colorRecoveredCases">#83BEA7</color>
     <color name="colorDeceasedCases">#5A6679</color>
     <color name="colorMapsCardBackground">#FFFFFF</color>
+    <color name="colorButtonBackground">#F397A3</color>
+    <color name="colorButtonText">#FFFFFF</color>
 
 </resources>

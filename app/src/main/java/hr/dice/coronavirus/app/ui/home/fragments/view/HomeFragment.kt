@@ -1,6 +1,5 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
-import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +33,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             homeFragment = this@HomeFragment
         }
         initViewModelObservers()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.emptyState.backToSearch.setOnClickListener {
+            navigateToCountrySelection()
+        }
     }
 
     private fun tryAgainToFetchStatisticsData() {
