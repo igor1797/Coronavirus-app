@@ -2,6 +2,8 @@
 <layout>
 
     <data>
+        <import type="hr.dice.coronavirus.app.common.ExtensionHelpersKt" />
+
         <variable
             name="country"
             type="hr.dice.coronavirus.app.model.country_list.Country" />
@@ -21,7 +23,7 @@
             android:id="@+id/flagEmoji"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{country.flagEmoji}"
+            android:text="@{ExtensionHelpersKt.getFlagEmoji(country)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textColor="@color/cloudBurst"
+            android:textColor="@color/colorCountryItemText"
             android:textSize="16sp"
             android:text="@{country.name}"
             app:layout_constraintBottom_toBottomOf="parent"

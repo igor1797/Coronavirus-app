@@ -11,7 +11,7 @@ import hr.dice.coronavirus.app.databinding.DateOrStateItemBinding
 import hr.dice.coronavirus.app.model.global.GlobalCountry
 import android.view.LayoutInflater as LayoutInflater
 
-class CountryStatusListAdapter : ListAdapter<GlobalCountry, CountryStatusListAdapter.StateHolder>(COMPARATOR) {
+class CountryStatusListAdapter : ListAdapter<GlobalCountry, CountryStatusListAdapter.StateHolder>(GlobalCountryDiffItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StateHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -39,7 +39,7 @@ class CountryStatusListAdapter : ListAdapter<GlobalCountry, CountryStatusListAda
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<GlobalCountry>() {
+        private val GlobalCountryDiffItemCallback = object : DiffUtil.ItemCallback<GlobalCountry>() {
             override fun areItemsTheSame(oldItem: GlobalCountry, newItem: GlobalCountry): Boolean {
                 return oldItem.name == newItem.name
             }

@@ -6,6 +6,12 @@
 
     <data>
 
+        <import type="hr.dice.coronavirus.app.common.ConstantsKt" />
+
+        <variable
+            name="countrySelectionFragment"
+            type="hr.dice.coronavirus.app.ui.country_selection.view.CountrySelectionFragment" />
+
         <variable
             name="viewModel"
             type="hr.dice.coronavirus.app.ui.country_selection.presentation.CountrySelectionViewModel" />
@@ -13,7 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/success"
@@ -30,12 +36,13 @@
                 android:paddingBottom="8dp"
                 android:src="@drawable/back_button"
                 app:layout_constrainedWidth="true"
+                android:onClick="@{() -> countrySelectionFragment.goBack()}"
                 app:layout_constraintBottom_toBottomOf="@id/countrySelectionHeader"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@id/countrySelectionHeader"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/countrySelectionHeader"
-                app:tint="@color/cloudBurst" />
+                app:tint="@color/colorHeader" />
 
             <TextView
                 android:id="@+id/countrySelectionHeader"
@@ -45,7 +52,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
                 android:text="@string/chooseYourCountryText"
-                android:textColor="@color/cloudBurst"
+                android:textColor="@color/colorHeader"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/backButton"
@@ -59,7 +66,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/search_view_background"
-                android:backgroundTint="@color/athensGray"
+                android:backgroundTint="@color/colorSearchBackground"
                 android:orientation="horizontal"
                 android:padding="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,8 +90,9 @@
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
                     android:hint="@string/searchHint"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/regentGray"
+                    android:text="@={viewModel.searchQuery}"
+                    android:textColor="@color/colorSearchText"
+                    android:textColorHint="@color/colorSearchHintText"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +112,8 @@
                 android:paddingBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/searchLayout">
+                app:layout_constraintTop_toBottomOf="@id/searchLayout"
+                android:onClick="@{() -> viewModel.saveUserSelection(ConstantsKt.WORLDWIDE)}">
 
                 <TextView
                     android:id="@+id/worldwideIcon"
@@ -122,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/worldwideText"
-                    android:textColor="@color/cloudBurst"
+                    android:textColor="@color/colorHeader"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +147,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:alpha="0.2"
-                android:background="@color/cloudBurst"
+                android:background="@color/colorDivider"
                 app:layout_constraintTop_toBottomOf="@id/worldwideItem" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -157,13 +166,14 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="35dp"
                 android:text="@string/noResultsText"
-                android:textColor="@color/black"
+                android:textColor="@color/colorNoResultsText"
                 android:textSize="16sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <include
             android:id="@+id/loading"

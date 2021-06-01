@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,15 +12,12 @@ import hr.dice.coronavirus.app.model.one_country.CountryStatus
 import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
-import hr.dice.coronavirus.app.ui.base.EmptyState
 import hr.dice.coronavirus.app.ui.base.Success
 import hr.dice.coronavirus.app.ui.base.UseCase
 import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.home.adapters.CountryStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.DateStatusListAdapter
-import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
@@ -27,38 +25,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
     private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
     private val homeViewModel by sharedGraphViewModel<HomeViewModel>(R.id.home_container_graph) { parametersOf(WorldWide) }
-    private val homeContainerViewModel by lazy { requireParentFragment().requireParentFragment().getViewModel<HomeContainerViewModel>() }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
     override fun onPostViewCreated() {
-        binding.viewModel = homeViewModel
-        observe()
-        initListeners()
-    }
-
-    private fun initListeners() {
-        with(binding) {
-            changeSelection.setOnClickListener {
-                navigateToCountrySelection()
-            }
-            noInternetConnection.tryAgain.setOnClickListener {
-                tryAgainToFetchStatisticsData()
-            }
-            error.tryAgain.setOnClickListener {
-                tryAgainToFetchStatisticsData()
-            }
-            emptyState.backToSearch.setOnClickListener {
-                navigateToCountrySelection()
-            }
+        binding.apply {
+            viewModel = homeViewModel
+            homeFragment = this@HomeFragment
         }
+        initViewModelObservers()
     }
 
     private fun tryAgainToFetchStatisticsData() {
         homeViewModel.getStatisticsData()
     }
 
-    private fun navigateToCountrySelection() {
+    fun navigateToCountrySelection() {
         val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
         controller.navigate(R.id.goToCountrySelectionFragment)
     }
@@ -70,7 +52,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun observe() {
+    private fun initViewModelObservers() {
         with(homeViewModel) {
             useCase.observe(viewLifecycleOwner) {
                 when (it) {
@@ -90,13 +72,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 coronaDataStatus.observe(viewLifecycleOwner) { viewState ->
                     if (viewState is Success<*>) {
                         handleSuccess(it, viewState)
-                    } else {
-                        homeContainerViewModel.disableMapsItem()
-                    }
-                    if (viewState is EmptyState) {
-                        homeContainerViewModel.setBottomNavInvisible()
-                    } else {
-                        homeContainerViewModel.setBottomNavVisible()
                     }
                 }
             }
@@ -104,7 +79,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun handleSuccess(useCase: UseCase, successResponse: Success<*>) {
-        homeContainerViewModel.enableMapsItem()
         when (useCase) {
             is CountrySelected -> handleCountrySelectedSuccess(successResponse.data as CountryStatus)
             WorldWide -> handleWorldwideSelectedSuccess(successResponse.data as GlobalStatus)

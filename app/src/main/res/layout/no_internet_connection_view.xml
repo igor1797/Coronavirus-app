@@ -19,17 +19,18 @@
 
         <TextView
             android:id="@+id/noInternetConnectionText"
-            style="@style/textStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
             android:text="@string/noInternetConnectionText"
-            android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@id/somethingWentWrongText"
-            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/textStyle"
+            android:textColor="@color/colorViewStateTitleText"
+            android:layout_marginTop="28dp"
+            app:layout_constraintTop_toBottomOf="@id/wifi"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/wifi" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/somethingWentWrongText"
+            />
 
         <TextView
             android:id="@+id/somethingWentWrongText"

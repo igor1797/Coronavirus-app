@@ -11,6 +11,10 @@
             type="hr.dice.coronavirus.app.model.CasesStatus" />
 
         <variable
+            name="homeFragment"
+            type="hr.dice.coronavirus.app.ui.home.fragments.view.HomeFragment" />
+
+        <variable
             name="viewModel"
             type="hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel" />
     </data>
@@ -33,7 +37,7 @@
                 <View
                     android:id="@+id/headerBackground"
                     android:layout_width="match_parent"
-                    android:layout_height="340dp"
+                    android:layout_height="365dp"
                     android:background="@color/mirage"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,8 +105,9 @@
 
                 <View
                     android:id="@+id/changeSelection"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:onClick="@{() -> homeFragment.navigateToCountrySelection()}"
                     android:background="@drawable/arrow_drop_down"
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintEnd_toStartOf="@id/virusTwo"
