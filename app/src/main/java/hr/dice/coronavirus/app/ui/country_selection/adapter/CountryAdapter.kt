@@ -12,7 +12,7 @@ import hr.dice.coronavirus.app.ui.base.BaseHolder
 
 class CountryAdapter(
     private val onItemSelected: (String) -> Unit
-) : ListAdapter<Country, CountryAdapter.CountryHolder>(COMPARATOR) {
+) : ListAdapter<Country, CountryAdapter.CountryHolder>(CountryDiffItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -36,7 +36,7 @@ class CountryAdapter(
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<Country>() {
+        private val CountryDiffItemCallback = object : DiffUtil.ItemCallback<Country>() {
             override fun areItemsTheSame(oldItem: Country, newItem: Country): Boolean {
                 return oldItem.name == newItem.name
             }

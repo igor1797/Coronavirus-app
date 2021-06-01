@@ -1,7 +1,6 @@
 package hr.dice.coronavirus.app.di
 
 import hr.dice.coronavirus.app.ui.country_selection.presentation.CountrySelectionViewModel
-import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
 import hr.dice.coronavirus.app.ui.latest_news_list.presentation.LatestNewsViewModel
 import hr.dice.coronavirus.app.ui.maps.MapsViewModel
@@ -19,7 +18,5 @@ val presentationModule = module {
 
     viewModel { LatestNewsViewModel(get(), get()) }
 
-    viewModel { HomeContainerViewModel() }
-
-    viewModel { MapsViewModel() }
+    viewModel { MapsViewModel(get()) }
 }
