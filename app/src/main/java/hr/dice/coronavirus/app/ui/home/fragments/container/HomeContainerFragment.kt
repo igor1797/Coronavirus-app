@@ -6,18 +6,13 @@ import androidx.navigation.ui.setupWithNavController
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.databinding.FragmentHomeContainerBinding
 import hr.dice.coronavirus.app.ui.base.BaseFragment
-import hr.dice.coronavirus.app.ui.home.fragments.container.presentation.HomeContainerViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
-
-    private val homeContainerViewModel: HomeContainerViewModel by viewModel()
 
     override val layoutResourceId: Int get() = R.layout.fragment_home_container
 
     override fun onPostViewCreated() {
         setBottomNav()
-        observe()
     }
 
     private fun setBottomNav() {
@@ -25,12 +20,6 @@ class HomeContainerFragment : BaseFragment<FragmentHomeContainerBinding>() {
         binding.bottomNav.apply {
             setupWithNavController(navController)
             setOnNavigationItemReselectedListener { }
-        }
-    }
-
-    private fun observe() {
-        homeContainerViewModel.mapsItemEnabled.observe(viewLifecycleOwner) { mapsItemEnabled ->
-            binding.bottomNav.menu.findItem(R.id.mapsFragment).isEnabled = mapsItemEnabled
         }
     }
 }
