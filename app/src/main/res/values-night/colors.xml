@@ -15,5 +15,10 @@
   <color name="colorCardViewContent">#B88C96A5</color>
   <color name="colorCardViewTitle">#CCF9FCFC</color>
   <color name="colorCardViewInfo">#B88C96A5</color>
+  <color name="colorConfirmedCases">#BD7B97</color>
+  <color name="colorActiveCases">#007BFF</color>
+  <color name="colorRecoveredCases">#83BEA7</color>
+  <color name="colorDeceasedCases">#7AFFFFFF</color>
+  <color name="colorMapsCardBackground">#D13C4858</color>
 
 </resources>
