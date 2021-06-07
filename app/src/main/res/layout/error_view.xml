@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <View
-        android:id="@+id/errorViruses"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
-        android:background="@drawable/viruses_error"
-        app:layout_constraintBottom_toTopOf="@id/oopsText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"/>
+<layout>
 
-    <TextView
-        android:id="@+id/oopsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/oopsText"
-        android:textSize="24sp"
-        style="@style/textStyle"
-        android:textColor="@color/colorViewStateTitleText"
-        android:layout_marginTop="28dp"
-        app:layout_constraintTop_toBottomOf="@id/errorViruses"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/somethingWentWrongText"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/somethingWentWrongText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/errorMessageText"
-        style="@style/textStyle"
-        android:gravity="center"
-        android:lineSpacingExtra="18sp"
-        app:layout_constraintTop_toBottomOf="@id/oopsText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        <View
+            android:id="@+id/errorViruses"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:background="@drawable/viruses_error"
+            app:layout_constraintBottom_toTopOf="@id/oopsText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/oopsText"
+            style="@style/textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/oopsText"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/somethingWentWrongText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorViruses" />
+
+        <TextView
+            android:id="@+id/somethingWentWrongText"
+            style="@style/textStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="18sp"
+            android:text="@string/errorMessageText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/oopsText" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/wewak"
+            android:text="@string/pleaseTryAgainText"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/somethingWentWrongText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -103,4 +103,8 @@ dependencies {
 
     //Datastore
     implementation "androidx.datastore:datastore-preferences:$datastoreVersion"
+
+    //Google maps
+    implementation "com.google.android.libraries.maps:maps:$mapsVersion"
+
 }

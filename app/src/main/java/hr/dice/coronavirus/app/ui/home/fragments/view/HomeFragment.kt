@@ -5,6 +5,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
+import hr.dice.coronavirus.app.common.sharedGraphViewModel
 import hr.dice.coronavirus.app.databinding.FragmentHomeBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
@@ -17,14 +18,13 @@ import hr.dice.coronavirus.app.ui.base.WorldWide
 import hr.dice.coronavirus.app.ui.home.adapters.CountryStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.adapters.DateStatusListAdapter
 import hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val homeViewModel by viewModel<HomeViewModel> { parametersOf(WorldWide) }
     private val dateStatusListAdapter by lazy { DateStatusListAdapter() }
     private val countryStatusListAdapter by lazy { CountryStatusListAdapter() }
+    private val homeViewModel by sharedGraphViewModel<HomeViewModel>(R.id.home_container_graph) { parametersOf(WorldWide) }
 
     override val layoutResourceId: Int get() = R.layout.fragment_home
 
@@ -34,6 +34,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             homeFragment = this@HomeFragment
         }
         initViewModelObservers()
+    }
+
+    private fun tryAgainToFetchStatisticsData() {
+        homeViewModel.getStatisticsData()
     }
 
     fun navigateToCountrySelection() {

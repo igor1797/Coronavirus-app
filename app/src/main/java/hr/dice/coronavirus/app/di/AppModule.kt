@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.di
 
+import android.location.Geocoder
 import hr.dice.coronavirus.app.BuildConfig
 import hr.dice.coronavirus.app.datastore.DataStoreSelectionManager
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
@@ -58,6 +59,10 @@ val appModule = module {
 
     single {
         SimpleDateFormat()
+    }
+
+    single {
+        Geocoder(get())
     }
 }
 
