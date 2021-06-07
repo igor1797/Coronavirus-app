@@ -1,12 +1,15 @@
 package hr.dice.coronavirus.app.ui.latest_news_list.view
 
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hr.dice.coronavirus.app.R
 import hr.dice.coronavirus.app.common.visible
 import hr.dice.coronavirus.app.databinding.FragmentLatestNewsBinding
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
+import hr.dice.coronavirus.app.ui.home.fragments.container.HomeContainerFragmentDirections
 import hr.dice.coronavirus.app.ui.latest_news_list.adapter.NewsAdapter
 import hr.dice.coronavirus.app.ui.latest_news_list.adapter.PaginationListener
 import hr.dice.coronavirus.app.ui.latest_news_list.presentation.LatestNewsViewModel
@@ -59,7 +62,14 @@ class LatestNewsFragment : BaseFragment<FragmentLatestNewsBinding>() {
         }
     }
 
+    private fun navigateToSingleNewsPageFragment(url: String) {
+        val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
+        val direction = HomeContainerFragmentDirections.goToSingleNewsPageFragment(url)
+        controller.navigate(direction)
+    }
+
     private fun onSingleNewsClicked(url: String) {
+        navigateToSingleNewsPageFragment(url)
     }
 
     override fun onDestroyView() {

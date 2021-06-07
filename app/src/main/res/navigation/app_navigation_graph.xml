@@ -23,10 +23,23 @@
         <action
             android:id="@+id/goToCountrySelectionFragment"
             app:destination="@id/countrySelectionFragment" />
+        <action
+            android:id="@+id/goToSingleNewsPageFragment"
+            app:destination="@id/singleNewsPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/countrySelectionFragment"
         android:name="hr.dice.coronavirus.app.ui.country_selection.view.CountrySelectionFragment"
         android:label="country_selection_fragment"
         tools:layout="@layout/country_selection_fragment" />
+    <fragment
+        android:id="@+id/singleNewsPageFragment"
+        android:name="hr.dice.coronavirus.app.ui.single_news_page.SingleNewsPageFragment"
+        android:label="fragment_single_news_page"
+        tools:layout="@layout/fragment_single_news_page">
+
+        <argument
+            android:name="singleNewsUrl"
+            app:argType="string"/>
+    </fragment>
 </navigation>
