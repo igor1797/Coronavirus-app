@@ -46,10 +46,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         homeViewModel.getStatisticsData()
     }
 
-    private fun tryAgainToFetchStatisticsData() {
-        homeViewModel.getStatisticsData()
-    }
-
     fun navigateToCountrySelection() {
         val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
         controller.navigate(R.id.goToCountrySelectionFragment)
