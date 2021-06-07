@@ -4,6 +4,7 @@ import hr.dice.coronavirus.app.common.EMPTY_STRING
 import hr.dice.coronavirus.app.model.Case
 import hr.dice.coronavirus.app.model.CasesStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
+import hr.dice.coronavirus.app.model.one_country.DateStatus
 import hr.dice.coronavirus.app.networking.CoronavirusApiService
 import hr.dice.coronavirus.app.networking.base.onFailure
 import hr.dice.coronavirus.app.networking.base.onNoInternetConnection
@@ -55,11 +56,33 @@ class CoronavirusRepository(
         val latestDate = filteredCountryStatusList.last()
         val dayBeforeLatestDate = filteredCountryStatusList[filteredCountryStatusList.size - 2]
         val activeCases = Case(latestDate.active, latestDate.active - dayBeforeLatestDate.active)
-        val confirmedCases = Case(latestDate.confirmed, latestDate.confirmed - dayBeforeLatestDate.confirmed)
-        val recoveredCases = Case(latestDate.recovered, latestDate.recovered - dayBeforeLatestDate.recovered)
+        val confirmedCases =
+            Case(latestDate.confirmed, latestDate.confirmed - dayBeforeLatestDate.confirmed)
+        val recoveredCases =
+            Case(latestDate.recovered, latestDate.recovered - dayBeforeLatestDate.recovered)
         val deceasedCases = Case(latestDate.deaths, latestDate.deaths - dayBeforeLatestDate.deaths)
         val casesStatus = CasesStatus(confirmedCases, activeCases, recoveredCases, deceasedCases)
         val datesStatus = filteredCountryStatusList.map { it.mapToDomain() }.reversed()
-        return CountryStatus(latestDate.country, datesStatus, casesStatus, latestDate.date)
+        return CountryStatus(latestDate.country, calculateDatesStatusForOneDay(datesStatus), casesStatus, latestDate.date)
+    }
+
+    private fun calculateDatesStatusForOneDay(datesStatus: List<DateStatus>): List<DateStatus> {
+        val datesStatusForOneDay = arrayListOf<DateStatus>()
+        datesStatus.forEachIndexed { br, dateStatus ->
+            if (br < datesStatus.size - 1) {
+                val previousDateStatus = datesStatus[br + 1]
+                datesStatusForOneDay.add(
+                    dateStatus.copy(
+                        active = dateStatus.active - previousDateStatus.active,
+                        confirmed = dateStatus.confirmed - previousDateStatus.confirmed,
+                        deceased = dateStatus.deceased - previousDateStatus.deceased,
+                        recovered = dateStatus.recovered - previousDateStatus.recovered
+                    )
+                )
+            } else {
+                datesStatusForOneDay.add(dateStatus)
+            }
+        }
+        return datesStatusForOneDay
     }
 }
