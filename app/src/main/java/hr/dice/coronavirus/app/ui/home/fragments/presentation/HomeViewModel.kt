@@ -1,5 +1,6 @@
 package hr.dice.coronavirus.app.ui.home.fragments.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -41,6 +42,7 @@ class HomeViewModel(
     }
 
     val coronaDataStatus: LiveData<ViewState> = _useCase.flatMapLatest { useCase ->
+        Log.d("TAGER", ": aaaaaaaaaa")
         timeAgo = 0
         when (useCase) {
             is CountrySelected -> {

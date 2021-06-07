@@ -2,6 +2,7 @@ package hr.dice.coronavirus.app.ui.maps
 
 import android.content.Intent
 import android.net.Uri
+import androidx.navigation.Navigation
 import com.google.android.libraries.maps.CameraUpdateFactory
 import com.google.android.libraries.maps.GoogleMap
 import com.google.android.libraries.maps.OnMapReadyCallback
@@ -14,6 +15,7 @@ import hr.dice.coronavirus.app.common.sharedGraphViewModel
 import hr.dice.coronavirus.app.databinding.FragmentMapsBinding
 import hr.dice.coronavirus.app.model.global.GlobalStatus
 import hr.dice.coronavirus.app.model.one_country.CountryStatus
+import hr.dice.coronavirus.app.ui.activity.MainActivity
 import hr.dice.coronavirus.app.ui.base.BaseFragment
 import hr.dice.coronavirus.app.ui.base.CountrySelected
 import hr.dice.coronavirus.app.ui.base.WorldWide
@@ -29,15 +31,45 @@ class MapsFragment : BaseFragment<FragmentMapsBinding>() {
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
+        map.uiSettings.isMapToolbarEnabled = false
         getStatisticsMapsData()
     }
 
     override val layoutResourceId: Int get() = R.layout.fragment_maps
 
     override fun onPostViewCreated() {
+        binding.viewModel = homeViewModel
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-        initViewModelObservers()
+        homeViewModel.coronaDataStatus.observe(viewLifecycleOwner) {
+            it.onSuccess<Any> {
+                mapFragment?.getMapAsync(callback)
+                initViewModelObservers()
+            }
+        }
+        initListeners()
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
+            emptyState.backToSearch.setOnClickListener {
+                navigateToCountrySelection()
+            }
+        }
+    }
+
+    private fun tryAgainToFetchStatisticsData() {
+        homeViewModel.getStatisticsData()
+    }
+
+    private fun navigateToCountrySelection() {
+        val controller = Navigation.findNavController(activity as MainActivity, R.id.mainNavHostFragment)
+        controller.navigate(R.id.goToCountrySelectionFragment)
     }
 
     private fun getStatisticsMapsData() {
