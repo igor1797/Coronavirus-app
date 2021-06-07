@@ -24,6 +24,7 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
         }
         setupRecycler()
         initViewModelObservers()
+        initListeners()
     }
 
     private fun setupRecycler() {
@@ -31,6 +32,21 @@ class CountrySelectionFragment : BaseFragment<CountrySelectionFragmentBinding>()
             adapter = countryAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    private fun initListeners() {
+        with(binding) {
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchCountryListData()
+            }
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchCountryListData()
+            }
+        }
+    }
+
+    private fun tryAgainToFetchCountryListData() {
+        countrySelectionViewModel.getCountryListData()
     }
 
     private fun initViewModelObservers() {

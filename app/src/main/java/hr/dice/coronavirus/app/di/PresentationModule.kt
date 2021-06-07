@@ -12,7 +12,7 @@ val presentationModule = module {
 
     viewModel { SplashViewModel() }
 
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get()) }
 
     viewModel { CountrySelectionViewModel(get()) }
 

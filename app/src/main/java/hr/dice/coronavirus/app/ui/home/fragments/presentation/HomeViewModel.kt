@@ -33,7 +33,7 @@ class HomeViewModel(
 
     private var timeAgo = 0
 
-    private val _useCase = MutableSharedFlow<UseCase>()
+    private val _useCase = MutableSharedFlow<UseCase>(1)
     val useCase: LiveData<UseCase> = _useCase.asLiveData(viewModelScope.coroutineContext)
 
     init {
@@ -92,8 +92,10 @@ class HomeViewModel(
         }
     }
 
-    private suspend fun setUseCase(useCase: UseCase) {
-        _useCase.emit(useCase)
+    private fun setUseCase(useCase: UseCase) {
+        viewModelScope.launch {
+            _useCase.emit(useCase)
+        }
     }
 
     private fun findTopThreeCountriesByConfirmedCases(countries: List<GlobalCountry>): List<GlobalCountry> {

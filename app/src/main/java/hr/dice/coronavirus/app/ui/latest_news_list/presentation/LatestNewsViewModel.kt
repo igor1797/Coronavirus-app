@@ -14,9 +14,11 @@ import hr.dice.coronavirus.app.model.news_list.SingleNews
 import hr.dice.coronavirus.app.repositories.NewsRepository
 import hr.dice.coronavirus.app.ui.base.ViewState
 import hr.dice.coronavirus.app.ui.base.onSuccess
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class LatestNewsViewModel(
     private val newsRepository: NewsRepository,
@@ -26,7 +28,7 @@ class LatestNewsViewModel(
     private val _isInitialNewsLoad = MutableLiveData(false)
     val isInitialNewsLoad: LiveData<Boolean> get() = _isInitialNewsLoad
 
-    private val _offset = MutableStateFlow(INITIAL_OFFSET)
+    private val _offset = MutableSharedFlow<Int>(1)
     private var totalNews = 0
 
     val viewState: LiveData<ViewState> = _offset.flatMapLatest { offset ->
@@ -35,6 +37,12 @@ class LatestNewsViewModel(
 
     private val news = MutableStateFlow<List<SingleNews>>(emptyList())
     val newsList: LiveData<List<SingleNews>> = news.asLiveData(viewModelScope.coroutineContext)
+
+    init {
+        viewModelScope.launch {
+            _offset.emit(INITIAL_OFFSET)
+        }
+    }
 
     private fun fetchMoreLatestNews(offset: Int) = newsRepository.getLatestNewsList(KEYWORD_CORONA, NEWS_PER_PAGE, offset)
         .map {
@@ -60,7 +68,9 @@ class LatestNewsViewModel(
 
     fun loadMoreLatestNews(newOffset: Int) {
         if (newOffset < totalNews) {
-            _offset.value = newOffset
+            viewModelScope.launch {
+                _offset.emit(newOffset)
+            }
         }
     }
 

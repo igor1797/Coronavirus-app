@@ -33,6 +33,16 @@ object BindingAdapter {
         }
     }
 
+    @BindingAdapter("app:newsSuccessState")
+    @JvmStatic
+    fun View.setUiStateForNewsSuccess(viewState: ViewState?) {
+        when (viewState) {
+            is Success<*> -> visible()
+            is Loading -> visible()
+            else -> gone()
+        }
+    }
+
     @BindingAdapter("app:loadingState")
     @JvmStatic
     fun View.setUiStateForLoading(viewState: ViewState?) {
