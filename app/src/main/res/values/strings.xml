@@ -21,23 +21,11 @@
     <string name="statisticsWorldwideText">Statistics Worldwide</string>
     <string name="stateText">State</string>
     <string name="oopsText">Oops!</string>
-    <string name="errorMessageText">
-        <br>
-            Something went wrong.
-        </br>
-        <br>
-            Please try again
-        </br>
-    </string>
+    <string name="errorMessageText">Something went wrong.</string>
+    <string name="pleaseTryAgainText">Please try again</string>
     <string name="noInternetConnectionText">No Internet connection</string>
-    <string name="noInternetConnectionMessageText">
-        <br>
-             Please check your internet connection \n
-        </br>
-        <br>
-           and  try again
-        </br>
-    </string>
+    <string name="noInternetConnectionMessageText">Please check your internet connection</string>
+    <string name="tryAgainText">Try again</string>
     <string name="loadingText">Loading</string>
     <string name="positiveAlertButtonText">OK</string>
     <string name="noDataFourCountryTitleText">No data</string>
@@ -45,6 +33,8 @@
     <string name="pageComingSoonText">Page coming soon</string>
     <string name="worldWideEmoji">🌏</string>
     <string name="noResultsText">No results found!</string>
+    <string name="map_id">d7eaa32f14840c45</string>
+    <string name="markerErrorMessage">Something went wrong on adding markers on map</string>
     <string name="nowText">now</string>
     <string name="mAgotext">%sm ago</string>
     <string name="hAgoText">%sh ago</string>

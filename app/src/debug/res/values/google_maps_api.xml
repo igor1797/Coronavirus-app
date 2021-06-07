@@ -1,0 +1,23 @@
+<resources>
+    <!--
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=16:EE:95:86:B3:74:D1:64:DE:CD:35:CC:36:9F:BF:FF:84:41:ED:D4%3Bhr.dice.coronavirus.app.ui.maps
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    hr.dice.coronavirus.app.ui.maps
+
+    SHA-1 certificate fingerprint:
+    16:EE:95:86:B3:74:D1:64:DE:CD:35:CC:36:9F:BF:FF:84:41:ED:D4
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBjqbjSsOyhSJgRx29RN2UPuVuCFbh-kPo</string>
+</resources>

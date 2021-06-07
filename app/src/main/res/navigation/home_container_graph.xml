@@ -19,4 +19,9 @@
         android:name="hr.dice.coronavirus.app.ui.latest_news_list.view.LatestNewsFragment"
         android:label="fragment_latest_news"
         tools:layout="@layout/fragment_latest_news" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="hr.dice.coronavirus.app.ui.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
