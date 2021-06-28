@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import hr.dice.coronavirus.app.common.gone
 import hr.dice.coronavirus.app.common.loadImage
 import hr.dice.coronavirus.app.common.visible
+import hr.dice.coronavirus.app.ui.base.EmptyState
 import hr.dice.coronavirus.app.ui.base.Error
 import hr.dice.coronavirus.app.ui.base.Loading
 import hr.dice.coronavirus.app.ui.base.NoInternetState
@@ -46,6 +47,15 @@ object BindingAdapter {
     fun View.setUiStateForNoInternetConnection(viewState: ViewState?) {
         when (viewState) {
             is NoInternetState -> visible()
+            else -> gone()
+        }
+    }
+
+    @BindingAdapter("app:emptyState")
+    @JvmStatic
+    fun View.setUiStateForEmpty(viewState: ViewState?) {
+        when (viewState) {
+            is EmptyState -> visible()
             else -> gone()
         }
     }

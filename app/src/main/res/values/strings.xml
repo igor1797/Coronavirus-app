@@ -35,6 +35,9 @@
     <string name="noResultsText">No results found!</string>
     <string name="map_id">d7eaa32f14840c45</string>
     <string name="markerErrorMessage">Something went wrong on adding markers on map</string>
+    <string name="noInformationMessage">Sorry, there’re no information for your search.</string>
+    <string name="checkOtherCountriesText">We will try to find it. Please check other countries in the meantime.</string>
+    <string name="backToSearchText">Back to Search</string>
     <string name="nowText">now</string>
     <string name="mAgotext">%sm ago</string>
     <string name="hAgoText">%sh ago</string>

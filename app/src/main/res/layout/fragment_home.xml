@@ -45,7 +45,7 @@
                     android:id="@+id/virusOne"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:background="@drawable/virus_light_mode"
+                    android:background="@drawable/virus"
                     app:layout_constraintTop_toBottomOf="@id/updated"
                     app:layout_constraintStart_toStartOf="parent"
                     android:translationX="-45dp"
@@ -56,7 +56,7 @@
                     android:id="@+id/virusTwo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:background="@drawable/virus_light_mode"
+                    android:background="@drawable/virus"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:translationX="30dp"
@@ -66,7 +66,7 @@
                 <View
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/virus_light_mode"
+                    android:background="@drawable/virus"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/virusOne"
                     app:layout_constraintTop_toTopOf="@id/virusOne"
@@ -602,6 +602,12 @@
             android:id="@+id/error"
             app:errorState="@{viewModel.coronaDataStatus}"
             layout="@layout/error_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/emptyState"
+            layout="@layout/empty_state_view"
+            app:emptyState="@{viewModel.coronaDataStatus}"
             android:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

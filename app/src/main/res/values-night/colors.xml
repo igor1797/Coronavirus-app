@@ -20,5 +20,7 @@
   <color name="colorRecoveredCases">#83BEA7</color>
   <color name="colorDeceasedCases">#7AFFFFFF</color>
   <color name="colorMapsCardBackground">#D13C4858</color>
+  <color name="colorButtonBackground">#565A65</color>
+  <color name="colorButtonText">#CBCBCE</color>
 
 </resources>

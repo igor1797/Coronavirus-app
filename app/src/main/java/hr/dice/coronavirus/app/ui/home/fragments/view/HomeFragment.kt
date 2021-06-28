@@ -1,6 +1,5 @@
 package hr.dice.coronavirus.app.ui.home.fragments.view
 
-import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +33,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             homeFragment = this@HomeFragment
         }
         initViewModelObservers()
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.emptyState.backToSearch.setOnClickListener {
+            navigateToCountrySelection()
+        }
     }
 
     private fun tryAgainToFetchStatisticsData() {
@@ -89,15 +95,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun handleCountrySelectedSuccess(countryStatus: CountryStatus) {
-        if (countryStatus.datesStatus.isEmpty()) {
-            navigateToCountrySelection()
-            showErrorDialog()
-        } else {
-            dateStatusListAdapter.submitList(countryStatus.datesStatus)
-            with(binding) {
-                casesStatus = countryStatus.casesStatus
-                selection.text = countryStatus.name
-            }
+        dateStatusListAdapter.submitList(countryStatus.datesStatus)
+        with(binding) {
+            casesStatus = countryStatus.casesStatus
+            selection.text = countryStatus.name
         }
     }
 
@@ -106,17 +107,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         with(binding) {
             casesStatus = globalStatus.casesStatus
             selection.text = getText(R.string.worldwideText)
-        }
-    }
-
-    private fun showErrorDialog() {
-        activity?.let {
-            AlertDialog.Builder(it)
-                .setTitle(R.string.noDataFourCountryTitleText)
-                .setIcon(R.drawable.error)
-                .setMessage(R.string.noDataFourCountryMessageText)
-                .setPositiveButton(R.string.positiveAlertButtonText) { dialog, _ -> dialog.dismiss() }
-                .show()
         }
     }
 }

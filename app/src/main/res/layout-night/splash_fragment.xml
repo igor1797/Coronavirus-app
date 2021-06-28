@@ -17,7 +17,7 @@
             android:id="@+id/virusLogoImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/virus_dark_mode"
+            android:background="@drawable/virus"
             app:layout_constraintBottom_toTopOf="@id/logoText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
