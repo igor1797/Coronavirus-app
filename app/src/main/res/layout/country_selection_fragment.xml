@@ -93,6 +93,7 @@
                     android:text="@={viewModel.searchQuery}"
                     android:textColor="@color/colorSearchText"
                     android:textColorHint="@color/colorSearchHintText"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

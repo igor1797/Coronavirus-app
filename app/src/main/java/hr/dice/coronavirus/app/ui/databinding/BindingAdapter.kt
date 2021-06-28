@@ -100,7 +100,7 @@ object BindingAdapter {
     fun View.setGraphDirectionByNumber(increasing: Int) {
         when (increasing) {
             -1 -> {
-                rotation = 40F
+                rotation = 55F
             }
             0 -> {
                 rotation = 20F
