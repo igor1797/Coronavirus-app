@@ -37,8 +37,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initListeners() {
-        binding.emptyState.backToSearch.setOnClickListener {
-            navigateToCountrySelection()
+        with(binding) {
+            emptyState.backToSearch.setOnClickListener {
+                navigateToCountrySelection()
+            }
+            error.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
+            noInternetConnection.tryAgain.setOnClickListener {
+                tryAgainToFetchStatisticsData()
+            }
         }
     }
 
