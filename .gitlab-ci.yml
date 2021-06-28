@@ -1,0 +1,48 @@
+image: jangrewe/gitlab-ci-android
+
+stages:
+  - check
+  - test
+  - build
+  - deploy
+
+  
+before_script:
+    - export GRADLE_USER_HOME=$(pwd)/.gradle
+    - chmod +x ./gradlew
+
+cache:
+  key: ${CI_COMMIT_REF_NAME}
+  paths:
+    - .gradle/
+
+ktlint:
+  stage: check
+  when: always
+  script:
+  - ./gradlew clean ktlintCheck
+  artifacts:
+    paths:
+    - app/build/reports/ktlint
+
+unitTestDebug:
+  stage: test
+  when: manual
+  script:
+  - ./gradlew clean testDebugUnitTest
+  artifacts:
+    paths:
+    - app/build/reports
+
+build:
+  stage: build
+  when: on_success
+  script:
+    - ./gradlew clean assembleDebug --stacktrace
+  artifacts:
+    name: "${CI_JOB_ID}-${CI_JOB_NAME}"
+    expire_in: 1 weeks
+    paths:
+    - app/build/outputs/
+
+# Deploy job doesn't exist for this project, so we will just send notification to discord DICE mobile channel that build succeeded TODO: add job for sending discord message

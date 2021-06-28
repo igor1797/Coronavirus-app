@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="casesStatus"
+            type="hr.dice.coronavirus.app.model.CasesStatus" />
+
+        <variable
+            name="homeFragment"
+            type="hr.dice.coronavirus.app.ui.home.fragments.view.HomeFragment" />
+
+        <variable
+            name="viewModel"
+            type="hr.dice.coronavirus.app.ui.home.fragments.presentation.HomeViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/success"
+            app:successState="@{viewModel.coronaDataStatus}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.home.fragments.view.HomeFragment">
+
+                <TextView
+                    android:id="@+id/headerText"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/covid19TrackerText"
+                    android:textColor="@color/whiteWith48Opacity"
+                    android:textSize="14sp"
+                    android:layout_marginStart="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/selection"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/worldwideText"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/whiteWith82Opacity"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintEnd_toStartOf="@id/changeSelection"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/headerText" />
+
+                <View
+                    android:id="@+id/changeSelection"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:onClick="@{() -> homeFragment.navigateToCountrySelection()}"
+                    android:background="@drawable/arrow_drop_down"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintEnd_toStartOf="@id/virusTwo"
+                    app:layout_constraintBottom_toBottomOf="@id/selection"
+                    app:layout_constraintStart_toEndOf="@id/selection"
+                    app:layout_constraintTop_toTopOf="@id/selection" />
+
+                <TextView
+                    android:id="@+id/updated"
+                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.65"
+                    android:text="@string/lastUpdatedText"
+                    android:textColor="@color/whiteWith48Opacity"
+                    android:textSize="14sp"
+                    android:layout_marginStart="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/selection" />
+
+                <View
+                    android:id="@+id/virusOne"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/virus"
+                    app:layout_constraintTop_toBottomOf="@id/updated"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:translationX="-45dp"
+                    android:layout_marginTop="20dp"
+                    android:alpha="0.8"/>
+
+                <View
+                    android:id="@+id/virusTwo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/virus"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:translationX="30dp"
+                    android:layout_marginTop="24dp"
+                    android:alpha="0.8"/>
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/virus"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/virusOne"
+                    app:layout_constraintTop_toTopOf="@id/virusOne"
+                    android:alpha="0.8"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/dashboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/updated">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/confirmedCard"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
+                        app:contentPaddingBottom="16dp"
+                        app:contentPaddingLeft="16dp"
+                        app:contentPaddingRight="16dp"
+                        app:contentPaddingTop="16dp"
+                        app:layout_constraintBottom_toTopOf="@id/recoveredCard"
+                        app:layout_constraintDimensionRatio="W,1:1"
+                        app:layout_constraintEnd_toStartOf="@id/activeCard"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/confirmed"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/confirmedText"
+                                android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/totalConfirmed"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{casesStatus.confirmed.totalNumberOfCasesFormatted}"
+                                android:textColor="@color/chestnutRose"
+                                android:textSize="22sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/confirmed" />
+
+                            <ImageView
+                                android:id="@+id/confirmedCasesArrow"
+                                android:layout_width="10dp"
+                                android:layout_height="0dp"
+                                android:layout_marginEnd="2dp"
+                                android:src="@drawable/arrow"
+                                app:layout_constraintBottom_toBottomOf="@id/newConfirmed"
+                                app:layout_constraintEnd_toStartOf="@id/newConfirmed"
+                                app:layout_constraintTop_toTopOf="@id/newConfirmed"
+                                app:tint="@color/chestnutRose"
+                                app:visibilityByNumber="@{casesStatus.confirmed.increasing()}" />
+
+                            <TextView
+                                android:id="@+id/newConfirmed"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAlignBottom="true"
+                                android:text="@{casesStatus.confirmed.newNumberOfCasesFormatted}"
+                                android:textColor="@color/chestnutRose"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalConfirmed"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:visibilityByNumber="@{casesStatus.confirmed.increasing()}" />
+
+                            <ImageView
+                                android:id="@+id/confirmedCasesGraph"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="12dp"
+                                android:src="@drawable/graph"
+                                app:graphDirectionByNumber="@{casesStatus.confirmed.increasing()}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/totalConfirmed"
+                                app:tint="@color/chestnutRose" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/activeCard"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
+                        app:contentPaddingBottom="16dp"
+                        app:contentPaddingLeft="16dp"
+                        app:contentPaddingRight="16dp"
+                        app:contentPaddingTop="16dp"
+                        app:layout_constraintBottom_toTopOf="@id/deceasedCard"
+                        app:layout_constraintDimensionRatio="W,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/confirmedCard"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/active"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/activeText"
+                                android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/totalActive"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{casesStatus.active.totalNumberOfCasesFormatted}"
+                                android:textColor="@color/azureRadiance"
+                                android:textSize="22sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/active" />
+
+                            <ImageView
+                                android:id="@+id/activeCasesArrow"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginEnd="2dp"
+                                android:baselineAlignBottom="true"
+                                android:src="@drawable/arrow"
+                                app:arrowDirectionByNumber="@{casesStatus.active.increasing()}"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalActive"
+                                app:layout_constraintEnd_toStartOf="@id/newActive"
+                                app:tint="@color/azureRadiance"
+                                app:visibilityByNumber="@{casesStatus.active.increasing()}" />
+
+                            <TextView
+                                android:id="@+id/newActive"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAlignBottom="true"
+                                android:text="@{casesStatus.active.newNumberOfCasesFormatted}"
+                                android:textColor="@color/azureRadiance"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalActive"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:visibilityByNumber="@{casesStatus.active.increasing()}" />
+
+                            <ImageView
+                                android:id="@+id/activeCasesGraph"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="12dp"
+                                android:src="@drawable/graph"
+                                app:graphDirectionByNumber="@{casesStatus.active.increasing()}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/totalActive"
+                                app:tint="@color/azureRadiance" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/recoveredCard"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
+                        app:contentPaddingBottom="16dp"
+                        app:contentPaddingLeft="16dp"
+                        app:contentPaddingRight="16dp"
+                        app:contentPaddingTop="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="W,1:1"
+                        app:layout_constraintEnd_toStartOf="@id/deceasedCard"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/confirmedCard">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/recovered"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/recoveredText"
+                                android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/totalRecovered"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{casesStatus.recovered.totalNumberOfCasesFormatted}"
+                                android:textColor="@color/acapulco"
+                                android:textSize="22sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/recovered" />
+
+                            <ImageView
+                                android:id="@+id/recoveredCasesArrow"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginEnd="2dp"
+                                android:baselineAlignBottom="true"
+                                android:src="@drawable/arrow"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalRecovered"
+                                app:layout_constraintEnd_toStartOf="@id/newRecovered"
+                                app:tint="@color/acapulco"
+                                app:visibilityByNumber="@{casesStatus.recovered.increasing()}" />
+
+                            <TextView
+                                android:id="@+id/newRecovered"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAlignBottom="true"
+                                android:text="@{casesStatus.recovered.newNumberOfCasesFormatted}"
+                                android:textColor="@color/acapulco"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalRecovered"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:visibilityByNumber="@{casesStatus.recovered.increasing()}" />
+
+                            <ImageView
+                                android:id="@+id/recoveredCasesGraph"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="12dp"
+                                android:src="@drawable/graph"
+                                app:graphDirectionByNumber="@{casesStatus.recovered.increasing()}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/totalRecovered"
+                                app:tint="@color/acapulco" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/deceasedCard"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/oxfordBlueWith82Opacity"
+                        app:contentPaddingBottom="16dp"
+                        app:contentPaddingLeft="16dp"
+                        app:contentPaddingRight="16dp"
+                        app:contentPaddingTop="16dp"
+                        app:layout_constraintDimensionRatio="W,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/recoveredCard"
+                        app:layout_constraintTop_toBottomOf="@id/activeCard">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/deceased"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/deceasedText"
+                                android:textAllCaps="true"
+                                android:textColor="@color/regentGray"
+                                android:textSize="12sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/totalDeceased"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{casesStatus.deceased.totalNumberOfCasesFormatted}"
+                                android:textColor="@color/regentGrayWithOpacity"
+                                android:textSize="22sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/deceased" />
+
+                            <ImageView
+                                android:id="@+id/deceasedCasesArrow"
+                                android:layout_width="10dp"
+                                android:layout_height="0dp"
+                                android:layout_marginEnd="2dp"
+                                android:src="@drawable/arrow"
+                                app:layout_constraintBottom_toBottomOf="@id/newDeceased"
+                                app:layout_constraintEnd_toStartOf="@id/newDeceased"
+                                app:layout_constraintTop_toTopOf="@id/newDeceased"
+                                app:tint="@color/regentGray"
+                                app:visibilityByNumber="@{casesStatus.deceased.increasing()}" />
+
+                            <TextView
+                                android:id="@+id/newDeceased"
+                                style="@style/textStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:baselineAlignBottom="true"
+                                android:text="@{casesStatus.deceased.newNumberOfCasesFormatted}"
+                                android:textColor="@color/regentGrayWithOpacity"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBaseline_toBaselineOf="@id/totalDeceased"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:visibilityByNumber="@{casesStatus.deceased.increasing()}" />
+
+                            <ImageView
+                                android:id="@+id/deceasedCasesGraph"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="12dp"
+                                android:src="@drawable/graph"
+                                app:graphDirectionByNumber="@{casesStatus.deceased.increasing()}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/totalDeceased"
+                                app:tint="@color/regentGrayWithOpacity" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/dateOrStateHeader"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dashboard">
+
+                    <TextView
+                        android:id="@+id/stateOrDateText"
+                        style="@style/textStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/shuttleGray"
+                        android:padding="8dp"
+                        android:textColor="@color/cloudBurst"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/cText"
+                        style="@style/textStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/shuttleGray"
+                        android:padding="8dp"
+                        android:text="@string/cText"
+                        android:textColor="@color/turkishRose"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/aText"
+                        style="@style/textStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/shuttleGray"
+                        android:padding="8dp"
+                        android:text="@string/aText"
+                        android:textColor="@color/azureRadiance"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/rText"
+                        style="@style/textStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/shuttleGray"
+                        android:padding="8dp"
+                        android:text="@string/rText"
+                        android:textColor="@color/acapulco"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/dText"
+                        style="@style/textStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_background"
+                        android:backgroundTint="@color/shuttleGray"
+                        android:padding="8dp"
+                        android:text="@string/dText"
+                        android:textColor="@color/whiteWith48Opacity"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/dateOrStateHeader"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/date_or_state_item" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <include
+            android:id="@+id/loading"
+            app:loadingState="@{viewModel.coronaDataStatus}"
+            layout="@layout/loading_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/noInternetConnection"
+            app:noInternetConnectionState="@{viewModel.coronaDataStatus}"
+            layout="@layout/no_internet_connection_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/error"
+            app:errorState="@{viewModel.coronaDataStatus}"
+            layout="@layout/error_view"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/emptyState"
+            layout="@layout/empty_state_view"
+            app:emptyState="@{viewModel.coronaDataStatus}"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

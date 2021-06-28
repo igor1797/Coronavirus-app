@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="hr.dice.coronavirus.app.ui.splash.view.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/goToHomeContainerFragment"
+            app:destination="@id/homeContainerFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/splashFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeContainerFragment"
+        android:name="hr.dice.coronavirus.app.ui.home.fragments.container.HomeContainerFragment"
+        android:label="HomeContainerFragment" >
+        <action
+            android:id="@+id/goToCountrySelectionFragment"
+            app:destination="@id/countrySelectionFragment" />
+        <action
+            android:id="@+id/goToSingleNewsPageFragment"
+            app:destination="@id/singleNewsPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countrySelectionFragment"
+        android:name="hr.dice.coronavirus.app.ui.country_selection.view.CountrySelectionFragment"
+        android:label="country_selection_fragment"
+        tools:layout="@layout/country_selection_fragment" />
+    <fragment
+        android:id="@+id/singleNewsPageFragment"
+        android:name="hr.dice.coronavirus.app.ui.single_news_page.SingleNewsPageFragment"
+        android:label="fragment_single_news_page"
+        tools:layout="@layout/fragment_single_news_page">
+
+        <argument
+            android:name="singleNewsUrl"
+            app:argType="string"/>
+    </fragment>
+</navigation>
